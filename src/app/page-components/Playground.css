@@ -1,0 +1,7 @@
+.pg-container {
+    display: flex;
+    flex-grow: 1;
+    background-color: #ac2c2c;
+    font-size: var(--font-size-12);
+    overflow: hidden;
+}
