@@ -1,10 +1,15 @@
-import React, { useRef, useEffect, useImperativeHandle } from 'react';
+import React, { useRef, useEffect, useImperativeHandle, useState } from 'react';
 import { EditorView, basicSetup } from 'codemirror';
 import { EditorState } from '@codemirror/state';
 import { javascript } from '@codemirror/lang-javascript';
+import { StreamLanguage } from '@codemirror/language';
+import { shell as shellMode } from '@codemirror/legacy-modes/mode/shell';
+
 import { oneDark } from '@codemirror/theme-one-dark';
 
 import './index.css';
+
+import { redisSupport } from './redis-support';
 
 interface CodeMirrorEditorProps {
     initialValue?: string;
@@ -12,7 +17,9 @@ interface CodeMirrorEditorProps {
     tabIndex?: number;
     onBlur?: (code: string) => void;
     disabled?: boolean;
+    mode?: 'javascript' | 'shell' | 'redis';
 }
+
 
 const CodeMirrorEditor = React.forwardRef<EditorView | null, CodeMirrorEditorProps>(
     ({
@@ -20,7 +27,8 @@ const CodeMirrorEditor = React.forwardRef<EditorView | null, CodeMirrorEditorPro
         className = '',
         tabIndex = 99,
         onBlur,
-        disabled = false
+        disabled = false,
+        mode = 'javascript'
     }, ref) => {
         const editorContainerRef = useRef<HTMLDivElement>(null);
         const editorViewRef = useRef<EditorView | null>(null);
@@ -42,12 +50,19 @@ const CodeMirrorEditor = React.forwardRef<EditorView | null, CodeMirrorEditorPro
                 return;
             }
 
+            let modeElm: any = javascript();
+            if (mode === 'shell') {
+                modeElm = StreamLanguage.define(shellMode);
+            } else if (mode === 'redis') {
+                modeElm = redisSupport;
+            }
+
             // Create a new editor state with initial value and extensions
             const state = EditorState.create({
                 doc: initialValue,
                 extensions: [
                     basicSetup,
-                    javascript(),
+                    modeElm,
                     oneDark,
                     EditorView.editable.of(!disabled), // editor read-only if disabled
                 ],
@@ -71,11 +86,15 @@ const CodeMirrorEditor = React.forwardRef<EditorView | null, CodeMirrorEditorPro
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [ref, disabled]);
 
-        return <div ref={editorContainerRef}
-            className={`code-mirror-container ${className}`}
-            tabIndex={tabIndex}
-            onBlur={onEditorBlur}
-        />;
+
+        return (
+            <div ref={editorContainerRef}
+                className={`comp-code-mirror ${className}`}
+                tabIndex={tabIndex}
+                onBlur={onEditorBlur}
+            />
+        )
+
     }
 );
 

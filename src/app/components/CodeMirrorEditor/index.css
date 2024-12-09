@@ -1,7 +1,16 @@
-.code-mirror-container {
-    width: 100%;
-    max-width: 100%;
-    overflow: auto;
-    height: 200px;
-    box-sizing: border-box;
-}
+   .comp-code-mirror {
+       flex-grow: 1;
+       display: flex;
+       overflow: auto;
+       box-sizing: border-box;
+       height: 100px;
+
+       .cm-editor {
+           flex-grow: 1;
+           background-color: #111111;
+       }
+
+       .cm-gutters {
+           background-color: #202020;
+       }
+   }

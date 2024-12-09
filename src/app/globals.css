@@ -50,7 +50,9 @@ body {
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  /* color: rgb(var(--foreground-rgb)); */
+  background-color: #111111;
+  color: #eaeaeb;
 }
 
 a {
