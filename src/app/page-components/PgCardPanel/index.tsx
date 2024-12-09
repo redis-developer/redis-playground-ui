@@ -7,10 +7,22 @@ import './index.css';
 
 const PgCardPanel = () => {
     return <div className="card-panel">
-        <QueryCard queryId="1" query="SELECT * FROM users" />
-        <DbIndexCard dbIndexId="1" />
-        <DataSourceCard dataSourceId="1" />
-        <ResultCard data="data" error="error" />
+        <div className="card-panel-row">
+            <div className="card-panel-row-item">
+                <QueryCard queryId="1" query="FT.SEARCH {dbIndexName} '@brandName:{tokyo*}'" />
+            </div>
+            <div className="card-panel-row-item">
+                <DbIndexCard dbIndexId="1" />
+            </div>
+        </div>
+        <div className="card-panel-row">
+            <div className="card-panel-row-item">
+                <ResultCard data="data" error="error" />
+            </div>
+            <div className="card-panel-row-item">
+                <DataSourceCard dataSourceId="1" />
+            </div>
+        </div>
     </div>
 }
 

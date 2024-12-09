@@ -1,1 +1,17 @@
-.card-panel {}
+.card-panel {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
+    .card-panel-row {
+        height: 50%;
+        display: flex;
+        gap: 1px;
+    }
+
+    .card-panel-row-item {
+        max-width: 50%;
+        width: 50%;
+        display: flex;
+    }
+}

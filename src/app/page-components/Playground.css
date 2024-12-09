@@ -1,7 +1,12 @@
 .pg-container {
     display: flex;
+    flex-direction: column;
     flex-grow: 1;
-    background-color: #ac2c2c;
     font-size: var(--font-size-12);
-    overflow: hidden;
+    /* overflow: hidden; */
+    max-height: 100vh;
+
+    i {
+        font-size: var(--font-size-14);
+    }
 }

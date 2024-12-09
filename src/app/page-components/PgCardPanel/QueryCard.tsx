@@ -1,5 +1,8 @@
-import CardHeader from './CardHeader';
 import './QueryCard.css';
+
+import CardHeader from './CardHeader';
+
+import CodeMirrorEditor from '../../components/CodeMirrorEditor';
 
 interface QueryCardProps {
     queryId: string;
@@ -8,14 +11,13 @@ interface QueryCardProps {
 
 const labels = {
     infoIconContent: 'Try different queries to see how your data changes.',
-    headerTitle: 'Query',
+    headerTitle: 'QUERY',
 }
 
 const QueryCard = ({ queryId, query }: QueryCardProps) => {
     return <div className="query-card">
         <CardHeader headerTitle={labels.headerTitle} showCopyIcon={true} infoIconContent={labels.infoIconContent} />
-        <div className="query-id">{queryId}</div>
-        <div className="query">{query}</div>
+        <CodeMirrorEditor initialValue={query} mode="redis" />
     </div>
 }
 

@@ -1,1 +1,24 @@
-.card-header {}
+.card-header {
+    padding: 10px;
+    background-color: #212536;
+    color: #bdc3d7;
+    /*#eaeaeb;e7e7e7*/
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .card-header-title {
+        font-size: var(--font-size-14);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .card-header-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+}

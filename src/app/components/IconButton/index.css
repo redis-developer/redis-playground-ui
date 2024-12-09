@@ -1,1 +1,15 @@
-.comp-icon-button {}
+.comp-icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #8ba2ff;
+    color: #0b132e;
+
+    .icon {
+        margin-right: 10px;
+    }
+}

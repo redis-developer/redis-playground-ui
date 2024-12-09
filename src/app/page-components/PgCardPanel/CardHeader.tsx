@@ -7,11 +7,17 @@ interface CardHeaderProps {
 }
 
 const CardHeader = ({ headerTitle, infoIconContent, showCopyIcon }: CardHeaderProps) => {
-    return <div className="card-header">
-        <div className="card-header-title">{headerTitle}</div>
-        {infoIconContent && <div className="card-header-info-icon">{infoIconContent}</div>}
-        {showCopyIcon && <div className="card-header-copy-icon">Copy</div>}
-    </div>
-}
+    return (
+        <div className="card-header">
+            <div className="card-header-title font-bold">
+                {headerTitle}
+                {infoIconContent && <i className="fa fa-info-circle" title={infoIconContent}></i>}
+            </div>
+            <div className="card-header-buttons">
+                {showCopyIcon && <i className="fa fa-copy" title="Copy"></i>}
+            </div>
+        </div>
+    );
+};
 
 export default CardHeader;

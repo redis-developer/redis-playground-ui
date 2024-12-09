@@ -5,7 +5,7 @@ interface CardFooterProps {
 }
 
 const CardFooter = ({ footerText }: CardFooterProps) => {
-    return <div className="card-footer">{footerText}</div>
+    return <div className="card-footer font-medium">{footerText}</div>
 }
 
 export default CardFooter;

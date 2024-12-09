@@ -1,1 +1,5 @@
-.db-index-card {}
+.db-index-card {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
