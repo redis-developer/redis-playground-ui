@@ -1,0 +1,5 @@
+.pg-card-footer {
+    padding: var(--space-8);
+    background-color: var(--pg-card-footer-bg-clr);
+    color: var(--pg-card-footer-txt-clr);
+}

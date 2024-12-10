@@ -1,21 +1,22 @@
-.card-header {
-    padding: 10px;
-    background-color: #212536;
-    color: #bdc3d7;
-    /*#eaeaeb;e7e7e7*/
+.pg-card-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    .card-header-title {
-        font-size: var(--font-size-14);
+    padding: var(--space-8);
+    background-color: var(--pg-card-header-bg-clr);
+    color: var(--pg-card-header-txt-clr);
+
+
+    .pg-card-header-title {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 10px;
+        font-size: var(--font-size-14);
     }
 
-    .card-header-buttons {
+    .pg-card-header-buttons {
         display: flex;
         align-items: center;
         justify-content: center;

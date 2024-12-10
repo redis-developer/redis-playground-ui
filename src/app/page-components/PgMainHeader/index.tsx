@@ -13,20 +13,20 @@ const labels = {
     btnShare: 'Share',
 }
 
-const PgHeader = () => {
-    return <div className="pg-header">
+const PgMainHeader = () => {
+    return <div className="pg-main-header">
 
-        <div className="pg-header-title font-bold">
+        <div className="pg-main-header-title font-bold">
             <Image src={logoSmallImgPath} alt="logo" width={30} height={30} />
 
             {labels.title}
         </div>
-        <div className="pg-header-buttons">
-            <IconButton btnLabel={labels.btnRun} iconClass="fa fa-play" btnClass="pg-header-run-btn" />
+        <div className="pg-main-header-buttons">
+            <IconButton btnLabel={labels.btnRun} iconClass="fa fa-play" btnClass="pg-main-header-run-btn" />
             <IconButton btnLabel={labels.btnReset} iconClass="fa fa-refresh" />
             <IconButton btnLabel={labels.btnShare} iconClass="fa fa-share" />
         </div>
     </div>
 }
 
-export default PgHeader;
+export default PgMainHeader;

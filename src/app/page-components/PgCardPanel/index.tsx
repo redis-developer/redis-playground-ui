@@ -1,26 +1,26 @@
-import QueryCard from "./QueryCard";
-import DbIndexCard from "./DbIndexCard";
-import DataSourceCard from "./DataSourceCard";
-import ResultCard from "./ResultCard";
+import PgQueryCard from "./PgQueryCard";
+import PgDbIndexCard from "./PgDbIndexCard";
+import PgDataSourceCard from "./PgDataSourceCard";
+import PgResultCard from "./PgResultCard";
 
 import './index.css';
 
 const PgCardPanel = () => {
-    return <div className="card-panel">
-        <div className="card-panel-row">
-            <div className="card-panel-row-item">
-                <QueryCard queryId="1" query="FT.SEARCH {dbIndexName} '@brandName:{tokyo*}'" />
+    return <div className="pg-card-panel">
+        <div className="pg-card-panel-row">
+            <div className="pg-card-panel-row-item">
+                <PgQueryCard queryId="1" query="FT.SEARCH {dbIndexName} '@brandName:{tokyo*}'" />
             </div>
-            <div className="card-panel-row-item">
-                <DbIndexCard dbIndexId="1" />
+            <div className="pg-card-panel-row-item">
+                <PgDbIndexCard dbIndexId="1" />
             </div>
         </div>
-        <div className="card-panel-row">
-            <div className="card-panel-row-item">
-                <ResultCard data="data" error="error" />
+        <div className="pg-card-panel-row">
+            <div className="pg-card-panel-row-item">
+                <PgResultCard data="data" error="error" />
             </div>
-            <div className="card-panel-row-item">
-                <DataSourceCard dataSourceId="1" />
+            <div className="pg-card-panel-row-item">
+                <PgDataSourceCard dataSourceId="1" />
             </div>
         </div>
     </div>

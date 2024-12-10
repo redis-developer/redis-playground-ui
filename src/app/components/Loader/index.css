@@ -1,6 +1,6 @@
 .comp-loader {
     height: var(--comp-loader-height);
-    background-color: var(--primary-1);
+    background-color: var(--comp-loader-bg-clr);
     position: relative;
     overflow: hidden;
     transform: scaleX(1.2);
@@ -12,7 +12,7 @@
         left: -50%;
         height: var(--comp-loader-height);
         width: 40%;
-        background: linear-gradient(90deg, var(--gradient-clr-1) 0%, var(--gradient-clr-2) 100%);
+        background: linear-gradient(90deg, var(--comp-loader-gradient1) 0%, var(--comp-loader-gradient2) 100%);
         animation: compLoaderLineAnim 1.5s linear infinite;
     }
 }

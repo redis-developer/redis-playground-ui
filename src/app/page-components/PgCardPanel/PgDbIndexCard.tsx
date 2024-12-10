@@ -1,10 +1,10 @@
-import './DbIndexCard.css';
+import './PgDbIndexCard.css';
 
-import CardHeader from './CardHeader';
+import PgCardHeader from './PgCardHeader';
 import CodeMirrorEditor from '../../components/CodeMirrorEditor';
 
 
-interface DbIndexCardProps {
+interface PgDbIndexCardProps {
     dbIndexId: string;
 }
 
@@ -29,11 +29,11 @@ let initialValue = `FT.CREATE {dbIndexName}
  $.productDescription AS productDescription TEXT
 `;
 
-const DbIndexCard = ({ dbIndexId }: DbIndexCardProps) => {
-    return <div className="db-index-card">
-        <CardHeader headerTitle={labels.headerTitle} showCopyIcon={true} infoIconContent={labels.infoIconContent} />
+const PgDbIndexCard = ({ dbIndexId }: PgDbIndexCardProps) => {
+    return <div className="pg-db-index-card">
+        <PgCardHeader headerTitle={labels.headerTitle} showCopyIcon={true} infoIconContent={labels.infoIconContent} />
         <CodeMirrorEditor initialValue={initialValue} mode="redis" />
     </div>
 }
 
-export default DbIndexCard;
+export default PgDbIndexCard;

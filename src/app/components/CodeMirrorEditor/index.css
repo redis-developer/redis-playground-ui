@@ -1,16 +1,17 @@
    .comp-code-mirror {
        flex-grow: 1;
        display: flex;
-       overflow: auto;
        box-sizing: border-box;
+       /* default height */
        height: 100px;
+       overflow: auto;
 
        .cm-editor {
            flex-grow: 1;
-           background-color: #111111;
+           background-color: var(--comp-code-mirror-bg-clr);
        }
 
        .cm-gutters {
-           background-color: #202020;
+           background-color: var(--comp-code-mirror-gutter-bg-clr);
        }
    }

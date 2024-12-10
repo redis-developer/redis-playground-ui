@@ -1,10 +1,10 @@
-import './DataSourceCard.css';
+import './PgDataSourceCard.css';
 
-import CardFooter from './CardFooter';
-import CardHeader from './CardHeader';
+import PgCardFooter from './PgCardFooter';
+import PgCardHeader from './PgCardHeader';
 import CodeMirrorEditor from '../../components/CodeMirrorEditor';
 
-interface DataSourceCardProps {
+interface PgDataSourceCardProps {
   dataSourceId: string;
 }
 
@@ -152,14 +152,14 @@ let sampleInitialValue = `[
   }
 ]`;
 
-const DataSourceCard = ({ dataSourceId }: DataSourceCardProps) => {
-  return <div className="data-source-card">
-    <CardHeader headerTitle={labels.headerTitle} showCopyIcon={true} infoIconContent={labels.infoIconContent} />
+const PgDataSourceCard = ({ dataSourceId }: PgDataSourceCardProps) => {
+  return <div className="pg-data-source-card">
+    <PgCardHeader headerTitle={labels.headerTitle} showCopyIcon={true} infoIconContent={labels.infoIconContent} />
 
     <CodeMirrorEditor initialValue={sampleInitialValue} mode="javascript" />
 
-    <CardFooter footerText={labels.footerText} />
+    <PgCardFooter footerText={labels.footerText} />
   </div>
 }
 
-export default DataSourceCard;
+export default PgDataSourceCard;

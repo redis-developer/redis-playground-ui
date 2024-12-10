@@ -1,17 +1,17 @@
-.card-panel {
+.pg-card-panel {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 
-    .card-panel-row {
-        height: 50%;
+    .pg-card-panel-row {
         display: flex;
         gap: 1px;
+        height: 50%;
     }
 
-    .card-panel-row-item {
+    .pg-card-panel-row-item {
+        display: flex;
         max-width: 50%;
         width: 50%;
-        display: flex;
     }
 }

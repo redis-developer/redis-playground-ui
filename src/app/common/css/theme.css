@@ -24,9 +24,8 @@
     --secondary-1: #F57C00;
     --secondary-clr-1: #000000;
 
-    --gradient-clr-1: #ff00cc;
-    --gradient-clr-2: #333399;
-    --gradient-clr: #ffffff;
+    --comp-loader-gradient1: #ff00cc;
+    --comp-loader-gradient2: #333399;
 
     --fn-info-bg: #ffffff;
     --fn-info-clr: #000000;
@@ -58,9 +57,9 @@
     --secondary-1: #6D4C41;
     --secondary-clr-1: #ffffff;
 
-    --gradient-clr-1: #8A2387;
-    --gradient-clr-2: #F27121;
-    --gradient-clr: #ffffff;
+    --comp-loader-gradient1: #8A2387;
+    --comp-loader-gradient2: #F27121;
+
 
 }
 
@@ -90,9 +89,9 @@
     --secondary-1: #6D4C41;
     --secondary-clr-1: #ffffff;
 
-    --gradient-clr-1: #8A2387;
-    --gradient-clr-2: #F27121;
-    --gradient-clr: #ffffff;
+    --comp-loader-gradient1: #8A2387;
+    --comp-loader-gradient2: #F27121;
+
 
 }
 
@@ -122,9 +121,9 @@
     --secondary-1: #6D4C41;
     --secondary-clr-1: #ffffff;
 
-    --gradient-clr-1: #8A2387;
-    --gradient-clr-2: #F27121;
-    --gradient-clr: #ffffff;
+    --comp-loader-gradient1: #8A2387;
+    --comp-loader-gradient2: #F27121;
+
 
 }
 
@@ -154,9 +153,9 @@
     --secondary-1: #6D4C41;
     --secondary-clr-1: #ffffff;
 
-    --gradient-clr-1: #8A2387;
-    --gradient-clr-2: #F27121;
-    --gradient-clr: #ffffff;
+    --comp-loader-gradient1: #8A2387;
+    --comp-loader-gradient2: #F27121;
+
 
 }
 
@@ -186,9 +185,9 @@
     --secondary-1: #6D4C41;
     --secondary-clr-1: #ffffff;
 
-    --gradient-clr-1: #8A2387;
-    --gradient-clr-2: #F27121;
-    --gradient-clr: #ffffff;
+    --comp-loader-gradient1: #8A2387;
+    --comp-loader-gradient2: #F27121;
+
 
 }
 
@@ -227,7 +226,34 @@
     --secondary-1: #ff6f61;
     --secondary-clr-1: #ffffff;
 
-    --gradient-clr-1: #ff00cc;
-    --gradient-clr-2: #333399;
-    --gradient-clr: #ffffff;
+    --comp-loader-gradient1: #ff00cc;
+    --comp-loader-gradient2: #333399;
+
+}
+
+.theme-custom-component {
+    --comp-code-mirror-bg-clr: #111111;
+    --comp-code-mirror-gutter-bg-clr: #202020;
+
+    --comp-icon-button-bg-clr: #8ba2ff;
+    --comp-icon-button-txt-clr: #0b132e;
+    --comp-icon-button-icon-clr: #0b132e;
+    --comp-icon-button-border-clr: #ccc;
+
+    --comp-loader-bg-clr: #8ba2ff;
+    --comp-loader-gradient1: #ff00cc;
+    --comp-loader-gradient2: #333399;
+
+    --pg-main-header-bg-clr: #0e1633;
+    --pg-main-header-txt-clr: #bdc3d7;
+
+    --pg-main-header-run-btn-bg-clr: #237a40;
+    --pg-main-header-run-btn-txt-clr: #ffffff;
+    --pg-main-header-run-btn-icon-clr: #c0fae6;
+    --pg-main-header-run-btn-border-clr: #ccc;
+
+    --pg-card-header-bg-clr: #212536;
+    --pg-card-header-txt-clr: #bdc3d7;
+    --pg-card-footer-bg-clr: #212536;
+    --pg-card-footer-txt-clr: #bdc3d7;
 }
