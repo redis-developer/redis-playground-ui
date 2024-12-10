@@ -4,27 +4,27 @@ import Image from 'next/image';
 
 import IconButton from '@/app/components/IconButton';
 
-const logoSmallImgPath = '/logo-small.png';
 
+const logoImgPath = '/logo-small.png';
 const labels = {
     title: 'Redis Playground',
-    btnRun: 'Run',
-    btnReset: 'Reset',
-    btnShare: 'Share',
+    buttonRun: 'Run',
+    buttonReset: 'Reset',
+    buttonShare: 'Share',
 }
 
 const PgMainHeader = () => {
     return <div className="pg-main-header">
 
-        <div className="pg-main-header-title font-bold">
-            <Image src={logoSmallImgPath} alt="logo" width={30} height={30} />
+        <div className="header-title font-bold">
+            <Image src={logoImgPath} alt="logo" width={30} height={30} />
 
             {labels.title}
         </div>
-        <div className="pg-main-header-buttons">
-            <IconButton btnLabel={labels.btnRun} iconClass="fa fa-play" btnClass="pg-main-header-run-btn" />
-            <IconButton btnLabel={labels.btnReset} iconClass="fa fa-refresh" />
-            <IconButton btnLabel={labels.btnShare} iconClass="fa fa-share" />
+        <div className="header-buttons">
+            <IconButton buttonLbl={labels.buttonRun} iconCls="fa fa-play" buttonCls="header-run-btn" />
+            <IconButton buttonLbl={labels.buttonReset} iconCls="fa fa-refresh" />
+            <IconButton buttonLbl={labels.buttonShare} iconCls="fa fa-share" />
         </div>
     </div>
 }

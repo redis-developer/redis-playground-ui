@@ -4,14 +4,15 @@
     flex-direction: column;
 
     .pg-card-panel-row {
+        flex-grow: 1;
         display: flex;
         gap: 1px;
-        height: 50%;
+        max-height: 50%;
     }
 
     .pg-card-panel-row-item {
+        flex-grow: 1;
         display: flex;
         max-width: 50%;
-        width: 50%;
     }
 }

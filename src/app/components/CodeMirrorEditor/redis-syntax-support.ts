@@ -2,25 +2,32 @@ import {
   LRLanguage,
   LanguageSupport,
   defineLanguageFacet,
+  HighlightStyle,
+  syntaxHighlighting,
+  StreamLanguage,
 } from "@codemirror/language";
-import { HighlightStyle, syntaxHighlighting } from "@codemirror/language";
 import { tags } from "@lezer/highlight";
-import { StreamLanguage } from "@codemirror/language";
 
-// Define Redis language with explicit tag mapping
+const redisCommands = [
+  "GET",
+  "HGET",
+  "PING",
+  "KEYS",
+  "LRANGE",
+  "FT.CREATE",
+  "FT.SEARCH",
+];
+
+// /^(GET|HGET|PING|KEYS|LRANGE)\b/i  where \b is word boundary
+const commandPattern = new RegExp(`^(${redisCommands.join("|")})\\b`, "i");
+
 const redisLanguage = StreamLanguage.define({
   name: "redis",
 
   token(stream, state) {
     if (stream.eatSpace()) return null;
 
-    // Commands
-    if (stream.match(/^(GET|HGET|PING|KEYS|LRANGE)\b/i)) {
-      return "keyword";
-    }
-
-    // Extended Commands
-    if (stream.match(/^(FT\.CREATE|FT\.SEARCH)\b/i)) {
+    if (stream.match(commandPattern)) {
       return "keyword";
     }
 
@@ -39,7 +46,7 @@ const redisLanguage = StreamLanguage.define({
       return "variable";
     }
 
-    // Strings (e.g., '{dbIndexName}', '{keyPrefix}')
+    // Strings (e.g., 'dbIndexName', 'keyPrefix')
     if (stream.match(/^'.*?'|".*?"/)) {
       return "string";
     }
@@ -54,12 +61,11 @@ const redisLanguage = StreamLanguage.define({
   },
 });
 
-// Define highlighting style
 const redisHighlightStyle = HighlightStyle.define([
-  // Commands (FT.CREATE, GET, SET, etc.)
+  // Commands or keywords
   {
     tag: tags.keyword,
-    color: "#c8b6f3", //#111111
+    color: "#c8b6f3",
     //fontWeight: "bold",
   },
 
@@ -79,7 +85,7 @@ const redisHighlightStyle = HighlightStyle.define([
   { tag: tags.bracket, color: "#56b6c2" },
 ]);
 
-// Create language support with highlighting
-export const redisSupport = new LanguageSupport(redisLanguage, [
+// Language support with highlighting
+export const redisSyntaxSupport = new LanguageSupport(redisLanguage, [
   syntaxHighlighting(redisHighlightStyle),
 ]);

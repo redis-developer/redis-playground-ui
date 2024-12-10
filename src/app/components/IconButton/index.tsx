@@ -1,17 +1,17 @@
 import './index.css';
 
 interface IconButtonProps {
-    btnLabel: string;
+    buttonLbl: string;
     onClick?: () => void;
-    iconClass?: string;
-    btnClass?: string;
+    iconCls?: string;
+    buttonCls?: string;
 
 }
 
-const IconButton = ({ iconClass, btnLabel, onClick, btnClass }: IconButtonProps) => {
-    return (<div className={`comp-icon-button ${btnClass}`} onClick={onClick}>
-        <i className={`icon ${iconClass}`}></i>
-        <span className="label">{btnLabel}</span>
+const IconButton = ({ buttonLbl, onClick, iconCls = "", buttonCls = "" }: IconButtonProps) => {
+    return (<div className={`comp-icon-button ${buttonCls}`} onClick={onClick}>
+        {iconCls && <i className={`icon ${iconCls}`} />}
+        <span className="button-lbl">{buttonLbl}</span>
     </div>);
 }
 

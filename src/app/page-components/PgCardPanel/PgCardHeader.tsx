@@ -9,12 +9,12 @@ interface PgCardHeaderProps {
 const PgCardHeader = ({ headerTitle, infoIconContent, showCopyIcon }: PgCardHeaderProps) => {
     return (
         <div className="pg-card-header">
-            <div className="pg-card-header-title font-bold">
+            <div className="header-title font-bold">
                 {headerTitle}
 
                 {infoIconContent && <i className="fa fa-info-circle" title={infoIconContent}></i>}
             </div>
-            <div className="pg-card-header-buttons">
+            <div className="header-buttons">
                 {showCopyIcon && <i className="fa fa-copy" title="Copy"></i>}
             </div>
         </div>

@@ -1,15 +1,21 @@
+import './index.css';
+
 import React, { useRef, useEffect, useImperativeHandle, useState } from 'react';
 import { EditorView, basicSetup } from 'codemirror';
 import { EditorState } from '@codemirror/state';
 import { javascript } from '@codemirror/lang-javascript';
 import { StreamLanguage } from '@codemirror/language';
 import { shell as shellMode } from '@codemirror/legacy-modes/mode/shell';
-
 import { oneDark } from '@codemirror/theme-one-dark';
 
-import './index.css';
 
-import { redisSupport } from './redis-support';
+import { redisSyntaxSupport } from './redis-syntax-support';
+
+enum CodeMirrorMode {
+    javascript = 'javascript',
+    shell = 'shell',
+    redis = 'redis'
+}
 
 interface CodeMirrorEditorProps {
     initialValue?: string;
@@ -17,7 +23,7 @@ interface CodeMirrorEditorProps {
     tabIndex?: number;
     onBlur?: (code: string) => void;
     disabled?: boolean;
-    mode?: 'javascript' | 'shell' | 'redis';
+    mode?: CodeMirrorMode;
 }
 
 
@@ -28,7 +34,7 @@ const CodeMirrorEditor = React.forwardRef<EditorView | null, CodeMirrorEditorPro
         tabIndex = 99,
         onBlur,
         disabled = false,
-        mode = 'javascript'
+        mode = CodeMirrorMode.javascript
     }, ref) => {
         const editorContainerRef = useRef<HTMLDivElement>(null);
         const editorViewRef = useRef<EditorView | null>(null);
@@ -50,11 +56,11 @@ const CodeMirrorEditor = React.forwardRef<EditorView | null, CodeMirrorEditorPro
                 return;
             }
 
-            let modeElm: any = javascript();
-            if (mode === 'shell') {
+            let modeElm: any = javascript(); // default mode
+            if (mode === CodeMirrorMode.shell) {
                 modeElm = StreamLanguage.define(shellMode);
-            } else if (mode === 'redis') {
-                modeElm = redisSupport;
+            } else if (mode === CodeMirrorMode.redis) {
+                modeElm = redisSyntaxSupport;
             }
 
             // Create a new editor state with initial value and extensions
@@ -101,6 +107,8 @@ const CodeMirrorEditor = React.forwardRef<EditorView | null, CodeMirrorEditorPro
 CodeMirrorEditor.displayName = 'CodeMirrorEditor';
 
 export default React.memo(CodeMirrorEditor);
+
+export { CodeMirrorMode };
 
 
 /**

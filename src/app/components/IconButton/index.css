@@ -2,16 +2,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: var(--space-8);
 
-    cursor: pointer;
     padding: var(--space-8);
     border-radius: var(--radius-4);
     border: 1px solid var(--comp-icon-button-border-clr);
     background-color: var(--comp-icon-button-bg-clr);
     color: var(--comp-icon-button-txt-clr);
+    cursor: pointer;
 
     .icon {
-        margin-right: var(--space-8);
         color: var(--comp-icon-button-icon-clr);
     }
 }
