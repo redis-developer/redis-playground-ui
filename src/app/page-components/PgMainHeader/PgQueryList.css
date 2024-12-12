@@ -2,7 +2,8 @@
 
     select {
         width: 300px;
-        padding: var(--space-8);
+        height: 36px;
+        /* padding: var(--space-8); */
         font-size: var(--font-size-14);
 
         border-radius: var(--radius-4);
@@ -12,5 +13,8 @@
 
         cursor: pointer;
         outline: none;
+
+        text-align: center;
+        text-align-last: center;
     }
 }

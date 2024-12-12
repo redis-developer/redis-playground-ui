@@ -6,7 +6,7 @@ import CodeMirrorEditor from '../../components/CodeMirrorEditor';
 import { CodeMirrorMode } from '../../components/CodeMirrorEditor';
 
 interface PgDataSourceCardProps {
-  dataSourceId: string;
+  dataSourceId?: string;
 }
 
 const pageData = {

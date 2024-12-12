@@ -5,7 +5,7 @@ import CodeMirrorEditor from '../../components/CodeMirrorEditor';
 import { CodeMirrorMode } from '../../components/CodeMirrorEditor';
 
 interface PgDbIndexCardProps {
-    dbIndexId: string;
+    dbIndexId?: string;
 }
 
 const pageData = {

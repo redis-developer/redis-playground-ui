@@ -1,12 +1,15 @@
 import './PgQueryCard.css';
 
+import { useEffect, useRef } from 'react';
+import { EditorView } from 'codemirror';
+
 import PgCardHeader from './PgCardHeader';
 import CodeMirrorEditor from '../../components/CodeMirrorEditor';
-import { CodeMirrorMode } from '../../components/CodeMirrorEditor';
+import { CodeMirrorMode, updateCode } from '../../components/CodeMirrorEditor';
 
 interface PgQueryCardProps {
-    queryId: string;
-    query: string;
+    queryId?: string;
+    query?: string;
 }
 
 const pageData = {
@@ -15,9 +18,17 @@ const pageData = {
 }
 
 const PgQueryCard = ({ queryId, query }: PgQueryCardProps) => {
+    const editorRef = useRef<EditorView | null>(null);
+
+    useEffect(() => {
+        if (editorRef?.current && query) {
+            updateCode(editorRef.current, query);
+        }
+    }, [query]);
+
     return <div className="pg-query-card">
         <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent} />
-        <CodeMirrorEditor initialValue={query} mode={CodeMirrorMode.redis} />
+        <CodeMirrorEditor initialValue={query} mode={CodeMirrorMode.redis} ref={editorRef} />
     </div>
 }
 

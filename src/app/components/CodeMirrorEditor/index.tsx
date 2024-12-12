@@ -26,6 +26,18 @@ interface CodeMirrorEditorProps {
     mode?: CodeMirrorMode;
 }
 
+const updateCode = (editorView: EditorView, code: string) => {
+    if (editorView) {
+        const transaction = editorView.state.update({
+            changes: {
+                from: 0,
+                to: editorView.state.doc.length,
+                insert: code
+            }
+        });
+        editorView.dispatch(transaction);
+    }
+}
 
 const CodeMirrorEditor = React.forwardRef<EditorView | null, CodeMirrorEditorProps>(
     ({
@@ -108,7 +120,7 @@ CodeMirrorEditor.displayName = 'CodeMirrorEditor';
 
 export default React.memo(CodeMirrorEditor);
 
-export { CodeMirrorMode };
+export { CodeMirrorMode, updateCode };
 
 
 /**

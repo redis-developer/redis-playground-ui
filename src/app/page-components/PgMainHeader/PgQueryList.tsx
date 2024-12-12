@@ -3,6 +3,7 @@ import "./PgQueryList.css";
 import { useEffect, useState } from "react";
 
 import { pgGetQueryNavbarData } from "@/app/utils/services";
+import { usePlaygroundContext } from "../PlaygroundContext";
 
 interface IQueryNavbarData {
     category: string;
@@ -14,6 +15,8 @@ interface IQueryNavbarData {
 }
 
 const PgQueryList = () => {
+
+    const { setSelectedQueryId } = usePlaygroundContext();
 
     const [queryNavbarData, setQueryNavbarData] = useState<IQueryNavbarData[]>([]);
 
@@ -27,9 +30,14 @@ const PgQueryList = () => {
         fetchQueryNavbarData();
     }, []);
 
+    const handleQueryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const queryId = event.target.value;
+        setSelectedQueryId(queryId);
+    };
+
     return <div className="pg-query-list">
-        <select>
-            <option value="0" key="0">--- Select a query ---</option>
+        <select onChange={handleQueryChange}>
+            <option value="" key="0">--- Select a query ---</option>
             {queryNavbarData.map((category) => (
                 <optgroup label={category.category} key={category.category}>
                     {category.items.map((item) => (
