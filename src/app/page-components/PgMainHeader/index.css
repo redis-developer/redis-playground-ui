@@ -1,7 +1,7 @@
 .pg-main-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: var(--space-8);
     background-color: var(--pg-main-header-bg-clr);
     color: var(--pg-main-header-txt-clr);
@@ -9,9 +9,16 @@
     .header-title {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         gap: 20px;
         font-size: var(--font-size-18);
+    }
+
+    .header-query-list {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .header-buttons {
@@ -19,15 +26,17 @@
         align-items: center;
         justify-content: center;
         gap: 10px;
-    }
 
-    .header-run-btn {
-        background-color: var(--pg-main-header-run-btn-bg-clr);
-        color: var(--pg-main-header-run-btn-txt-clr);
-        border: 1px solid var(--pg-main-header-run-btn-border-clr);
+        .header-run-btn {
+            background-color: var(--pg-main-header-run-btn-bg-clr);
+            color: var(--pg-main-header-run-btn-txt-clr);
+            border: 1px solid var(--pg-main-header-run-btn-border-clr);
 
-        i {
-            color: var(--pg-main-header-run-btn-icon-clr);
+            i {
+                color: var(--pg-main-header-run-btn-icon-clr);
+            }
         }
     }
+
+
 }

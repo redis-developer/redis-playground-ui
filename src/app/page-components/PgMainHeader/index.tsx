@@ -3,6 +3,7 @@ import './index.css';
 import Image from 'next/image';
 
 import IconButton from '@/app/components/IconButton';
+import PgQueryList from './PgQueryList';
 
 
 const logoImgPath = '/logo-small.png';
@@ -20,6 +21,9 @@ const PgMainHeader = () => {
             <Image src={logoImgPath} alt="logo" width={30} height={30} />
 
             {labels.title}
+        </div>
+        <div className="header-query-list">
+            <PgQueryList />
         </div>
         <div className="header-buttons">
             <IconButton buttonLbl={labels.buttonRun} iconCls="fa fa-play" buttonCls="header-run-btn" />

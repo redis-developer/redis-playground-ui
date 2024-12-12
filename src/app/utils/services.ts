@@ -18,6 +18,7 @@ const testRedisConnectionSchema = z.object({
 
 const API_PATHS = {
   testRedisConnection: "/testRedisConnection",
+  pgGetQueryNavbarData: "/pgGetQueryNavbarData",
 };
 
 //#region API calls
@@ -34,6 +35,16 @@ const testRedisConnection = async (
     errorAPIAlert(API_PATHS.testRedisConnection);
   }
 };
+
+const pgGetQueryNavbarData = async () => {
+  try {
+    const response = await postRequest(API_PATHS.pgGetQueryNavbarData, {});
+    return response?.data;
+  } catch (axiosError: any) {
+    consoleLogError(axiosError);
+    errorAPIAlert(API_PATHS.pgGetQueryNavbarData);
+  }
+};
 //#endregion
 
-export { API_PATHS, testRedisConnection };
+export { API_PATHS, testRedisConnection, pgGetQueryNavbarData };
