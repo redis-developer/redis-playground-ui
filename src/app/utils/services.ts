@@ -4,15 +4,6 @@ import { postRequest, consoleLogError, errorAPIAlert } from "./axios-util";
 import { errorToast } from "./toast-util";
 
 //#region API input schema
-const zodEncryptedData = z.object({
-  encryptedData: z.string(),
-  iv: z.string(),
-  authTag: z.string(),
-});
-
-const testRedisConnectionSchema = z.object({
-  redisConUrlEncrypted: zodEncryptedData,
-});
 
 const pgGetQueryDataByIdSchema = z.object({
   queryIds: z.string().array(),
@@ -28,30 +19,21 @@ const pgGetSampleDataByDataSourceIdSchema = z.object({
   dataCount: z.number(),
 });
 
+const pgRunQuerySchema = z.object({
+  customQuery: z.string().optional(),
+  queryId: z.string().optional(),
+});
 //#endregion
 
 const API_PATHS = {
-  testRedisConnection: "/testRedisConnection",
   pgGetQueryNavbarData: "/pgGetQueryNavbarData",
   pgGetQueryDataById: "/pgGetQueryDataById",
   pgGetDbIndexById: "/pgGetDbIndexById",
   pgGetSampleDataByDataSourceId: "/pgGetSampleDataByDataSourceId",
+  pgRunQuery: "/pgRunQuery",
 };
 
 //#region API calls
-const testRedisConnection = async (
-  input: z.infer<typeof testRedisConnectionSchema>
-) => {
-  try {
-    testRedisConnectionSchema.parse(input); // validate input
-
-    const response = await postRequest(API_PATHS.testRedisConnection, input);
-    return response?.data;
-  } catch (axiosError: any) {
-    consoleLogError(axiosError);
-    errorAPIAlert(API_PATHS.testRedisConnection);
-  }
-};
 
 const pgGetQueryNavbarData = async () => {
   try {
@@ -107,13 +89,37 @@ const pgGetSampleDataByDataSourceId = async (
     errorAPIAlert(API_PATHS.pgGetSampleDataByDataSourceId);
   }
 };
+
+const pgRunQuery = async (input: z.infer<typeof pgRunQuerySchema>) => {
+  const testResult: any = {
+    data: null,
+    error: null,
+  };
+
+  try {
+    pgRunQuerySchema.parse(input); // validate input
+
+    const response = await postRequest(API_PATHS.pgRunQuery, input);
+    testResult.data = response?.data?.data || "No data found";
+  } catch (axiosError: any) {
+    const error = consoleLogError(axiosError);
+    if (error?.userMessage) {
+      errorToast(error.userMessage);
+    } else {
+      //errorAPIAlert(API_PATHS.pgRunQuery);
+    }
+    testResult.error = error?.message || error; // message, stack
+  }
+
+  return testResult;
+};
 //#endregion
 
 export {
   API_PATHS,
-  testRedisConnection,
   pgGetQueryNavbarData,
   pgGetQueryDataById,
   pgGetDbIndexById,
   pgGetSampleDataByDataSourceId,
+  pgRunQuery,
 };

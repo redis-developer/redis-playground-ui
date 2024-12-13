@@ -6,6 +6,7 @@ import { EditorView } from 'codemirror';
 import PgCardHeader from './PgCardHeader';
 import CodeMirrorEditor from '../../components/CodeMirrorEditor';
 import { CodeMirrorMode, updateCode } from '../../components/CodeMirrorEditor';
+import { usePlaygroundContext } from '../PlaygroundContext';
 
 interface PgQueryCardProps {
     queryId?: string;
@@ -18,6 +19,7 @@ const pageData = {
 }
 
 const PgQueryCard = ({ queryId, query }: PgQueryCardProps) => {
+    const { setCustomQuery, queryViewData } = usePlaygroundContext();
     const editorRef = useRef<EditorView | null>(null);
 
     useEffect(() => {
@@ -26,9 +28,18 @@ const PgQueryCard = ({ queryId, query }: PgQueryCardProps) => {
         }
     }, [query]);
 
+    const handleQueryChange = (newQuery: string) => {
+
+        if (!newQuery || newQuery.trim() === queryViewData?.query) {
+            newQuery = "";
+        }
+        setCustomQuery(newQuery);
+    }
+
     return <div className="pg-query-card pg-child-editor-container">
         <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent} />
-        <CodeMirrorEditor initialValue={query} mode={CodeMirrorMode.redis} ref={editorRef} />
+        <CodeMirrorEditor initialValue={query} mode={CodeMirrorMode.redis}
+            ref={editorRef} onBlur={handleQueryChange} />
     </div>
 }
 

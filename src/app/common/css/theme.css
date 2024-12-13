@@ -234,6 +234,7 @@
 .theme-custom-component {
     --comp-code-mirror-bg-clr: #111111;
     --comp-code-mirror-gutter-bg-clr: #202020;
+    --comp-code-mirror-disabled-bg-clr: #1d1d1d;
 
     --comp-icon-button-bg-clr: #8ba2ff;
     --comp-icon-button-txt-clr: #0b132e;

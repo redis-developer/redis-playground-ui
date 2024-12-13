@@ -44,7 +44,7 @@ const PgDbIndexCard = ({ dbIndexId }: PgDbIndexCardProps) => {
 
     return <div className="pg-db-index-card pg-child-editor-container">
         <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent} />
-        <CodeMirrorEditor initialValue={dbIndexQuery} mode={CodeMirrorMode.redis} ref={editorRef} />
+        <CodeMirrorEditor initialValue={dbIndexQuery} mode={CodeMirrorMode.redis} ref={editorRef} disabled={true} />
     </div>
 }
 

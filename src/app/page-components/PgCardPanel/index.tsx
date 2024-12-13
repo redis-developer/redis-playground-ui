@@ -12,23 +12,13 @@ import { usePlaygroundContext } from "../PlaygroundContext";
 import { pgGetQueryDataById } from "@/app/utils/services";
 
 
-const pageData = {
-    queryResult: {
-        data: [
-            {
-                productId: 1,
-                price: 100,
-                brandName: "tokyo",
-            }
-        ],
-        error: null,
-    },
-    dataSourceId: "1",
-}
-
-
 const PgCardPanel = () => {
-    const { selectedQueryId, queryViewData, setQueryViewData } = usePlaygroundContext();
+    const {
+        selectedQueryId,
+        queryViewData, setQueryViewData,
+        queryResult, queryError,
+        setCustomQuery
+    } = usePlaygroundContext();
 
     useEffect(() => {
         // on change of selectedQueryId
@@ -38,11 +28,12 @@ const PgCardPanel = () => {
                 if (result?.data?.length > 0) {
                     const resultData: IQueryViewData = result?.data[0];
                     setQueryViewData(resultData);
+                    setCustomQuery("");
                 }
             }
         };
         fetchQueryData();
-    }, [selectedQueryId, setQueryViewData]);
+    }, [selectedQueryId, setQueryViewData, setCustomQuery]);
 
     return <div className="pg-card-panel">
         <div className="pg-card-panel-row">
@@ -56,7 +47,7 @@ const PgCardPanel = () => {
 
         <div className="pg-card-panel-row">
             <div className="pg-card-panel-row-item">
-                <PgResultCard data={JSON.stringify(pageData.queryResult.data, null, 4)} error={pageData.queryResult.error} />
+                <PgResultCard result={queryResult} error={queryError} />
             </div>
             <div className="pg-card-panel-row-item">
                 <PgDataSourceCard dataSourceId={queryViewData?.dataSourceId} />

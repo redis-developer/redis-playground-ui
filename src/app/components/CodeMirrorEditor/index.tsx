@@ -107,7 +107,7 @@ const CodeMirrorEditor = React.forwardRef<EditorView | null, CodeMirrorEditorPro
 
         return (
             <div ref={editorContainerRef}
-                className={`comp-code-mirror ${className}`}
+                className={`comp-code-mirror ${className} ${disabled ? 'disabled' : ''}`}
                 tabIndex={tabIndex}
                 onBlur={onEditorBlur}
             />

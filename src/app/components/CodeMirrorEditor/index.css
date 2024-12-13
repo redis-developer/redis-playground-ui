@@ -15,3 +15,14 @@
            background-color: var(--comp-code-mirror-gutter-bg-clr);
        }
    }
+
+   .comp-code-mirror.disabled {
+       .cm-editor {
+           background-color: var(--comp-code-mirror-disabled-bg-clr);
+           cursor: no-drop;
+
+           .cm-activeLine {
+               background-color: transparent;
+           }
+       }
+   }
