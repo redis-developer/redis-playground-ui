@@ -1,8 +1,12 @@
 import './PgDbIndexCard.css';
 
+import { useState, useEffect, useRef } from 'react';
+import { EditorView } from 'codemirror';
+
 import PgCardHeader from './PgCardHeader';
 import CodeMirrorEditor from '../../components/CodeMirrorEditor';
-import { CodeMirrorMode } from '../../components/CodeMirrorEditor';
+import { updateCode, CodeMirrorMode } from '../../components/CodeMirrorEditor';
+import { pgGetDbIndexById } from '../../utils/services';
 
 interface PgDbIndexCardProps {
     dbIndexId?: string;
@@ -12,28 +16,35 @@ const pageData = {
     infoIconContent: 'To search data in Redis, we must create an index.',
     headerTitle: 'DB INDEX',
     dbIndexName: "fashionSearchIndex",
-    dbIndexQuery: `FT.CREATE {dbIndexName}
- ON JSON
- PREFIX 1 {keyPrefix}
- SCHEMA
- $.productId AS "productId" NUMERIC
- $.price AS price NUMERIC
- $.brandName AS brandName TAG
- $.gender AS gender TAG
- $.masterCategoryType AS masterCategoryType TAG
- $.subCategoryType AS subCategoryType TAG
- $.productColors AS productColors TAG
- $.productDisplayName AS productDisplayName TAG
- $.displayCategories AS displayCategories TAG SEPARATOR ,
- $.productDescription AS productDescription TEXT
-`
 }
 
 
 const PgDbIndexCard = ({ dbIndexId }: PgDbIndexCardProps) => {
-    return <div className="pg-db-index-card">
+    const [dbIndexQuery, setDbIndexQuery] = useState("");
+    const editorRef = useRef<EditorView | null>(null);
+
+    useEffect(() => {
+        const fetchDbIndexQuery = async () => {
+            if (dbIndexId) {
+                const result = await pgGetDbIndexById({ dbIndexIds: [dbIndexId] });
+                if (result?.data?.length > 0) {
+                    const resultQuery = result?.data[0].dbIndexQuery;
+                    setDbIndexQuery(resultQuery);
+                }
+            }
+        }
+        fetchDbIndexQuery();
+    }, [dbIndexId]);
+
+    useEffect(() => {
+        if (editorRef?.current && dbIndexQuery) {
+            updateCode(editorRef.current, dbIndexQuery);
+        }
+    }, [dbIndexQuery]);
+
+    return <div className="pg-db-index-card pg-child-editor-container">
         <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent} />
-        <CodeMirrorEditor initialValue={pageData.dbIndexQuery} mode={CodeMirrorMode.redis} />
+        <CodeMirrorEditor initialValue={dbIndexQuery} mode={CodeMirrorMode.redis} ref={editorRef} />
     </div>
 }
 

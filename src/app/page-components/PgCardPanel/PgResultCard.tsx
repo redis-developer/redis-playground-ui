@@ -17,7 +17,7 @@ const pageData = {
 }
 
 const PgResultCard = ({ data, error }: PgResultCardProps) => {
-    return <div className="pg-result-card">
+    return <div className="pg-result-card pg-child-editor-container">
         <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent} />
 
         <CodeMirrorEditor initialValue={data} mode={CodeMirrorMode.javascript} />

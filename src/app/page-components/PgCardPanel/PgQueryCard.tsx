@@ -26,7 +26,7 @@ const PgQueryCard = ({ queryId, query }: PgQueryCardProps) => {
         }
     }, [query]);
 
-    return <div className="pg-query-card">
+    return <div className="pg-query-card pg-child-editor-container">
         <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent} />
         <CodeMirrorEditor initialValue={query} mode={CodeMirrorMode.redis} ref={editorRef} />
     </div>

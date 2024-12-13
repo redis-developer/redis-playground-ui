@@ -18,12 +18,24 @@ const pgGetQueryDataByIdSchema = z.object({
   queryIds: z.string().array(),
 });
 
+const pgGetDbIndexByIdSchema = z.object({
+  isAll: z.boolean().optional(),
+  dbIndexIds: z.string().array(),
+});
+
+const pgGetSampleDataByDataSourceIdSchema = z.object({
+  dataSourceId: z.string(),
+  dataCount: z.number(),
+});
+
 //#endregion
 
 const API_PATHS = {
   testRedisConnection: "/testRedisConnection",
   pgGetQueryNavbarData: "/pgGetQueryNavbarData",
   pgGetQueryDataById: "/pgGetQueryDataById",
+  pgGetDbIndexById: "/pgGetDbIndexById",
+  pgGetSampleDataByDataSourceId: "/pgGetSampleDataByDataSourceId",
 };
 
 //#region API calls
@@ -64,6 +76,37 @@ const pgGetQueryDataById = async (
     errorAPIAlert(API_PATHS.pgGetQueryDataById);
   }
 };
+
+const pgGetDbIndexById = async (
+  input: z.infer<typeof pgGetDbIndexByIdSchema>
+) => {
+  try {
+    pgGetDbIndexByIdSchema.parse(input); // validate input
+
+    const response = await postRequest(API_PATHS.pgGetDbIndexById, input);
+    return response?.data;
+  } catch (axiosError: any) {
+    consoleLogError(axiosError);
+    errorAPIAlert(API_PATHS.pgGetDbIndexById);
+  }
+};
+
+const pgGetSampleDataByDataSourceId = async (
+  input: z.infer<typeof pgGetSampleDataByDataSourceIdSchema>
+) => {
+  try {
+    pgGetSampleDataByDataSourceIdSchema.parse(input); // validate input
+
+    const response = await postRequest(
+      API_PATHS.pgGetSampleDataByDataSourceId,
+      input
+    );
+    return response?.data;
+  } catch (axiosError: any) {
+    consoleLogError(axiosError);
+    errorAPIAlert(API_PATHS.pgGetSampleDataByDataSourceId);
+  }
+};
 //#endregion
 
 export {
@@ -71,4 +114,6 @@ export {
   testRedisConnection,
   pgGetQueryNavbarData,
   pgGetQueryDataById,
+  pgGetDbIndexById,
+  pgGetSampleDataByDataSourceId,
 };

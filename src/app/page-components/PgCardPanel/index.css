@@ -14,5 +14,9 @@
         flex-grow: 1;
         display: flex;
         max-width: 50%;
+
+        .pg-child-editor-container {
+            max-width: 50vw;
+        }
     }
 }
