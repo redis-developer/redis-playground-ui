@@ -100,7 +100,11 @@ const pgRunQuery = async (input: z.infer<typeof pgRunQuerySchema>) => {
     pgRunQuerySchema.parse(input); // validate input
 
     const response = await postRequest(API_PATHS.pgRunQuery, input);
-    testResult.data = response?.data?.data || "No data found";
+    testResult.data = response?.data?.data;
+
+    if (!testResult.data) {
+      throw new Error("No data found");
+    }
   } catch (axiosError: any) {
     const error = consoleLogError(axiosError);
     if (error?.userMessage) {

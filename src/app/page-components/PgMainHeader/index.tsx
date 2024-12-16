@@ -6,6 +6,7 @@ import IconButton from '@/app/components/IconButton';
 import PgQueryList from './PgQueryList';
 import { usePlaygroundContext } from '../PlaygroundContext';
 import { pgRunQuery } from '@/app/utils/services';
+import { QueryResultFormat } from '@/app/constants';
 
 
 const logoImgPath = '/logo-small.png';
@@ -16,29 +17,89 @@ const labels = {
     buttonShare: 'Share',
 }
 
+const getQueryMatchLabel = (result: any) => {
+    let footerText = "---";
+    try {
+        if (result?.length > 0 && Array.isArray(result)) {
+            const mCount = parseInt(result[0]);
+            footerText = `TOTAL ${mCount > 1 ? "MATCHES" : "MATCH"}: ${mCount}`;
+            let resultLength = result.length - 1; //-mCount
+            if (resultLength % 2 === 0) { //key value pair
+                resultLength = resultLength / 2;
+                if (resultLength < mCount) {
+                    footerText += ` (SHOWING FIRST ${resultLength} RESULTS)`;
+                }
+            }
+
+        }
+        else if (result && typeof result === "string") {
+            footerText = "TOTAL MATCH: 1";
+        }
+    }
+    catch (e) {
+        console.error(e);
+    }
+    return footerText;
+}
+
+const detectResultFormatType = (currentQuery: string, result: any[]) => {
+    let retType = QueryResultFormat.string;
+
+    if (result?.length > 0 && Array.isArray(result) && currentQuery?.startsWith('FT.SEARCH')) {
+        retType = QueryResultFormat.hash;
+
+        if (result.length > 2) {
+            // const matchedCount = result[0];
+            // const firstKey = result[1];
+            const firstValue = result[2];
+            /*
+                firstValue = [
+                    "$",  // JSON path
+                    "{...json content...}"
+                ]
+             */
+            if (firstValue?.length == 2 && firstValue[0].startsWith("$")) {
+                retType = QueryResultFormat.json;
+            }
+        }
+    }
+    return retType;
+}
+
 const PgMainHeader = () => {
-    const { queryViewData, customQuery, setQueryResult, setQueryError } = usePlaygroundContext();
+    const { queryViewData, customQuery, setQueryResult, setQueryError, setQueryMatchLabel, setQueryResultFormatType } = usePlaygroundContext();
 
 
     const handleRunQuery = async () => {
         setQueryResult("");
+        setQueryResultFormatType(QueryResultFormat.string);
+        setQueryMatchLabel('NO RESULT FOUND');
         setQueryError("");
-        const result = await pgRunQuery({
+
+        const apiResult = await pgRunQuery({
             queryId: queryViewData?.queryId,
             customQuery: customQuery,
         });
 
-        if (result?.data) {
-            setQueryResult(JSON.stringify(result?.data, null, 4));
+        if (apiResult?.data) {
+            setQueryResult(apiResult?.data);
+
+            const currentQuery = customQuery || queryViewData?.query || "";
+            const formatType = detectResultFormatType(currentQuery, apiResult?.data);
+            setQueryResultFormatType(formatType);
+
+            const footerText = getQueryMatchLabel(apiResult?.data);
+            setQueryMatchLabel(footerText);
         }
-        else if (result?.error) {
-            setQueryError(JSON.stringify(result?.error, null, 4));
+        else if (apiResult?.error) {
+            setQueryResultFormatType(QueryResultFormat.error);
+            setQueryError(apiResult?.error);
         }
 
     }
 
     const handleResetQuery = () => {
-        console.log('reset query');
+        alert('Not implemented');
     }
 
     const handleShareQuery = () => {

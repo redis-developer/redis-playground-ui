@@ -8,4 +8,11 @@ const PAGE_THEMES = [
   "theme-gray",
 ];
 
-export { PAGE_THEMES };
+enum QueryResultFormat {
+  json = "json",
+  hash = "hash",
+  string = "string",
+  error = "error",
+}
+
+export { PAGE_THEMES, QueryResultFormat };

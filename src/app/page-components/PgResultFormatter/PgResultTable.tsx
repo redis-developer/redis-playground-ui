@@ -2,7 +2,7 @@ import './PgResultTable.css';
 
 import { useEffect, useState } from 'react';
 
-import { usePlaygroundContext } from '../PlaygroundContext';
+import { QueryResultFormat } from '@/app/constants';
 
 /**
 const sampleResult = [
@@ -61,8 +61,10 @@ const sampleResult = [
 ];
  */
 
+
 interface PgResultTableProps {
     result: any[];
+    formatType: QueryResultFormat;
 }
 
 interface IHeader {
@@ -70,32 +72,78 @@ interface IHeader {
     text: string;
 }
 
-const formatResult = (_result: any[]) => {
-    const jsonArr: any[] = [];
 
-    if (_result?.length) {
+
+const formatJsonResult = (key: string, value: any[]) => {
+    let retObj: any = null;
+    if (key && value?.length) {
+        /*
+        value = [
+            "$",  // JSON path
+            "{...json content...}"
+        ]
+         */
+        const jsonPath = value[0];
+        const jsonData = value[1];
+        try {
+            const parsedData = JSON.parse(jsonData as string);
+            retObj = {
+                key,
+                path: jsonPath,
+                ...parsedData
+            };
+        } catch (e) {
+            console.error('Error parsing JSON:', e);
+        }
+    }
+    return retObj;
+}
+
+const formatHashResult = (key: string, value: any[]) => {
+    let retObj: any = null;
+    if (key && value?.length && value.length % 2 === 0) {
+        /*
+        value = [field1, value1, field2, value2, ...]
+         */
+        retObj = {
+            key: key
+        };
+        for (let i = 0; i < value.length; i += 2) {
+            const field = value[i];
+            const fieldValue = value[i + 1];
+            retObj[field] = fieldValue;
+        }
+
+    }
+
+    return retObj;
+}
+
+const formatResult = (_result: any[], _formatType: QueryResultFormat) => {
+    const objArr: any[] = [];
+
+    if (_result?.length && _formatType) {
+        // const mCount = result[0];, start from 1
         for (let i = 1; i < _result.length; i += 2) {
             const key = _result[i] as string;
             const value = _result[i + 1] as any[];
 
-            if (value?.length) {
-                const jsonPath = value[0];
-                const jsonData = value[1];
-                try {
-                    const parsedData = JSON.parse(jsonData as string);
-                    jsonArr.push({
-                        key,
-                        path: jsonPath,
-                        ...parsedData
-                    });
-                } catch (e) {
-                    console.error('Error parsing JSON:', e);
+            if (_formatType === QueryResultFormat.json) {
+                const jsonObj = formatJsonResult(key, value);
+                if (jsonObj) {
+                    objArr.push(jsonObj);
+                }
+            } else if (_formatType === QueryResultFormat.hash) {
+                const hashObj = formatHashResult(key, value);
+                if (hashObj) {
+                    objArr.push(hashObj);
                 }
             }
         }
     }
-    return jsonArr;
+    return objArr;
 };
+
 
 const getTableHeaders = (_tableData: any[]) => {
     let headers: IHeader[] = [];
@@ -126,34 +174,20 @@ const getTableHeaders = (_tableData: any[]) => {
 };
 
 
-const PgResultTable = ({ result }: PgResultTableProps) => {
+const PgResultTable = ({ result, formatType }: PgResultTableProps) => {
 
-    const [matchedCount, setMatchedCount] = useState(0);
     const [tableData, setTableData] = useState<any[]>([]);
     const [tableHeaders, setTableHeaders] = useState<IHeader[]>([]);
 
-    const { setQueryMatchLabel } = usePlaygroundContext();
-
     useEffect(() => {
-        setQueryMatchLabel('NO RESULT FOUND');
-
         if (result?.length) {
-            const mCount = result[0];
-            setMatchedCount(mCount);
-
-            const tData = formatResult(result);
+            const tData = formatResult(result, formatType);
             setTableData(tData);
 
             const headers = getTableHeaders(tData);
             setTableHeaders(headers);
-
-            let fText = `TOTAL MATCHES: ${mCount}`;
-            if (tData.length < mCount) {
-                fText += ` (SHOWING FIRST ${tData.length} RESULTS)`;
-            }
-            setQueryMatchLabel(fText);
         }
-    }, [result, setQueryMatchLabel]);
+    }, [result, formatType]);
 
 
     return (
@@ -174,11 +208,11 @@ const PgResultTable = ({ result }: PgResultTableProps) => {
 
                 <tbody>
                     {tableData.map((item, index) => (
-                        <tr key={item.id}>
-                            <td key={`${item.id}-slNo`}>{index + 1}</td>
+                        <tr key={item.key}>
+                            <td key={`${item.key}-slNo`}>{index + 1}</td>
 
                             {tableHeaders.map((header) => (
-                                <td key={`${item.id}-${header.key}`}>
+                                <td key={`${item.key}-${header.key}`}>
                                     {item[header.key]?.toString() || '-'}
                                 </td>
                             ))}
