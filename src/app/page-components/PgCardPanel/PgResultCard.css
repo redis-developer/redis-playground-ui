@@ -4,6 +4,13 @@
     flex-direction: column;
     background-color: var(--pg-result-bg-clr);
 
+    .pg-result-card-content {
+        flex-grow: 1;
+        /* display: flex; */
+        display: none;
+        flex-direction: column;
+    }
+
     .pg-result-error-container {
         flex-grow: 1;
         padding: var(--space-12);
@@ -15,5 +22,9 @@
             margin-bottom: var(--space-12);
         }
 
+    }
+
+    .show-view {
+        display: flex !important;
     }
 }
