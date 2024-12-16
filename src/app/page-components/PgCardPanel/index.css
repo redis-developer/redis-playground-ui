@@ -17,6 +17,7 @@
 
         .pg-child-editor-container {
             max-width: 50vw;
+            max-height: 50vh;
         }
     }
 }

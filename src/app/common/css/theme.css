@@ -257,4 +257,13 @@
     --pg-card-header-txt-clr: #bdc3d7;
     --pg-card-footer-bg-clr: #212536;
     --pg-card-footer-txt-clr: #bdc3d7;
+
+    --pg-result-table-border-clr: #333333;
+    --pg-result-table-header-bg-clr: #1a202c;
+    --pg-result-table-header-txt-clr: #bdc3d7;
+    --pg-result-table-row-bg-even-clr: #252525;
+    --pg-result-table-row-bg-odd-clr: #1d1d1d;
+    --pg-result-table-row-bg-hover-clr: #2a2a2a;
+    --pg-result-table-row-txt-clr: #ffffff;
+
 }

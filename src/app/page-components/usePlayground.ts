@@ -10,6 +10,7 @@ const usePlayground = () => {
   const [customQuery, setCustomQuery] = useState<string>("");
   const [queryResult, setQueryResult] = useState<any>(null);
   const [queryError, setQueryError] = useState<any>(null);
+  const [queryMatchLabel, setQueryMatchLabel] = useState<string>("");
 
   return {
     selectedQueryId,
@@ -22,6 +23,8 @@ const usePlayground = () => {
     setQueryResult,
     queryError,
     setQueryError,
+    queryMatchLabel,
+    setQueryMatchLabel,
   };
 };
 
