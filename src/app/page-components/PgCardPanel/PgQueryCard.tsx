@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { EditorView } from 'codemirror';
 
 import PgCardHeader from './PgCardHeader';
+import { HeaderIcon } from './PgCardHeader';
 import CodeMirrorEditor from '../../components/CodeMirrorEditor';
 import { CodeMirrorMode, updateCode } from '../../components/CodeMirrorEditor';
 import { usePlaygroundContext } from '../PlaygroundContext';
@@ -36,8 +37,26 @@ const PgQueryCard = ({ queryId, query }: PgQueryCardProps) => {
         setCustomQuery(newQuery);
     }
 
+    const handleCopyClick = () => {
+        try {
+            if (editorRef.current) {
+                const content = editorRef.current.state.doc.toString();
+                navigator.clipboard.writeText(content);
+            }
+        }
+        catch (e) {
+            console.error(e);
+        }
+    }
+
+    const handleIconClick = (icon: HeaderIcon) => {
+        if (icon === HeaderIcon.copy) {
+            handleCopyClick();
+        }
+    }
+
     return <div className="pg-query-card pg-child-editor-container">
-        <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent} />
+        <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent} handleIconClick={handleIconClick} />
         <CodeMirrorEditor initialValue={query} mode={CodeMirrorMode.redis}
             ref={editorRef} onBlur={handleQueryChange} />
     </div>

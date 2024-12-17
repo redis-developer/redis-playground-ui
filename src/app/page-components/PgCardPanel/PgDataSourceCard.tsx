@@ -5,6 +5,7 @@ import { EditorView } from 'codemirror';
 
 import PgCardFooter from './PgCardFooter';
 import PgCardHeader from './PgCardHeader';
+import { HeaderIcon } from './PgCardHeader';
 import CodeMirrorEditor from '../../components/CodeMirrorEditor';
 import { CodeMirrorMode, updateCode } from '../../components/CodeMirrorEditor';
 import { pgGetSampleDataByDataSourceId } from '../../utils/services';
@@ -49,8 +50,26 @@ const PgDataSourceCard = ({ dataSourceId }: PgDataSourceCardProps) => {
     }
   }, [sampleData]);
 
+  const handleCopyClick = () => {
+    try {
+      if (editorRef.current) {
+        const content = editorRef.current.state.doc.toString();
+        navigator.clipboard.writeText(content);
+      }
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
+
+  const handleIconClick = (icon: HeaderIcon) => {
+    if (icon === HeaderIcon.copy) {
+      handleCopyClick();
+    }
+  }
+
   return <div className="pg-data-source-card pg-child-editor-container">
-    <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent} />
+    <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent} handleIconClick={handleIconClick} />
 
     <CodeMirrorEditor initialValue={sampleData} mode={CodeMirrorMode.javascript} ref={editorRef} disabled={true} />
 

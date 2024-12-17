@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { EditorView } from 'codemirror';
 
 import PgCardHeader from './PgCardHeader';
+import { HeaderIcon } from './PgCardHeader';
 import CodeMirrorEditor from '../../components/CodeMirrorEditor';
 import { updateCode, CodeMirrorMode } from '../../components/CodeMirrorEditor';
 import { pgGetDbIndexById } from '../../utils/services';
@@ -42,8 +43,26 @@ const PgDbIndexCard = ({ dbIndexId }: PgDbIndexCardProps) => {
         }
     }, [dbIndexQuery]);
 
+    const handleCopyClick = () => {
+        try {
+            if (editorRef.current) {
+                const content = editorRef.current.state.doc.toString();
+                navigator.clipboard.writeText(content);
+            }
+        }
+        catch (e) {
+            console.error(e);
+        }
+    }
+
+    const handleIconClick = (icon: HeaderIcon) => {
+        if (icon === HeaderIcon.copy) {
+            handleCopyClick();
+        }
+    }
+
     return <div className="pg-db-index-card pg-child-editor-container">
-        <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent} />
+        <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent} handleIconClick={handleIconClick} />
         <CodeMirrorEditor initialValue={dbIndexQuery} mode={CodeMirrorMode.redis} ref={editorRef} disabled={true} />
     </div>
 }

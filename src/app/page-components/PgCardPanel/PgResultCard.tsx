@@ -59,6 +59,22 @@ const PgResultCard = ({ result, error }: PgResultCardProps) => {
     }, [queryResultFormatType]);
 
 
+    const handleCopyClick = () => {
+        try {
+
+            if (queryResultFormatType === QueryResultFormat.error) {
+                navigator.clipboard.writeText(JSON.stringify(error, null, 4));
+            }
+            else if (editorRef.current) {
+                const content = editorRef.current.state.doc.toString();
+                navigator.clipboard.writeText(content);
+            }
+        }
+        catch (e) {
+            console.error(e);
+        }
+    }
+
     const handleSwitchViewClick = (isReset: boolean = false) => {
         //TODO: switch to react state style rather than DOM manipulation
         const views = document.getElementsByClassName('pg-result-card-content');
@@ -84,6 +100,9 @@ const PgResultCard = ({ result, error }: PgResultCardProps) => {
     const handleIconClick = (icon: HeaderIcon) => {
         if (icon === HeaderIcon.switchView) {
             handleSwitchViewClick();
+        }
+        else if (icon === HeaderIcon.copy) {
+            handleCopyClick();
         }
     }
 

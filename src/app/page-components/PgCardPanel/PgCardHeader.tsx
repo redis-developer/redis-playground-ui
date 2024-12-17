@@ -1,5 +1,7 @@
 import './PgCardHeader.css';
 
+import { infoToast } from '@/app/utils/toast-util';
+
 interface PgCardHeaderProps {
     headerTitle: string;
     infoIconContent?: string;
@@ -18,6 +20,12 @@ const PgCardHeader = ({ headerTitle, infoIconContent, showCopyIcon, showSwitchVi
     const handleClick = (icon: HeaderIcon) => {
         if (handleIconClick) {
             handleIconClick(icon);
+
+            if (icon === HeaderIcon.copy) {
+                infoToast('Copied to clipboard!', {
+                    autoClose: 1000
+                });
+            }
         }
     }
 
