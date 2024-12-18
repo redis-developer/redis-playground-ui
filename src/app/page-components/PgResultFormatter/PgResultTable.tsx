@@ -173,11 +173,25 @@ const getTableHeaders = (_tableData: any[]) => {
     return headers;
 };
 
+const formatCellContent = (value: any, maxLength: number) => {
+    if (!value) {
+        value = '';
+    }
+    const fullText = value.toString() || '-';
+    const trimmedText = fullText.length > maxLength
+        ? `${fullText.substring(0, maxLength)}...`
+        : '';
+    return {
+        displayText: trimmedText || fullText,
+        title: trimmedText ? fullText : ''
+    };
+};
 
 const PgResultTable = ({ result, formatType }: PgResultTableProps) => {
 
     const [tableData, setTableData] = useState<any[]>([]);
     const [tableHeaders, setTableHeaders] = useState<IHeader[]>([]);
+    const maxCellCharCount = 50;
 
     useEffect(() => {
         if (result?.length) {
@@ -188,6 +202,7 @@ const PgResultTable = ({ result, formatType }: PgResultTableProps) => {
             setTableHeaders(headers);
         }
     }, [result, formatType]);
+
 
 
     return (
@@ -211,11 +226,15 @@ const PgResultTable = ({ result, formatType }: PgResultTableProps) => {
                         <tr key={item.key}>
                             <td key={`${item.key}-slNo`}>{index + 1}</td>
 
-                            {tableHeaders.map((header) => (
-                                <td key={`${item.key}-${header.key}`}>
-                                    {item[header.key]?.toString() || '-'}
-                                </td>
-                            ))}
+                            {tableHeaders.map((header) => {
+                                const { displayText, title } = formatCellContent(item[header.key], maxCellCharCount);
+                                return (
+                                    <td key={`${item.key}-${header.key}`}
+                                        title={title}>
+                                        {displayText}
+                                    </td>
+                                );
+                            })}
                         </tr>
                     ))}
                 </tbody>
