@@ -8,7 +8,6 @@ import { StreamLanguage } from '@codemirror/language';
 import { shell as shellMode } from '@codemirror/legacy-modes/mode/shell';
 import { oneDark } from '@codemirror/theme-one-dark';
 
-
 import { redisSyntaxSupport } from './redis-syntax-support';
 
 enum CodeMirrorMode {
@@ -22,6 +21,7 @@ interface CodeMirrorEditorProps {
     className?: string;
     tabIndex?: number;
     onBlur?: (code: string) => void;
+    onExecute?: () => void;
     disabled?: boolean;
     mode?: CodeMirrorMode;
 }
@@ -45,6 +45,7 @@ const CodeMirrorEditor = React.forwardRef<EditorView | null, CodeMirrorEditorPro
         className = '',
         tabIndex = 99,
         onBlur,
+        onExecute,
         disabled = false,
         mode = CodeMirrorMode.javascript
     }, ref) => {
@@ -57,6 +58,29 @@ const CodeMirrorEditor = React.forwardRef<EditorView | null, CodeMirrorEditorPro
                 onBlur(code);
             }
         };
+
+        const bindDomEvents = () => {
+            if (onExecute && editorViewRef?.current?.dom) {
+                editorViewRef.current.dom.addEventListener('keydown', (event: KeyboardEvent) => {
+
+                    if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) {
+
+                        onExecute();
+
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                });
+            }
+        }
+
+        const unbindDomEvents = () => {
+            if (onExecute && editorViewRef?.current?.dom) {
+                editorViewRef.current.dom.removeEventListener('keydown', (event: KeyboardEvent) => {
+                    console.log(`removed keydown listener`);
+                });
+            }
+        }
 
         // Expose the editor view ref to the parent component
         //@ts-ignore
@@ -92,12 +116,16 @@ const CodeMirrorEditor = React.forwardRef<EditorView | null, CodeMirrorEditorPro
                 parent: editorContainerRef.current,
             });
 
+            bindDomEvents();
+
             // Update the ref for external access
             if (ref) {
                 (ref as React.MutableRefObject<EditorView | null>).current = editorViewRef.current;
             }
 
             return () => {
+                unbindDomEvents();
+
                 editorViewRef.current?.destroy();
                 editorViewRef.current = null;
             };

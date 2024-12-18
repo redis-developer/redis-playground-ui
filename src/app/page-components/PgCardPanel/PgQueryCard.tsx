@@ -34,7 +34,7 @@ const PgQueryCard = ({ queryId, query }: PgQueryCardProps) => {
         if (!newQuery || newQuery.trim() === queryViewData?.query) {
             newQuery = "";
         }
-        setCustomQuery(newQuery);
+        setCustomQuery(newQuery.trim());
     }
 
     const handleCopyClick = () => {
@@ -55,10 +55,22 @@ const PgQueryCard = ({ queryId, query }: PgQueryCardProps) => {
         }
     }
 
+    const handleExecute = () => {
+        const runBtn = document.querySelector('.header-run-btn');
+        if (runBtn) {
+            const clickEvent = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+                view: window
+            });
+            runBtn.dispatchEvent(clickEvent);
+        }
+    }
+
     return <div className="pg-query-card pg-child-editor-container">
         <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent} handleIconClick={handleIconClick} />
         <CodeMirrorEditor initialValue={query} mode={CodeMirrorMode.redis}
-            ref={editorRef} onBlur={handleQueryChange} />
+            ref={editorRef} onBlur={handleQueryChange} onExecute={handleExecute} />
     </div>
 }
 
