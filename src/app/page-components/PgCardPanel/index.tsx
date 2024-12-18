@@ -23,12 +23,15 @@ const PgCardPanel = () => {
     useEffect(() => {
         // on change of selectedQueryId
         const fetchQueryData = async () => {
+
             if (selectedQueryId) {
+                setCustomQuery("");
+                setQueryViewData(null);
+
                 const result = await pgGetQueryDataById({ queryIds: [selectedQueryId] });
                 if (result?.data?.length > 0) {
                     const resultData: IQueryViewData = result?.data[0];
                     setQueryViewData(resultData);
-                    setCustomQuery("");
                 }
             }
         };

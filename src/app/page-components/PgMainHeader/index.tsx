@@ -66,15 +66,21 @@ const detectResultFormatType = (currentQuery: string, result: any[]) => {
     return retType;
 }
 
+
+
 const PgMainHeader = () => {
-    const { queryViewData, customQuery, setQueryResult, setQueryError, setQueryMatchLabel, setQueryResultFormatType } = usePlaygroundContext();
+    const { queryViewData, customQuery, setQueryResult, setQueryError, setQueryMatchLabel, setQueryResultFormatType, selectedQueryId, setSelectedQueryId } = usePlaygroundContext();
 
 
-    const handleRunQuery = async () => {
+    const resetResultFields = () => {
         setQueryResult("");
         setQueryResultFormatType(QueryResultFormat.string);
         setQueryMatchLabel('NO RESULT FOUND');
         setQueryError("");
+    }
+
+    const handleRunQuery = async () => {
+        resetResultFields();
 
         const apiResult = await pgRunQuery({
             queryId: queryViewData?.queryId,
@@ -99,7 +105,17 @@ const PgMainHeader = () => {
     }
 
     const handleResetQuery = () => {
-        alert('Not implemented');
+
+        resetResultFields();
+
+        //retrigger the query change
+        const newSelectedQueryId = selectedQueryId;
+        setSelectedQueryId("");
+        if (newSelectedQueryId) {
+            setTimeout(() => {
+                setSelectedQueryId(newSelectedQueryId);
+            }, 0);
+        }
     }
 
     const handleShareQuery = () => {
