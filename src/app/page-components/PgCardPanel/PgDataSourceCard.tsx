@@ -68,7 +68,7 @@ const PgDataSourceCard = ({ dataSourceId }: PgDataSourceCardProps) => {
     }
   }
 
-  return <div className="pg-data-source-card pg-child-editor-container">
+  return <div className="pg-data-source-card">
     <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent} handleIconClick={handleIconClick} />
 
     <CodeMirrorEditor initialValue={sampleData} mode={CodeMirrorMode.javascript} ref={editorRef} disabled={true} />

@@ -1,14 +1,12 @@
    .comp-code-mirror {
        flex-grow: 1;
-       display: flex;
        box-sizing: border-box;
-       /* default height */
-       height: 100px;
        overflow: auto;
 
        .cm-editor {
-           flex-grow: 1;
            background-color: var(--comp-code-mirror-bg-clr);
+           height: 100%;
+           width: 100%;
        }
 
        .cm-gutters {

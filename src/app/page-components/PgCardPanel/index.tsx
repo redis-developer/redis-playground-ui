@@ -2,6 +2,11 @@ import './index.css';
 import type { IQueryViewData } from "@/app/types";
 
 import { useEffect } from 'react';
+import {
+    Panel,
+    PanelGroup,
+    PanelResizeHandle
+} from "react-resizable-panels";
 
 import PgQueryCard from "./PgQueryCard";
 import PgDbIndexCard from "./PgDbIndexCard";
@@ -11,6 +16,13 @@ import PgResultCard from "./PgResultCard";
 import { usePlaygroundContext } from "../PlaygroundContext";
 import { pgGetQueryDataById } from "@/app/utils/services";
 
+const ResizeHandle = () => {
+    return (
+        <PanelResizeHandle className="resize-handle">
+            <div className="resize-handle-inner" />
+        </PanelResizeHandle>
+    );
+};
 
 const PgCardPanel = () => {
     const {
@@ -38,25 +50,45 @@ const PgCardPanel = () => {
         fetchQueryData();
     }, [selectedQueryId, setQueryViewData, setCustomQuery]);
 
-    return <div className="pg-card-panel">
-        <div className="pg-card-panel-row">
-            <div className="pg-card-panel-row-item">
-                <PgQueryCard queryId={queryViewData?.queryId} query={queryViewData?.query} />
-            </div>
-            <div className="pg-card-panel-row-item">
-                <PgDbIndexCard dbIndexId={queryViewData?.dbIndexId} />
-            </div>
+    return (
+        <div className="pg-card-panel">
+            <PanelGroup direction="vertical">
+                <Panel minSize={20}>
+                    <PanelGroup direction="horizontal">
+                        <Panel minSize={20}>
+                            <div className="pg-card-panel-item">
+                                <PgQueryCard
+                                    queryId={queryViewData?.queryId}
+                                    query={queryViewData?.query} />
+                            </div>
+                        </Panel>
+                        <ResizeHandle />
+                        <Panel minSize={20}>
+                            <div className="pg-card-panel-item">
+                                <PgDbIndexCard dbIndexId={queryViewData?.dbIndexId} />
+                            </div>
+                        </Panel>
+                    </PanelGroup>
+                </Panel>
+                <ResizeHandle />
+                <Panel minSize={20}>
+                    <PanelGroup direction="horizontal">
+                        <Panel minSize={20}>
+                            <div className="pg-card-panel-item">
+                                <PgResultCard result={queryResult} error={queryError} />
+                            </div>
+                        </Panel>
+                        <ResizeHandle />
+                        <Panel minSize={20}>
+                            <div className="pg-card-panel-item">
+                                <PgDataSourceCard dataSourceId={queryViewData?.dataSourceId} />
+                            </div>
+                        </Panel>
+                    </PanelGroup>
+                </Panel>
+            </PanelGroup>
         </div>
-
-        <div className="pg-card-panel-row">
-            <div className="pg-card-panel-row-item">
-                <PgResultCard result={queryResult} error={queryError} />
-            </div>
-            <div className="pg-card-panel-row-item">
-                <PgDataSourceCard dataSourceId={queryViewData?.dataSourceId} />
-            </div>
-        </div>
-    </div>
+    );
 }
 
 export default PgCardPanel;

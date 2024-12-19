@@ -67,7 +67,7 @@ const PgQueryCard = ({ queryId, query }: PgQueryCardProps) => {
         }
     }
 
-    return <div className="pg-query-card pg-child-editor-container">
+    return <div className="pg-query-card">
         <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent} handleIconClick={handleIconClick} />
         <CodeMirrorEditor initialValue={query} mode={CodeMirrorMode.redis}
             ref={editorRef} onBlur={handleQueryChange} onExecute={handleExecute} />

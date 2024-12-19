@@ -106,7 +106,7 @@ const PgResultCard = ({ result, error }: PgResultCardProps) => {
         }
     }
 
-    return <div className="pg-result-card pg-child-editor-container">
+    return <div className="pg-result-card">
         <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent}
             showSwitchViewIcon={showSwitchViewIcon} handleIconClick={handleIconClick} />
 
