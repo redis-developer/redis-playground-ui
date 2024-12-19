@@ -18,7 +18,7 @@ interface PgResultCardProps {
 }
 
 const pageData = {
-    infoIconContent: 'A result is a collection of data that we want to search.',
+    infoIconContent: 'Search results for your query.',
     headerTitle: 'RESULT',
 }
 
@@ -48,7 +48,10 @@ const PgResultCard = ({ result, error }: PgResultCardProps) => {
             updateCode(editorRef.current, code);
         }
 
-        handleSwitchViewClick(true);
+
+        setTimeout(() => {
+            handleSwitchViewClick(true);
+        }, 10);
     }, [result]);
 
     useEffect(() => {
@@ -78,7 +81,7 @@ const PgResultCard = ({ result, error }: PgResultCardProps) => {
     const handleSwitchViewClick = (isReset: boolean = false) => {
         //TODO: switch to react state style rather than DOM manipulation
         const views = document.getElementsByClassName('pg-result-card-content');
-        if (views.length > 1) {
+        if (views.length > 0) {
             let lastViewIndex = 0;
 
             //remove show-view from all views
@@ -91,7 +94,7 @@ const PgResultCard = ({ result, error }: PgResultCardProps) => {
             let nextViewIndex = (lastViewIndex + 1) % views.length;
 
             if (isReset) {
-                nextViewIndex = 0;
+                nextViewIndex = views.length - 1; //default view is last available view
             }
             views[nextViewIndex].classList.add('show-view');
         }

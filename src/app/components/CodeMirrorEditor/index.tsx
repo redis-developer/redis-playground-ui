@@ -64,8 +64,11 @@ const CodeMirrorEditor = React.forwardRef<EditorView | null, CodeMirrorEditorPro
                 editorViewRef.current.dom.addEventListener('keydown', (event: KeyboardEvent) => {
 
                     if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) {
+                        onEditorBlur();
 
-                        onExecute();
+                        setTimeout(() => {
+                            onExecute();
+                        }, 1);
 
                         event.preventDefault();
                         event.stopPropagation();
