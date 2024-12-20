@@ -69,10 +69,11 @@ const detectResultFormatType = (currentQuery: string, result: any[]) => {
 
 
 const PgMainHeader = () => {
-    const { queryViewData, customQuery, setQueryResult, setQueryError, setQueryMatchLabel, setQueryResultFormatType, selectedQueryId, setSelectedQueryId } = usePlaygroundContext();
+    const { queryViewData, customQuery, setQueryResult, setQueryError, setQueryMatchLabel, setQueryResultFormatType, selectedQueryId, setSelectedQueryId, setExecutedQuery } = usePlaygroundContext();
 
 
     const resetResultFields = () => {
+        setExecutedQuery("");
         setQueryResult("");
         setQueryResultFormatType(QueryResultFormat.string);
         setQueryMatchLabel('NO RESULT FOUND');
@@ -83,7 +84,7 @@ const PgMainHeader = () => {
         resetResultFields();
 
         const apiResult = await pgRunQuery({
-            queryId: queryViewData?.queryId,
+            queryId: queryViewData?.queryId, //for default query
             customQuery: customQuery,
         });
 
@@ -91,6 +92,8 @@ const PgMainHeader = () => {
             setQueryResult(apiResult?.data);
 
             const currentQuery = customQuery || queryViewData?.query || "";
+            setExecutedQuery(currentQuery);
+
             const formatType = detectResultFormatType(currentQuery, apiResult?.data);
             setQueryResultFormatType(formatType);
 

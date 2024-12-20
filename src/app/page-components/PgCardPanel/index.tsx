@@ -48,7 +48,7 @@ const PgCardPanel = () => {
             }
         };
         fetchQueryData();
-    }, [selectedQueryId, setQueryViewData, setCustomQuery]);
+    }, [selectedQueryId]);//, setQueryViewData, setCustomQuery
 
     return (
         <div className="pg-card-panel">

@@ -3,6 +3,7 @@ import './PgResultTable.css';
 import { useEffect, useState } from 'react';
 
 import { QueryResultFormat } from '@/app/constants';
+import { usePlaygroundContext } from '../PlaygroundContext';
 
 /**
 const sampleResult = [
@@ -145,6 +146,30 @@ const formatResult = (_result: any[], _formatType: QueryResultFormat) => {
 };
 
 
+const prioritizeTableHeaders = (_headers: IHeader[], _query: string) => {
+    //showing search fields first in the table
+
+    let retHeaders: IHeader[] = _headers;
+
+    if (_headers?.length && _query) {
+
+        // Match all patterns that start with @ and end with :
+        const querySearchFields = _query.match(/@[^:]+:/g)?.map(field => {
+            // Remove @ from start and : from end
+            return field.slice(1, -1).trim();
+        }) || [];
+
+        if (querySearchFields?.length) {
+            const priorityKeys = ['key', 'path', ...querySearchFields];
+
+            const filteredHeaders = _headers.filter(header => priorityKeys.includes(header.key));
+            const remainingHeaders = _headers.filter(header => !priorityKeys.includes(header.key));
+            retHeaders = [...filteredHeaders, ...remainingHeaders];
+        }
+    }
+    return retHeaders;
+}
+
 const getTableHeaders = (_tableData: any[]) => {
     let headers: IHeader[] = [];
 
@@ -188,6 +213,7 @@ const formatCellContent = (value: any, maxLength: number) => {
 };
 
 const PgResultTable = ({ result, formatType }: PgResultTableProps) => {
+    const { executedQuery } = usePlaygroundContext();
 
     const [tableData, setTableData] = useState<any[]>([]);
     const [tableHeaders, setTableHeaders] = useState<IHeader[]>([]);
@@ -199,7 +225,8 @@ const PgResultTable = ({ result, formatType }: PgResultTableProps) => {
             setTableData(tData);
 
             const headers = getTableHeaders(tData);
-            setTableHeaders(headers);
+            const prioritizedHeaders = prioritizeTableHeaders(headers, executedQuery);
+            setTableHeaders(prioritizedHeaders);
         }
     }, [result, formatType]);
 
