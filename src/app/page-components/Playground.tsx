@@ -25,7 +25,7 @@ function Playground() {
     <>
       {isConfigLoaded &&
         <PlaygroundProvider>
-          <div className="pg-container theme-custom-component font-regular">
+          <div className="pg-container theme-custom-component font-regular" id="main-app">
             <PgMainHeader />
             <PgCardPanel />
           </div>
