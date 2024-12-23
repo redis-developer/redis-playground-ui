@@ -5,6 +5,7 @@
 .comp-modal-popup {
     flex-grow: 1;
     position: relative;
+    display: flex;
 
     background-color: var(--comp-modal-popup-bg-clr);
     color: var(--comp-modal-popup-txt-clr);
@@ -16,6 +17,7 @@
         cursor: pointer;
         padding: var(--space-4) var(--space-8);
         border-radius: var(--radius-4);
+        /*reverse colors*/
         color: var(--comp-modal-popup-bg-clr);
         background-color: var(--comp-modal-popup-txt-clr);
 

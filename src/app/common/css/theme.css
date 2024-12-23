@@ -232,6 +232,9 @@
 }
 
 .theme-custom-component {
+
+    /*TODO: add color shades and  use those in other variables*/
+
     --comp-code-mirror-bg-clr: #111111;
     --comp-code-mirror-gutter-bg-clr: #202020;
     --comp-code-mirror-disabled-bg-clr: #1d1d1d;
@@ -273,5 +276,11 @@
     --pg-result-error-txt-clr: #fe4336;
 
     --pg-card-panel-resize-handle-bg-clr: #5c6d75;
+
+    --pg-query-template-bg-clr: #242c47;
+    --pg-query-template-txt-clr: #bdc3d7;
+    --pg-query-template-label-bg-clr: #181d35;
+    --pg-query-template-description-bg-clr: #0e1633;
+    --pg-query-template-description-txt-clr: white;
 
 }

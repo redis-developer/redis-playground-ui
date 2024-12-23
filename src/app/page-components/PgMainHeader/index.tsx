@@ -1,12 +1,15 @@
 import './index.css';
 
+import { useState } from 'react';
 import Image from 'next/image';
 
 import IconButton from '@/app/components/IconButton';
-import PgQueryList from './PgQueryList';
+import ModalPopup from '@/app/components/ModalPopup';
+
 import { usePlaygroundContext } from '../PlaygroundContext';
 import { pgRunQuery } from '@/app/utils/services';
 import { QueryResultFormat } from '@/app/constants';
+import PgQueryTemplate from '../PgQueryTemplate';
 
 
 const logoImgPath = '/logo-small.png';
@@ -70,6 +73,7 @@ const detectResultFormatType = (currentQuery: string, result: any[]) => {
 
 const PgMainHeader = () => {
     const { queryViewData, customQuery, setQueryResult, setQueryError, setQueryMatchLabel, setQueryResultFormatType, selectedQueryId, setSelectedQueryId, setExecutedQuery } = usePlaygroundContext();
+    const [modalIsOpen, setModalIsOpen] = useState(false);
 
 
     const resetResultFields = () => {
@@ -122,7 +126,8 @@ const PgMainHeader = () => {
     }
 
     const handleShareQuery = () => {
-        alert('Not implemented');
+        setModalIsOpen(true);
+        //  alert('Not implemented');
     }
 
     return <div className="pg-main-header">
@@ -133,13 +138,18 @@ const PgMainHeader = () => {
             {labels.title}
         </div>
         <div className="header-query-list">
-            <PgQueryList />
         </div>
         <div className="header-buttons">
             <IconButton buttonLbl={labels.buttonRun} iconCls="fa fa-play" buttonCls="header-run-btn" onClick={handleRunQuery} />
             <IconButton buttonLbl={labels.buttonReset} iconCls="fa fa-refresh" onClick={handleResetQuery} />
             <IconButton buttonLbl={labels.buttonShare} iconCls="fa fa-share" onClick={handleShareQuery} />
         </div>
+
+        <ModalPopup isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}>
+
+            <PgQueryTemplate onClose={() => setModalIsOpen(false)} />
+
+        </ModalPopup>
     </div>
 }
 

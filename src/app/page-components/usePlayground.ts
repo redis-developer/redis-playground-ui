@@ -3,7 +3,20 @@ import type { IQueryViewData } from "@/app/types";
 import { useState } from "react";
 import { QueryResultFormat } from "../constants";
 
+interface IQueryNavbarData {
+  category: string;
+  items: {
+    queryId: string;
+    label: string;
+    description: string;
+  }[];
+}
+
 const usePlayground = () => {
+  const [queryNavbarData, setQueryNavbarData] = useState<IQueryNavbarData[]>(
+    []
+  );
+
   const [selectedQueryId, setSelectedQueryId] = useState<string>("");
   const [queryViewData, setQueryViewData] = useState<IQueryViewData | null>(
     null
@@ -20,6 +33,8 @@ const usePlayground = () => {
   const [executedQuery, setExecutedQuery] = useState<string>("");
 
   return {
+    queryNavbarData,
+    setQueryNavbarData,
     selectedQueryId,
     setSelectedQueryId,
     queryViewData,
@@ -40,3 +55,5 @@ const usePlayground = () => {
 };
 
 export { usePlayground };
+
+export type { IQueryNavbarData };
