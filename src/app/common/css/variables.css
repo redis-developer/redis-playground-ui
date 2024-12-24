@@ -36,4 +36,6 @@ body {
     --border: var(--primary-10);
 
     --comp-loader-height: 4px;
+
+    --pg-sidebar-width: 200px;
 }

@@ -7,12 +7,10 @@ import { useState } from 'react';
 import Image from 'next/image';
 
 import IconButton from '@/app/components/IconButton';
-import ModalPopup from '@/app/components/ModalPopup';
 
 import { usePlaygroundContext } from '../PlaygroundContext';
 import { pgRunQuery } from '@/app/utils/services';
 import { QueryResultFormat } from '@/app/constants';
-import PgQueryTemplate from '../PgQueryTemplate';
 
 
 const logoImgPath = '/logo-small.png';
@@ -77,7 +75,6 @@ const PgMainHeader = () => {
         setQueryResponse,
         selectedQuery, setSelectedQuery
     } = usePlaygroundContext();
-    const [modalIsOpen, setModalIsOpen] = useState(false);
 
 
     const handleRunQuery = async () => {
@@ -129,8 +126,7 @@ const PgMainHeader = () => {
     }
 
     const handleShareQuery = () => {
-        setModalIsOpen(true);
-        //  alert('Not implemented');
+        alert('Not implemented');
     }
 
     return <div className="pg-main-header">
@@ -147,12 +143,6 @@ const PgMainHeader = () => {
             <IconButton buttonLbl={labels.buttonReset} iconCls="fa fa-refresh" onClick={handleResetQuery} />
             <IconButton buttonLbl={labels.buttonShare} iconCls="fa fa-share" onClick={handleShareQuery} />
         </div>
-
-        <ModalPopup isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}>
-
-            <PgQueryTemplate onClose={() => setModalIsOpen(false)} />
-
-        </ModalPopup>
     </div>
 }
 

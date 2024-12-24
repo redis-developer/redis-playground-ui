@@ -9,4 +9,9 @@
     i {
         font-size: var(--font-size-14);
     }
+
+    .pg-container-body {
+        flex-grow: 1;
+        display: flex;
+    }
 }

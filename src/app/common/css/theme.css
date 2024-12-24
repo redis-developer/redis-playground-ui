@@ -283,4 +283,8 @@
     --pg-query-template-description-bg-clr: #0e1633;
     --pg-query-template-description-txt-clr: white;
 
+    --pg-sidebar-bg-clr: #1a2139;
+    --pg-sidebar-txt-clr: #bdc3d7;
+    --pg-sidebar-header-txt-clr: #8ba2ff;
+
 }

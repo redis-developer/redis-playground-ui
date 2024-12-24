@@ -1,6 +1,6 @@
 .pg-card-panel {
     flex-grow: 1;
-    max-width: 100vw;
+    max-width: calc(100vw - var(--pg-sidebar-width));
     max-height: 100vh;
 
     .pg-card-panel-item {
