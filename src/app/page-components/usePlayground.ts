@@ -1,59 +1,43 @@
-import type { IQueryViewData } from "@/app/types";
+import type {
+  IQueryViewData,
+  IQueryTemplateData,
+  ISelectedQuery,
+  IQueryResponse,
+} from "@/app/types";
 
 import { useState } from "react";
-import { QueryResultFormat } from "../constants";
-
-interface IQueryNavbarData {
-  category: string;
-  items: {
-    queryId: string;
-    label: string;
-    description: string;
-  }[];
-}
 
 const usePlayground = () => {
-  const [queryNavbarData, setQueryNavbarData] = useState<IQueryNavbarData[]>(
-    []
-  );
+  const [queryTemplateData, setQueryTemplateData] = useState<
+    IQueryTemplateData[]
+  >([]);
 
-  const [selectedQueryId, setSelectedQueryId] = useState<string>("");
+  const [selectedQuery, setSelectedQuery] = useState<ISelectedQuery | null>(
+    null
+  );
   const [queryViewData, setQueryViewData] = useState<IQueryViewData | null>(
     null
   );
   const [customQuery, setCustomQuery] = useState<string>("");
 
-  const [queryResult, setQueryResult] = useState<any>(null);
-  const [queryError, setQueryError] = useState<any>(null);
-  const [queryMatchLabel, setQueryMatchLabel] =
-    useState<string>("NO RESULT FOUND");
-  const [queryResultFormatType, setQueryResultFormatType] = useState(
-    QueryResultFormat.string
+  const [queryResponse, setQueryResponse] = useState<IQueryResponse | null>(
+    null
   );
-  const [executedQuery, setExecutedQuery] = useState<string>("");
 
   return {
-    queryNavbarData,
-    setQueryNavbarData,
-    selectedQueryId,
-    setSelectedQueryId,
+    queryTemplateData,
+    setQueryTemplateData,
+    selectedQuery,
+    setSelectedQuery,
     queryViewData,
     setQueryViewData,
     customQuery,
     setCustomQuery,
-    queryResult,
-    setQueryResult,
-    queryError,
-    setQueryError,
-    queryMatchLabel,
-    setQueryMatchLabel,
-    queryResultFormatType,
-    setQueryResultFormatType,
-    executedQuery,
-    setExecutedQuery,
+    queryResponse,
+    setQueryResponse,
   };
 };
 
 export { usePlayground };
 
-export type { IQueryNavbarData };
+export type { IQueryTemplateData };

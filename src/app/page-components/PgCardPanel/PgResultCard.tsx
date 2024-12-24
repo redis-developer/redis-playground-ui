@@ -12,25 +12,23 @@ import { usePlaygroundContext } from '../PlaygroundContext';
 import { QueryResultFormat } from '@/app/constants';
 import { HeaderIcon } from './PgCardHeader';
 
-interface PgResultCardProps {
-    result: any;
-    error: any;
-}
 
 const pageData = {
     infoIconContent: 'Search results for your query.',
     headerTitle: 'RESULT',
+    defaultFooterText: "NO RESULTS FOUND"
 }
 
 
-const PgResultCard = ({ result, error }: PgResultCardProps) => {
-    const { queryMatchLabel, queryResultFormatType } = usePlaygroundContext();
+const PgResultCard = () => {
+    const { queryResponse } = usePlaygroundContext();
     const [showSwitchViewIcon, setShowSwitchViewIcon] = useState(false);
     const editorRef = useRef<EditorView | null>(null);
 
     useEffect(() => {
+        //handle result 
         if (editorRef?.current) {
-            let code = result || "";
+            let code = queryResponse?.result || "";
 
             if (typeof code === 'string') {
                 try {
@@ -38,35 +36,31 @@ const PgResultCard = ({ result, error }: PgResultCardProps) => {
                     code = JSON.parse(code);
                 } catch (e) {
                 }
-            }
 
+            }
             if (code) {
                 //beautify json
                 code = JSON.stringify(code, null, 4);
             }
-
             updateCode(editorRef.current, code);
         }
 
-
+        //handle result format (switch view icon)
+        setShowSwitchViewIcon(false);
+        if (queryResponse?.resultFormatType !== QueryResultFormat.string && queryResponse?.resultFormatType !== QueryResultFormat.error) {
+            setShowSwitchViewIcon(true);
+        }
         setTimeout(() => {
             handleSwitchViewClick(true);
         }, 10);
-    }, [result]);
-
-    useEffect(() => {
-        setShowSwitchViewIcon(false);
-        if (queryResultFormatType !== QueryResultFormat.string && queryResultFormatType !== QueryResultFormat.error) {
-            setShowSwitchViewIcon(true);
-        }
-    }, [queryResultFormatType]);
+    }, [queryResponse]);
 
 
     const handleCopyClick = () => {
         try {
 
-            if (queryResultFormatType === QueryResultFormat.error) {
-                navigator.clipboard.writeText(JSON.stringify(error, null, 4));
+            if (queryResponse?.resultFormatType === QueryResultFormat.error) {
+                navigator.clipboard.writeText(JSON.stringify(queryResponse?.error, null, 4));
             }
             else if (editorRef.current) {
                 const content = editorRef.current.state.doc.toString();
@@ -113,7 +107,7 @@ const PgResultCard = ({ result, error }: PgResultCardProps) => {
         <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent}
             showSwitchViewIcon={showSwitchViewIcon} handleIconClick={handleIconClick} />
 
-        {queryResultFormatType !== QueryResultFormat.error &&
+        {queryResponse?.resultFormatType !== QueryResultFormat.error &&
             <>
                 {/* default view */}
                 <div className={`pg-result-card-content show-view`}>
@@ -122,10 +116,10 @@ const PgResultCard = ({ result, error }: PgResultCardProps) => {
                 </div>
 
 
-                {(queryResultFormatType === QueryResultFormat.json ||
-                    queryResultFormatType === QueryResultFormat.hash) &&
+                {(queryResponse?.resultFormatType === QueryResultFormat.json ||
+                    queryResponse?.resultFormatType === QueryResultFormat.hash) &&
                     <div className={`pg-result-card-content`}>
-                        <PgResultTable result={result} formatType={queryResultFormatType} />
+                        <PgResultTable result={queryResponse?.result} formatType={queryResponse?.resultFormatType} />
                     </div>
                 }
 
@@ -135,14 +129,14 @@ const PgResultCard = ({ result, error }: PgResultCardProps) => {
         }
 
 
-        {queryResultFormatType === QueryResultFormat.error &&
+        {queryResponse?.resultFormatType === QueryResultFormat.error &&
             <div className="pg-result-error-container">
                 <div className="pg-result-error-title font-semibold">Error</div>
-                <div className="pg-result-error-content">{JSON.stringify(error, null, 4)}</div>
+                <div className="pg-result-error-content">{JSON.stringify(queryResponse?.error, null, 4)}</div>
             </div>
         }
 
-        <PgCardFooter footerText={queryMatchLabel} />
+        <PgCardFooter footerText={queryResponse?.matchLabel || pageData.defaultFooterText} />
 
     </div>
 }

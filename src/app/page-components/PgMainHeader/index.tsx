@@ -1,5 +1,8 @@
 import './index.css';
 
+import type { IQueryResponse } from '@/app/types';
+
+
 import { useState } from 'react';
 import Image from 'next/image';
 
@@ -69,23 +72,24 @@ const detectResultFormatType = (currentQuery: string, result: any[]) => {
     return retType;
 }
 
-
-
 const PgMainHeader = () => {
-    const { queryViewData, customQuery, setQueryResult, setQueryError, setQueryMatchLabel, setQueryResultFormatType, selectedQueryId, setSelectedQueryId, setExecutedQuery } = usePlaygroundContext();
+    const { queryViewData, customQuery,
+        setQueryResponse,
+        selectedQuery, setSelectedQuery
+    } = usePlaygroundContext();
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
 
-    const resetResultFields = () => {
-        setExecutedQuery("");
-        setQueryResult("");
-        setQueryResultFormatType(QueryResultFormat.string);
-        setQueryMatchLabel('NO RESULT FOUND');
-        setQueryError("");
-    }
-
     const handleRunQuery = async () => {
-        resetResultFields();
+        setQueryResponse(null);
+
+        const queryResponse: IQueryResponse = {
+            executedQuery: "",
+            result: null,
+            error: null,
+            matchLabel: "",
+            resultFormatType: QueryResultFormat.string,
+        };
 
         const apiResult = await pgRunQuery({
             queryId: queryViewData?.queryId, //for default query
@@ -93,34 +97,33 @@ const PgMainHeader = () => {
         });
 
         if (apiResult?.data) {
-            setQueryResult(apiResult?.data);
+            queryResponse.result = apiResult?.data;
 
             const currentQuery = customQuery || queryViewData?.query || "";
-            setExecutedQuery(currentQuery);
+            queryResponse.executedQuery = currentQuery;
 
             const formatType = detectResultFormatType(currentQuery, apiResult?.data);
-            setQueryResultFormatType(formatType);
+            queryResponse.resultFormatType = formatType;
 
             const footerText = getQueryMatchLabel(apiResult?.data);
-            setQueryMatchLabel(footerText);
+            queryResponse.matchLabel = footerText;
         }
         else if (apiResult?.error) {
-            setQueryResultFormatType(QueryResultFormat.error);
-            setQueryError(apiResult?.error);
+            queryResponse.resultFormatType = QueryResultFormat.error;
+            queryResponse.error = apiResult?.error;
         }
 
+        setQueryResponse(queryResponse);
     }
 
     const handleResetQuery = () => {
 
-        resetResultFields();
-
         //retrigger the query change
-        const newSelectedQueryId = selectedQueryId;
-        setSelectedQueryId("");
-        if (newSelectedQueryId) {
+        const newSelectedQuery = selectedQuery;
+        setSelectedQuery(null);
+        if (newSelectedQuery) {
             setTimeout(() => {
-                setSelectedQueryId(newSelectedQueryId);
+                setSelectedQuery(newSelectedQuery);
             }, 0);
         }
     }

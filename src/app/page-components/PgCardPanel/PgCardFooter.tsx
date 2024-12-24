@@ -1,7 +1,7 @@
 import './PgCardFooter.css';
 
 interface PgCardFooterProps {
-    footerText: string;
+    footerText?: string;
 }
 
 const PgCardFooter = ({ footerText }: PgCardFooterProps) => {

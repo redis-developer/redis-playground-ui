@@ -1,6 +1,6 @@
 import './index.css';
 
-import type { IQueryNavbarData } from "../usePlayground";
+import type { IQueryTemplateData } from "../usePlayground";
 
 import { useEffect, useState } from "react";
 
@@ -16,25 +16,25 @@ const labels = {
 }
 
 const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
-    const { setSelectedQueryId, queryNavbarData, setQueryNavbarData } = usePlaygroundContext();
+    const { setSelectedQuery, queryTemplateData, setQueryTemplateData } = usePlaygroundContext();
 
-    const [filteredNavbarData, setFilteredNavbarData] = useState<IQueryNavbarData[]>(queryNavbarData);
+    const [filteredTemplateData, setFilteredTemplateData] = useState<IQueryTemplateData[]>(queryTemplateData);
 
     useEffect(() => {
-        if (queryNavbarData?.length === 0) {
-            const fetchQueryNavbarData = async () => {
+        if (queryTemplateData?.length === 0) {
+            const fetchQueryTemplateData = async () => {
                 const result = await pgGetQueryNavbarData();
                 if (result?.data?.length > 0) {
-                    setQueryNavbarData(result?.data);
-                    setFilteredNavbarData(result?.data);
+                    setQueryTemplateData(result?.data);
+                    setFilteredTemplateData(result?.data);
                 }
             };
-            fetchQueryNavbarData();
+            fetchQueryTemplateData();
         }
     }, []);
 
     const handleQueryItemClick = (queryId: string, category: string) => {
-        setSelectedQueryId(queryId);
+        setSelectedQuery({ queryId, category });
         if (onClose) {
             onClose();
         }
@@ -45,17 +45,17 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
         searchValue = searchValue?.toLowerCase().trim() || "";
 
         if (searchValue) {
-            const filteredData = queryNavbarData.map((category) => ({
+            const filteredData = queryTemplateData.map((category) => ({
                 ...category,
                 items: category.items.filter((item) =>
                     item.label.toLowerCase().includes(searchValue) ||
                     item.description?.toLowerCase().includes(searchValue)
                 )
             })).filter(category => category.items.length > 0);
-            setFilteredNavbarData(filteredData);
+            setFilteredTemplateData(filteredData);
         }
         else {
-            setFilteredNavbarData(queryNavbarData);
+            setFilteredTemplateData(queryTemplateData);
         }
     };
 
@@ -67,7 +67,7 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
             </div>
         </div>
         <div className="query-category-container">
-            {filteredNavbarData.map((category, index) => (
+            {filteredTemplateData.map((category, index) => (
                 <div key={index} className="query-category">
                     <div className="query-category-title font-bold">{category.category}</div>
                     <div className="query-category-items">
@@ -81,7 +81,7 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
                 </div>
             ))}
 
-            {filteredNavbarData.length === 0 && <div className="query-no-result">No matching queries found !</div>}
+            {filteredTemplateData.length === 0 && <div className="query-no-result">No matching queries found !</div>}
 
         </div>
     </div>

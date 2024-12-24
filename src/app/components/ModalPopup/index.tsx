@@ -1,7 +1,8 @@
 import './index.css';
 
+import { ReactNode, useEffect } from 'react';
 import ReactModal from 'react-modal';
-import { ReactNode } from 'react';
+
 
 
 interface ModalPopupProps {
@@ -15,6 +16,7 @@ interface ModalPopupProps {
 }
 
 const ModalPopup = ({ isOpen, onClose, children, styles }: ModalPopupProps) => {
+    const parentId = "main-app";
 
     const customStyles = {
         overlay: {
@@ -31,12 +33,16 @@ const ModalPopup = ({ isOpen, onClose, children, styles }: ModalPopupProps) => {
         },
     };
 
+    useEffect(() => {
+        ReactModal.setAppElement(`#${parentId}`);
+    }, []);
+
     return (
         <ReactModal
             isOpen={isOpen}
             onRequestClose={onClose}
             style={customStyles}
-            parentSelector={() => document.getElementById('main-app') || document.body}
+            parentSelector={() => document.getElementById(parentId) || document.body}
         >
             <div className="comp-modal-popup">
                 <div className="icon-close">

@@ -26,21 +26,22 @@ const ResizeHandle = () => {
 
 const PgCardPanel = () => {
     const {
-        selectedQueryId,
+        selectedQuery,
         queryViewData, setQueryViewData,
-        queryResult, queryError,
-        setCustomQuery
+        setCustomQuery,
+        setQueryResponse
     } = usePlaygroundContext();
 
     useEffect(() => {
-        // on change of selectedQueryId
+        // on change of selectedQuery
         const fetchQueryData = async () => {
 
-            if (selectedQueryId) {
+            if (selectedQuery) {
                 setCustomQuery("");
                 setQueryViewData(null);
+                setQueryResponse(null);
 
-                const result = await pgGetQueryDataById({ queryIds: [selectedQueryId] });
+                const result = await pgGetQueryDataById({ queryIds: [selectedQuery.queryId] });
                 if (result?.data?.length > 0) {
                     const resultData: IQueryViewData = result?.data[0];
                     setQueryViewData(resultData);
@@ -48,7 +49,7 @@ const PgCardPanel = () => {
             }
         };
         fetchQueryData();
-    }, [selectedQueryId]);//, setQueryViewData, setCustomQuery
+    }, [selectedQuery]);
 
     return (
         <div className="pg-card-panel">
@@ -75,7 +76,7 @@ const PgCardPanel = () => {
                     <PanelGroup direction="horizontal">
                         <Panel minSize={20}>
                             <div className="pg-card-panel-item">
-                                <PgResultCard result={queryResult} error={queryError} />
+                                <PgResultCard />
                             </div>
                         </Panel>
                         <ResizeHandle />

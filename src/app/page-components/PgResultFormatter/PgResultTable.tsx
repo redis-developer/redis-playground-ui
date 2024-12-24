@@ -146,7 +146,7 @@ const formatResult = (_result: any[], _formatType: QueryResultFormat) => {
 };
 
 
-const prioritizeTableHeaders = (_headers: IHeader[], _query: string) => {
+const prioritizeTableHeaders = (_headers: IHeader[], _query: string = "") => {
     //showing search fields first in the table
 
     let retHeaders: IHeader[] = _headers;
@@ -213,7 +213,7 @@ const formatCellContent = (value: any, maxLength: number) => {
 };
 
 const PgResultTable = ({ result, formatType }: PgResultTableProps) => {
-    const { executedQuery } = usePlaygroundContext();
+    const { queryResponse } = usePlaygroundContext();
 
     const [tableData, setTableData] = useState<any[]>([]);
     const [tableHeaders, setTableHeaders] = useState<IHeader[]>([]);
@@ -225,7 +225,7 @@ const PgResultTable = ({ result, formatType }: PgResultTableProps) => {
             setTableData(tData);
 
             const headers = getTableHeaders(tData);
-            const prioritizedHeaders = prioritizeTableHeaders(headers, executedQuery);
+            const prioritizedHeaders = prioritizeTableHeaders(headers, queryResponse?.executedQuery);
             setTableHeaders(prioritizedHeaders);
         }
     }, [result, formatType]);

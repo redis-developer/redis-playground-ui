@@ -28,6 +28,7 @@ interface CodeMirrorEditorProps {
 
 const updateCode = (editorView: EditorView, code: string) => {
     if (editorView) {
+        code = code || "";
         const transaction = editorView.state.update({
             changes: {
                 from: 0,
