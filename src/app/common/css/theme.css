@@ -243,6 +243,10 @@
     --comp-icon-button-txt-clr: #0b132e;
     --comp-icon-button-icon-clr: #0b132e;
     --comp-icon-button-border-clr: #ccc;
+    --comp-icon-success-button-bg-clr: #237a40;
+    --comp-icon-success-button-txt-clr: #ffffff;
+    --comp-icon-success-button-icon-clr: #c0fae6;
+    --comp-icon-success-button-border-clr: #ccc;
 
     --comp-loader-bg-clr: #8ba2ff;
     --comp-loader-gradient1: #ff00cc;
@@ -253,11 +257,6 @@
 
     --pg-main-header-bg-clr: #0e1633;
     --pg-main-header-txt-clr: #bdc3d7;
-
-    --pg-main-header-run-btn-bg-clr: #237a40;
-    --pg-main-header-run-btn-txt-clr: #ffffff;
-    --pg-main-header-run-btn-icon-clr: #c0fae6;
-    --pg-main-header-run-btn-border-clr: #ccc;
 
     --pg-card-header-bg-clr: #212536;
     --pg-card-header-txt-clr: #bdc3d7;

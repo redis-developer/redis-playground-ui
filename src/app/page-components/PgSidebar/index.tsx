@@ -43,7 +43,7 @@ const PgSidebar = () => {
             <div className="pg-list-title font-bold">
                 {labels.configure}
             </div>
-            <div className="pg-list-item" onClick={() => setModalIsOpen(true)}>
+            <div className="pg-list-item anime-line-hover" onClick={() => setModalIsOpen(true)}>
                 <div className="pg-list-item-icon">
                     <i className="fa fa-object-group"></i>
                 </div>
@@ -61,9 +61,10 @@ const PgSidebar = () => {
                     </div>
                     <div>
                         {selectedCategory?.items.map(item => (
-                            <div className={`pg-list-item ${item.queryId === selectedQuery?.queryId ? "pg-list-item-active" : ""}`}
+                            <div className={`pg-list-item anime-line-hover ${item.queryId === selectedQuery?.queryId ? "pg-list-item-active" : ""}`}
                                 key={item.label}
                                 onClick={() => handleQueryItemClick(item.queryId, selectedCategory?.category)}>
+
                                 <div className="pg-list-item-icon">
                                     <i className="fa fa-arrow-right"></i>
                                 </div>
@@ -83,7 +84,7 @@ const PgSidebar = () => {
                 {labels.links}
             </div>
             {linkItems.map(item => (
-                <div className="pg-list-item" key={item.label}>
+                <div className="pg-list-item anime-line-hover" key={item.label}>
                     <div className="pg-list-item-icon">
                         <i className={item.icon}></i>
                     </div>

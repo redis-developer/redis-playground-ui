@@ -26,16 +26,6 @@
         align-items: center;
         justify-content: center;
         gap: 10px;
-
-        .header-run-btn {
-            background-color: var(--pg-main-header-run-btn-bg-clr);
-            color: var(--pg-main-header-run-btn-txt-clr);
-            border: 1px solid var(--pg-main-header-run-btn-border-clr);
-
-            i {
-                color: var(--pg-main-header-run-btn-icon-clr);
-            }
-        }
     }
 
 

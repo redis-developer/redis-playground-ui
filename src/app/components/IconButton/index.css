@@ -6,12 +6,25 @@
 
     padding: var(--space-8);
     border-radius: var(--radius-4);
-    border: 1px solid var(--comp-icon-button-border-clr);
+    cursor: pointer;
+}
+
+.comp-icon-button.regular {
     background-color: var(--comp-icon-button-bg-clr);
     color: var(--comp-icon-button-txt-clr);
-    cursor: pointer;
+    border: 1px solid var(--comp-icon-button-border-clr);
 
     .icon {
         color: var(--comp-icon-button-icon-clr);
+    }
+}
+
+.comp-icon-button.success {
+    background-color: var(--comp-icon-success-button-bg-clr);
+    color: var(--comp-icon-success-button-txt-clr);
+    border: 1px solid var(--comp-icon-success-button-border-clr);
+
+    i {
+        color: var(--comp-icon-success-button-icon-clr) !important;
     }
 }

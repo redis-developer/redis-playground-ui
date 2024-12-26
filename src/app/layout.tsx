@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import './common/css/typography.css';
 import './common/css/variables.css';
 import './common/css/theme.css';
+import './common/css/anime.css';
 
 import "./globals.css";
 import 'react-toastify/dist/ReactToastify.css';

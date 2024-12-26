@@ -11,7 +11,7 @@ import IconButton from '@/app/components/IconButton';
 import { usePlaygroundContext } from '../PlaygroundContext';
 import { pgRunQuery } from '@/app/utils/services';
 import { QueryResultFormat } from '@/app/constants';
-
+import { IconButtonType } from '@/app/components/IconButton';
 
 const logoImgPath = '/logo-small.png';
 const labels = {
@@ -139,9 +139,9 @@ const PgMainHeader = () => {
         <div className="header-query-list">
         </div>
         <div className="header-buttons">
-            <IconButton buttonLbl={labels.buttonRun} iconCls="fa fa-play" buttonCls="header-run-btn" onClick={handleRunQuery} />
-            <IconButton buttonLbl={labels.buttonReset} iconCls="fa fa-refresh" onClick={handleResetQuery} />
-            <IconButton buttonLbl={labels.buttonShare} iconCls="fa fa-share" onClick={handleShareQuery} />
+            <IconButton buttonLbl={labels.buttonRun} iconCls="fa fa-play" buttonCls="header-run-btn anime-success-button-hover" onClick={handleRunQuery} buttonType={IconButtonType.SUCCESS} />
+            <IconButton buttonLbl={labels.buttonReset} iconCls="fa fa-refresh" buttonCls="anime-button-hover" onClick={handleResetQuery} />
+            <IconButton buttonLbl={labels.buttonShare} iconCls="fa fa-share" buttonCls="anime-button-hover" onClick={handleShareQuery} />
         </div>
     </div>
 }
