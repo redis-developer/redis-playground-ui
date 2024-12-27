@@ -10,7 +10,7 @@ import PgQueryTemplate from '../PgQueryTemplate';
 const labels = {
     configure: "CONFIGURE",
     selectQuery: "SELECT QUERY",
-    links: "LINKS"
+    links: "RESOURCES"
 }
 
 const linkItems = [

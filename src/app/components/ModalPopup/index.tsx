@@ -45,8 +45,8 @@ const ModalPopup = ({ isOpen, onClose, children, styles }: ModalPopupProps) => {
             parentSelector={() => document.getElementById(parentId) || document.body}
         >
             <div className="comp-modal-popup">
-                <div className="icon-close">
-                    <i className="fa fa-times" onClick={onClose}></i>
+                <div className="icon-close" onClick={onClose}>
+                    <i className="fa fa-times"></i>
                 </div>
                 {children}
             </div>
