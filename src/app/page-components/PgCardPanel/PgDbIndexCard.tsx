@@ -8,6 +8,7 @@ import { HeaderIcon } from './PgCardHeader';
 import CodeMirrorEditor from '../../components/CodeMirrorEditor';
 import { updateCode, CodeMirrorMode } from '../../components/CodeMirrorEditor';
 import { pgGetDbIndexById } from '../../utils/services';
+import { usePlaygroundContext } from '../PlaygroundContext';
 
 interface PgDbIndexCardProps {
     dbIndexId?: string;
@@ -23,15 +24,17 @@ const pageData = {
 const PgDbIndexCard = ({ dbIndexId }: PgDbIndexCardProps) => {
     const [dbIndexQuery, setDbIndexQuery] = useState("");
     const editorRef = useRef<EditorView | null>(null);
-
+    const { setApiCallInProgress } = usePlaygroundContext();
     useEffect(() => {
         const fetchDbIndexQuery = async () => {
             if (dbIndexId) {
+                setApiCallInProgress(prev => prev + 1);
                 const result = await pgGetDbIndexById({ dbIndexIds: [dbIndexId] });
                 if (result?.data?.length > 0) {
                     const resultQuery = result?.data[0].dbIndexQuery;
                     setDbIndexQuery(resultQuery);
                 }
+                setApiCallInProgress(prev => prev - 1);
             }
         }
         fetchDbIndexQuery();

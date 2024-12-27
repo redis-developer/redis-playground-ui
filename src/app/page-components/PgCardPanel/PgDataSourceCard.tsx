@@ -9,6 +9,7 @@ import { HeaderIcon } from './PgCardHeader';
 import CodeMirrorEditor from '../../components/CodeMirrorEditor';
 import { CodeMirrorMode, updateCode } from '../../components/CodeMirrorEditor';
 import { pgGetSampleDataByDataSourceId } from '../../utils/services';
+import { usePlaygroundContext } from '../PlaygroundContext';
 
 interface PgDataSourceCardProps {
   dataSourceId?: string;
@@ -26,10 +27,13 @@ const PgDataSourceCard = ({ dataSourceId }: PgDataSourceCardProps) => {
   const [footerText, setFooterText] = useState(pageData.defaultFooterText);
   const [sampleData, setSampleData] = useState("");
   const editorRef = useRef<EditorView | null>(null);
+  const { setApiCallInProgress } = usePlaygroundContext();
 
   useEffect(() => {
     const fetchSampleData = async () => {
       if (dataSourceId) {
+        setApiCallInProgress(prev => prev + 1);
+
         const result = await pgGetSampleDataByDataSourceId({
           dataSourceId: dataSourceId,
           dataCount: pageData.dataCount
@@ -39,6 +43,7 @@ const PgDataSourceCard = ({ dataSourceId }: PgDataSourceCardProps) => {
           setSampleData(resultData);
           setFooterText(`DISPLAYING ${result?.data?.length} SAMPLE RECORDS`);
         }
+        setApiCallInProgress(prev => prev - 1);
       }
     }
     fetchSampleData();

@@ -16,18 +16,23 @@ const labels = {
 }
 
 const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
-    const { setSelectedQuery, queryTemplateData, setQueryTemplateData } = usePlaygroundContext();
+    const { setSelectedQuery, queryTemplateData, setQueryTemplateData, setApiCallInProgress } = usePlaygroundContext();
 
     const [filteredTemplateData, setFilteredTemplateData] = useState<IQueryTemplateData[]>(queryTemplateData);
 
     useEffect(() => {
         if (queryTemplateData?.length === 0) {
+
             const fetchQueryTemplateData = async () => {
+                setApiCallInProgress(prev => prev + 1);
+
                 const result = await pgGetQueryNavbarData();
                 if (result?.data?.length > 0) {
                     setQueryTemplateData(result?.data);
                     setFilteredTemplateData(result?.data);
                 }
+
+                setApiCallInProgress(prev => prev - 1);
             };
             fetchQueryTemplateData();
         }

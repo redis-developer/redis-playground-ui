@@ -29,7 +29,8 @@ const PgCardPanel = () => {
         selectedQuery,
         queryViewData, setQueryViewData,
         setCustomQuery,
-        setQueryResponse
+        setQueryResponse,
+        setApiCallInProgress
     } = usePlaygroundContext();
 
     useEffect(() => {
@@ -37,6 +38,8 @@ const PgCardPanel = () => {
         const fetchQueryData = async () => {
 
             if (selectedQuery) {
+                setApiCallInProgress(prev => prev + 1);
+
                 setCustomQuery("");
                 setQueryViewData(null);
                 setQueryResponse(null);
@@ -46,6 +49,8 @@ const PgCardPanel = () => {
                     const resultData: IQueryViewData = result?.data[0];
                     setQueryViewData(resultData);
                 }
+
+                setApiCallInProgress(prev => prev - 1);
             }
         };
         fetchQueryData();

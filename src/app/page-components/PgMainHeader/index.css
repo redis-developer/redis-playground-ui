@@ -1,10 +1,13 @@
+.pg-main-header-container {
+    background-color: var(--pg-main-header-bg-clr);
+    color: var(--pg-main-header-txt-clr);
+}
+
 .pg-main-header {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: var(--space-8);
-    background-color: var(--pg-main-header-bg-clr);
-    color: var(--pg-main-header-txt-clr);
 
     .header-title {
         display: flex;

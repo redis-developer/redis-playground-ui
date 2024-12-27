@@ -3,7 +3,6 @@ import './index.css';
 import type { IQueryResponse } from '@/app/types';
 
 
-import { useState } from 'react';
 import Image from 'next/image';
 
 import IconButton from '@/app/components/IconButton';
@@ -12,6 +11,7 @@ import { usePlaygroundContext } from '../PlaygroundContext';
 import { pgRunQuery } from '@/app/utils/services';
 import { QueryResultFormat } from '@/app/constants';
 import { IconButtonType } from '@/app/components/IconButton';
+import Loader from "@/app/components/Loader";
 
 const logoImgPath = '/logo-small.png';
 const labels = {
@@ -73,7 +73,8 @@ const detectResultFormatType = (currentQuery: string, result: any[]) => {
 const PgMainHeader = () => {
     const { queryViewData, customQuery,
         setQueryResponse,
-        selectedQuery, setSelectedQuery
+        selectedQuery, setSelectedQuery,
+        apiCallInProgress, setApiCallInProgress
     } = usePlaygroundContext();
 
 
@@ -87,6 +88,7 @@ const PgMainHeader = () => {
             matchLabel: "",
             resultFormatType: QueryResultFormat.string,
         };
+        setApiCallInProgress(prev => prev + 1);
 
         const apiResult = await pgRunQuery({
             queryId: queryViewData?.queryId, //for default query
@@ -111,6 +113,7 @@ const PgMainHeader = () => {
         }
 
         setQueryResponse(queryResponse);
+        setApiCallInProgress(prev => prev - 1);
     }
 
     const handleResetQuery = () => {
@@ -129,21 +132,26 @@ const PgMainHeader = () => {
         alert('Not implemented');
     }
 
-    return <div className="pg-main-header">
+    return (
+        <div className="pg-main-header-container">
+            <div className="pg-main-header">
 
-        <div className="header-title font-bold">
-            <Image src={logoImgPath} alt="logo" width={30} height={30} />
+                <div className="header-title font-bold">
+                    <Image src={logoImgPath} alt="logo" width={30} height={30} />
 
-            {labels.title}
+                    {labels.title}
+                </div>
+                <div className="header-query-list">
+                </div>
+                <div className="header-buttons">
+                    <IconButton buttonLbl={labels.buttonRun} iconCls="fa fa-play" buttonCls="header-run-btn anime-success-button-hover" onClick={handleRunQuery} buttonType={IconButtonType.SUCCESS} />
+                    <IconButton buttonLbl={labels.buttonReset} iconCls="fa fa-refresh" buttonCls="anime-button-hover" onClick={handleResetQuery} />
+                    <IconButton buttonLbl={labels.buttonShare} iconCls="fa fa-share" buttonCls="anime-button-hover" onClick={handleShareQuery} />
+                </div>
+            </div>
+            <Loader isShow={apiCallInProgress > 0} />
         </div>
-        <div className="header-query-list">
-        </div>
-        <div className="header-buttons">
-            <IconButton buttonLbl={labels.buttonRun} iconCls="fa fa-play" buttonCls="header-run-btn anime-success-button-hover" onClick={handleRunQuery} buttonType={IconButtonType.SUCCESS} />
-            <IconButton buttonLbl={labels.buttonReset} iconCls="fa fa-refresh" buttonCls="anime-button-hover" onClick={handleResetQuery} />
-            <IconButton buttonLbl={labels.buttonShare} iconCls="fa fa-share" buttonCls="anime-button-hover" onClick={handleShareQuery} />
-        </div>
-    </div>
+    )
 }
 
 export default PgMainHeader;

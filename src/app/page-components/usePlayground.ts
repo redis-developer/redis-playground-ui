@@ -8,6 +8,8 @@ import type {
 import { useState } from "react";
 
 const usePlayground = () => {
+  const [apiCallInProgress, setApiCallInProgress] = useState(0);
+
   const [queryTemplateData, setQueryTemplateData] = useState<
     IQueryTemplateData[]
   >([]);
@@ -35,6 +37,8 @@ const usePlayground = () => {
     setCustomQuery,
     queryResponse,
     setQueryResponse,
+    apiCallInProgress,
+    setApiCallInProgress,
   };
 };
 
