@@ -3,6 +3,30 @@ import { z } from "zod";
 import { postRequest, consoleLogError, errorAPIAlert } from "./axios-util";
 import { errorToast } from "./toast-util";
 
+const apiCache: Record<string, any> = {};
+
+const getCacheKey = (prefixKey: string, suffixArr?: string[]) => {
+  let retValue = prefixKey;
+  if (suffixArr && suffixArr.length > 0) {
+    retValue = `${prefixKey}-${suffixArr.join("-")}`;
+  }
+  return retValue;
+};
+
+const getApiCache = (cacheKey: string) => {
+  let cacheValue = null;
+  if (apiCache[cacheKey]) {
+    cacheValue = apiCache[cacheKey];
+  }
+  return cacheValue;
+};
+
+const setApiCache = (cacheKey: string, cacheValue: any) => {
+  if (cacheKey && cacheValue) {
+    apiCache[cacheKey] = cacheValue;
+  }
+};
+
 //#region API input schema
 
 const pgGetQueryDataByIdSchema = z.object({
@@ -36,13 +60,20 @@ const API_PATHS = {
 //#region API calls
 
 const pgGetQueryNavbarData = async () => {
-  try {
-    const response = await postRequest(API_PATHS.pgGetQueryNavbarData, {});
-    return response?.data;
-  } catch (axiosError: any) {
-    consoleLogError(axiosError);
-    errorAPIAlert(API_PATHS.pgGetQueryNavbarData);
+  const cacheKey = getCacheKey(API_PATHS.pgGetQueryNavbarData);
+  let retValue = getApiCache(cacheKey);
+  if (!retValue) {
+    try {
+      const response = await postRequest(API_PATHS.pgGetQueryNavbarData, {});
+      retValue = response?.data;
+      setApiCache(cacheKey, retValue);
+    } catch (axiosError: any) {
+      consoleLogError(axiosError);
+      errorAPIAlert(API_PATHS.pgGetQueryNavbarData);
+    }
   }
+
+  return retValue;
 };
 
 const pgGetQueryDataById = async (
@@ -62,32 +93,49 @@ const pgGetQueryDataById = async (
 const pgGetDbIndexById = async (
   input: z.infer<typeof pgGetDbIndexByIdSchema>
 ) => {
-  try {
-    pgGetDbIndexByIdSchema.parse(input); // validate input
+  const cacheKey = getCacheKey(API_PATHS.pgGetDbIndexById, input.dbIndexIds);
+  let retValue = getApiCache(cacheKey);
+  if (!retValue) {
+    try {
+      pgGetDbIndexByIdSchema.parse(input); // validate input
 
-    const response = await postRequest(API_PATHS.pgGetDbIndexById, input);
-    return response?.data;
-  } catch (axiosError: any) {
-    consoleLogError(axiosError);
-    errorAPIAlert(API_PATHS.pgGetDbIndexById);
+      const response = await postRequest(API_PATHS.pgGetDbIndexById, input);
+      retValue = response?.data;
+      setApiCache(cacheKey, retValue);
+    } catch (axiosError: any) {
+      consoleLogError(axiosError);
+      errorAPIAlert(API_PATHS.pgGetDbIndexById);
+    }
   }
+
+  return retValue;
 };
 
 const pgGetSampleDataByDataSourceId = async (
   input: z.infer<typeof pgGetSampleDataByDataSourceIdSchema>
 ) => {
-  try {
-    pgGetSampleDataByDataSourceIdSchema.parse(input); // validate input
+  const cacheKey = getCacheKey(API_PATHS.pgGetSampleDataByDataSourceId, [
+    input.dataSourceId,
+  ]);
+  let retValue = getApiCache(cacheKey);
+  if (!retValue) {
+    try {
+      pgGetSampleDataByDataSourceIdSchema.parse(input); // validate input
 
-    const response = await postRequest(
-      API_PATHS.pgGetSampleDataByDataSourceId,
-      input
-    );
-    return response?.data;
-  } catch (axiosError: any) {
-    consoleLogError(axiosError);
-    errorAPIAlert(API_PATHS.pgGetSampleDataByDataSourceId);
+      const response = await postRequest(
+        API_PATHS.pgGetSampleDataByDataSourceId,
+        input
+      );
+
+      retValue = response?.data;
+      setApiCache(cacheKey, retValue);
+    } catch (axiosError: any) {
+      consoleLogError(axiosError);
+      errorAPIAlert(API_PATHS.pgGetSampleDataByDataSourceId);
+    }
   }
+
+  return retValue;
 };
 
 const pgRunQuery = async (input: z.infer<typeof pgRunQuerySchema>) => {
