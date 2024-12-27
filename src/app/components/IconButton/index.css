@@ -28,3 +28,8 @@
         color: var(--comp-icon-success-button-icon-clr) !important;
     }
 }
+
+.comp-icon-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

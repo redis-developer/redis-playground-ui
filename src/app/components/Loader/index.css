@@ -13,7 +13,7 @@
         height: var(--comp-loader-height);
         width: 40%;
         background: linear-gradient(90deg, var(--comp-loader-gradient1) 0%, var(--comp-loader-gradient2) 100%);
-        animation: compLoaderLineAnim 1.5s linear infinite;
+        animation: compLoaderLineAnim 0.8s linear infinite;
     }
 }
 

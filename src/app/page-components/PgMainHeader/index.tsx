@@ -2,7 +2,7 @@ import './index.css';
 
 import type { IQueryResponse } from '@/app/types';
 
-
+import { useState } from 'react';
 import Image from 'next/image';
 
 import IconButton from '@/app/components/IconButton';
@@ -77,6 +77,8 @@ const PgMainHeader = () => {
         apiCallInProgress, setApiCallInProgress
     } = usePlaygroundContext();
 
+    const [isRunButtonDisabled, setIsRunButtonDisabled] = useState(false);
+
 
     const handleRunQuery = async () => {
         setQueryResponse(null);
@@ -89,6 +91,7 @@ const PgMainHeader = () => {
             resultFormatType: QueryResultFormat.string,
         };
         setApiCallInProgress(prev => prev + 1);
+        setIsRunButtonDisabled(true);
 
         const apiResult = await pgRunQuery({
             queryId: queryViewData?.queryId, //for default query
@@ -114,6 +117,7 @@ const PgMainHeader = () => {
 
         setQueryResponse(queryResponse);
         setApiCallInProgress(prev => prev - 1);
+        setIsRunButtonDisabled(false);
     }
 
     const handleResetQuery = () => {
@@ -144,7 +148,7 @@ const PgMainHeader = () => {
                 <div className="header-query-list">
                 </div>
                 <div className="header-buttons">
-                    <IconButton buttonLbl={labels.buttonRun} iconCls="fa fa-play" buttonCls="header-run-btn anime-success-button-hover" onClick={handleRunQuery} buttonType={IconButtonType.SUCCESS} />
+                    <IconButton buttonLbl={labels.buttonRun} iconCls="fa fa-play" buttonCls="header-run-btn anime-success-button-hover" onClick={handleRunQuery} buttonType={IconButtonType.SUCCESS} isDisabled={isRunButtonDisabled} />
                     <IconButton buttonLbl={labels.buttonReset} iconCls="fa fa-refresh" buttonCls="anime-button-hover" onClick={handleResetQuery} />
                     <IconButton buttonLbl={labels.buttonShare} iconCls="fa fa-share" buttonCls="anime-button-hover" onClick={handleShareQuery} />
                 </div>

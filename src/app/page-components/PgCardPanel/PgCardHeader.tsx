@@ -1,6 +1,6 @@
 import './PgCardHeader.css';
 
-import { infoToast } from '@/app/utils/toast-util';
+import { useState } from 'react';
 
 interface PgCardHeaderProps {
     headerTitle: string;
@@ -17,14 +17,19 @@ enum HeaderIcon {
 
 const PgCardHeader = ({ headerTitle, infoIconContent, showCopyIcon, showSwitchViewIcon, handleIconClick }: PgCardHeaderProps) => {
 
+    const [copied, setCopied] = useState(false);
+
     const handleClick = (icon: HeaderIcon) => {
         if (handleIconClick) {
             handleIconClick(icon);
 
             if (icon === HeaderIcon.copy) {
-                infoToast('Copied to clipboard!', {
-                    autoClose: 1000
-                });
+                setCopied(true);
+                // Reset back to copy icon after 2 seconds
+                setTimeout(() => {
+                    setCopied(false);
+                }, 2000);
+
             }
         }
     }
@@ -38,7 +43,9 @@ const PgCardHeader = ({ headerTitle, infoIconContent, showCopyIcon, showSwitchVi
             </div>
             <div className="header-buttons">
                 {showSwitchViewIcon && <i className="fa fa-columns" title="Switch View" onClick={() => handleClick(HeaderIcon.switchView)}></i>}
-                {showCopyIcon && <i className="fa fa-copy" title="Copy" onClick={() => handleClick(HeaderIcon.copy)}></i>}
+
+                {showCopyIcon &&
+                    (copied ? <i className="fa fa-check"></i> : <i className="fa fa-copy" title="Copy" onClick={() => handleClick(HeaderIcon.copy)}></i>)}
 
             </div>
         </div>
