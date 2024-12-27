@@ -1,4 +1,4 @@
-import './index.css';
+import './index.scss';
 
 import { useState } from 'react';
 import { Tooltip, ITooltip } from 'react-tooltip';

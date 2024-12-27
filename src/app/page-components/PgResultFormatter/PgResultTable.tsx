@@ -1,4 +1,4 @@
-import './PgResultTable.css';
+import './PgResultTable.scss';
 
 import { useEffect, useState } from 'react';
 

@@ -1,6 +1,6 @@
 "use client";
 
-import "./Playground.css";
+import "./Playground.scss";
 
 import React, { useEffect, useState } from "react";
 

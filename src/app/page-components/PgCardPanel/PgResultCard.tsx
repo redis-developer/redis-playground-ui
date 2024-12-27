@@ -1,4 +1,4 @@
-import './PgResultCard.css';
+import './PgResultCard.scss';
 
 import { useEffect, useRef, useState } from 'react';
 import { EditorView } from 'codemirror';

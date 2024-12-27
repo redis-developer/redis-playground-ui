@@ -1,4 +1,4 @@
-import './index.css';
+import './index.scss';
 import type { IQueryViewData } from "@/app/types";
 
 import { useEffect } from 'react';

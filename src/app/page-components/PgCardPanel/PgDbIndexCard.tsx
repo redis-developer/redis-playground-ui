@@ -1,4 +1,4 @@
-import './PgDbIndexCard.css';
+import './PgDbIndexCard.scss';
 
 import { useState, useEffect, useRef } from 'react';
 import { EditorView } from 'codemirror';

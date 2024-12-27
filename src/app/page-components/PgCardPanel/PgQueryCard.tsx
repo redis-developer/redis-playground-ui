@@ -1,4 +1,4 @@
-import './PgQueryCard.css';
+import './PgQueryCard.scss';
 
 import { useEffect, useRef } from 'react';
 import { EditorView } from 'codemirror';

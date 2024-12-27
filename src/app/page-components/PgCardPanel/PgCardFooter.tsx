@@ -1,4 +1,4 @@
-import './PgCardFooter.css';
+import './PgCardFooter.scss';
 
 interface PgCardFooterProps {
     footerText?: string;

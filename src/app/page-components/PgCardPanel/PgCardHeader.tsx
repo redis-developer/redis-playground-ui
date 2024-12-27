@@ -1,4 +1,4 @@
-import './PgCardHeader.css';
+import './PgCardHeader.scss';
 
 import { useState } from 'react';
 

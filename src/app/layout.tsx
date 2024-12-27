@@ -4,12 +4,12 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ToastContainer } from 'react-toastify';
 
-import './common/css/typography.css';
-import './common/css/variables.css';
-import './common/css/theme.css';
-import './common/css/anime.css';
+import './common/css/typography.scss';
+import './common/css/variables.scss';
+import './common/css/theme.scss';
+import './common/css/anime.scss';
 
-import "./globals.css";
+import "./globals.scss";
 import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ["latin"] });

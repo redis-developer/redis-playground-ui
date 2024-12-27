@@ -1,4 +1,4 @@
-import './PgDataSourceCard.css';
+import './PgDataSourceCard.scss';
 
 import { useEffect, useRef, useState } from 'react';
 import { EditorView } from 'codemirror';

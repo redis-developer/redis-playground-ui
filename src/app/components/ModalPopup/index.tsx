@@ -1,4 +1,4 @@
-import './index.css';
+import './index.scss';
 
 import { ReactNode, useEffect } from 'react';
 import ReactModal from 'react-modal';

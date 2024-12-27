@@ -1,4 +1,5 @@
-import "./index.css";
+import "./index.scss";
+
 import type { IQueryTemplateData } from "@/app/types";
 
 import { useEffect, useState } from "react";

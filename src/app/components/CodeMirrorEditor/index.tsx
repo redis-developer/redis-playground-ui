@@ -1,4 +1,4 @@
-import './index.css';
+import './index.scss';
 
 import React, { useRef, useEffect, useImperativeHandle, useState } from 'react';
 import { EditorView, basicSetup } from 'codemirror';
