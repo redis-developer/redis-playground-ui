@@ -16,7 +16,7 @@ interface PgDataSourceCardProps {
 }
 
 const pageData = {
-  infoIconContent: 'A data source is a collection of data that we want to search.',
+  infoIconContent: 'A data source is a collection of data in Redis that we want to search.',
   headerTitle: 'DATA SOURCE',
   defaultFooterText: 'NO RECORDS FOUND',
   dataCount: 30,

@@ -47,7 +47,9 @@ const PgResultCard = () => {
 
         //handle result format (switch view icon)
         setShowSwitchViewIcon(false);
-        if (queryResponse?.resultFormatType !== QueryResultFormat.string && queryResponse?.resultFormatType !== QueryResultFormat.error) {
+        if (queryResponse?.resultFormatType &&
+            queryResponse?.resultFormatType !== QueryResultFormat.string &&
+            queryResponse?.resultFormatType !== QueryResultFormat.error) {
             setShowSwitchViewIcon(true);
         }
         setTimeout(() => {

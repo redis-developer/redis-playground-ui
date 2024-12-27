@@ -2,6 +2,8 @@ import './PgCardHeader.css';
 
 import { useState } from 'react';
 
+import TooltipIcon from '../../components/TooltipIcon';
+
 interface PgCardHeaderProps {
     headerTitle: string;
     infoIconContent?: string;
@@ -14,6 +16,7 @@ enum HeaderIcon {
     copy = 'copy',
     switchView = 'switchView'
 }
+
 
 const PgCardHeader = ({ headerTitle, infoIconContent, showCopyIcon, showSwitchViewIcon, handleIconClick }: PgCardHeaderProps) => {
 
@@ -39,13 +42,21 @@ const PgCardHeader = ({ headerTitle, infoIconContent, showCopyIcon, showSwitchVi
             <div className="header-title font-bold">
                 {headerTitle}
 
-                {infoIconContent && <i className="fa fa-info-circle" title={infoIconContent}></i>}
+                {infoIconContent && (
+                    <TooltipIcon iconCls="fa fa-info-circle" title={infoIconContent} />
+                )}
+
+
             </div>
             <div className="header-buttons">
-                {showSwitchViewIcon && <i className="fa fa-columns" title="Switch View" onClick={() => handleClick(HeaderIcon.switchView)}></i>}
+                {showSwitchViewIcon && <TooltipIcon iconCls="fa fa-columns"
+                    title="Switch View"
+                    onClick={() => handleClick(HeaderIcon.switchView)}
+                />
+                }
 
                 {showCopyIcon &&
-                    (copied ? <i className="fa fa-check"></i> : <i className="fa fa-copy" title="Copy" onClick={() => handleClick(HeaderIcon.copy)}></i>)}
+                    (copied ? <i className="fa fa-check"></i> : <TooltipIcon iconCls="fa fa-copy" title="Copy" onClick={() => handleClick(HeaderIcon.copy)} />)}
 
             </div>
         </div>
