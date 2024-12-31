@@ -10,9 +10,6 @@ import { updateCode, CodeMirrorMode } from '../../components/CodeMirrorEditor';
 import { pgGetDbIndexById } from '../../utils/services';
 import { usePlaygroundContext } from '../PlaygroundContext';
 
-interface PgDbIndexCardProps {
-    dbIndexId?: string;
-}
 
 const pageData = {
     infoIconContent: 'To search data in Redis, we must create an index.',
@@ -21,15 +18,17 @@ const pageData = {
 }
 
 
-const PgDbIndexCard = ({ dbIndexId }: PgDbIndexCardProps) => {
+const PgDbIndexCard = () => {
     const [dbIndexQuery, setDbIndexQuery] = useState("");
     const editorRef = useRef<EditorView | null>(null);
-    const { setApiCallInProgress } = usePlaygroundContext();
+    const { setApiCallInProgress, queryViewData } = usePlaygroundContext();
+
     useEffect(() => {
         const fetchDbIndexQuery = async () => {
-            if (dbIndexId) {
+            if (queryViewData?.dbIndexId) {
                 setApiCallInProgress(prev => prev + 1);
-                const result = await pgGetDbIndexById({ dbIndexIds: [dbIndexId] });
+                setDbIndexQuery("");
+                const result = await pgGetDbIndexById({ dbIndexIds: [queryViewData?.dbIndexId] });
                 if (result?.data?.length > 0) {
                     const resultQuery = result?.data[0].dbIndexQuery;
                     setDbIndexQuery(resultQuery);
@@ -38,7 +37,7 @@ const PgDbIndexCard = ({ dbIndexId }: PgDbIndexCardProps) => {
             }
         }
         fetchDbIndexQuery();
-    }, [dbIndexId]);
+    }, [queryViewData]);
 
     useEffect(() => {
         if (editorRef?.current && dbIndexQuery) {

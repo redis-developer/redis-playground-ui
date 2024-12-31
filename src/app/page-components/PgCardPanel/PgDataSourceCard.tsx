@@ -11,9 +11,7 @@ import { CodeMirrorMode, updateCode } from '../../components/CodeMirrorEditor';
 import { pgGetSampleDataByDataSourceId } from '../../utils/services';
 import { usePlaygroundContext } from '../PlaygroundContext';
 
-interface PgDataSourceCardProps {
-  dataSourceId?: string;
-}
+
 
 const pageData = {
   infoIconContent: 'A data source is a collection of data in Redis that we want to search.',
@@ -23,19 +21,21 @@ const pageData = {
 }
 
 
-const PgDataSourceCard = ({ dataSourceId }: PgDataSourceCardProps) => {
+const PgDataSourceCard = () => {
   const [footerText, setFooterText] = useState(pageData.defaultFooterText);
   const [sampleData, setSampleData] = useState("");
   const editorRef = useRef<EditorView | null>(null);
-  const { setApiCallInProgress } = usePlaygroundContext();
+  const { setApiCallInProgress, queryViewData } = usePlaygroundContext();
 
   useEffect(() => {
     const fetchSampleData = async () => {
-      if (dataSourceId) {
+      if (queryViewData?.dataSourceId) {
         setApiCallInProgress(prev => prev + 1);
+        setSampleData("");
+        setFooterText(pageData.defaultFooterText);
 
         const result = await pgGetSampleDataByDataSourceId({
-          dataSourceId: dataSourceId,
+          dataSourceId: queryViewData?.dataSourceId,
           dataCount: pageData.dataCount
         });
         if (result?.data?.length > 0) {
@@ -47,7 +47,7 @@ const PgDataSourceCard = ({ dataSourceId }: PgDataSourceCardProps) => {
       }
     }
     fetchSampleData();
-  }, [dataSourceId]);
+  }, [queryViewData]);
 
   useEffect(() => {
     if (editorRef?.current && sampleData) {

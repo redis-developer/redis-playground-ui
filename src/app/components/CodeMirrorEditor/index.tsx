@@ -26,7 +26,7 @@ interface CodeMirrorEditorProps {
     mode?: CodeMirrorMode;
 }
 
-const updateCode = (editorView: EditorView, code: string) => {
+const updateCode = (editorView: EditorView, code?: string) => {
     if (editorView) {
         code = code || "";
         const transaction = editorView.state.update({
@@ -105,7 +105,7 @@ const CodeMirrorEditor = React.forwardRef<EditorView | null, CodeMirrorEditorPro
 
             // Create a new editor state with initial value and extensions
             const state = EditorState.create({
-                doc: initialValue,
+                doc: initialValue || '',
                 extensions: [
                     basicSetup,
                     modeElm,

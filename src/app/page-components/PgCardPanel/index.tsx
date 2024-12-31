@@ -27,7 +27,7 @@ const ResizeHandle = () => {
 const PgCardPanel = () => {
     const {
         selectedQuery,
-        queryViewData, setQueryViewData,
+        setQueryViewData,
         setCustomQuery,
         setQueryResponse,
         setApiCallInProgress
@@ -63,15 +63,13 @@ const PgCardPanel = () => {
                     <PanelGroup direction="horizontal">
                         <Panel minSize={20} defaultSize={55}>
                             <div className="pg-card-panel-item">
-                                <PgQueryCard
-                                    queryId={queryViewData?.queryId}
-                                    query={queryViewData?.query} />
+                                <PgQueryCard />
                             </div>
                         </Panel>
                         <ResizeHandle />
                         <Panel minSize={20} defaultSize={45}>
                             <div className="pg-card-panel-item">
-                                <PgDbIndexCard dbIndexId={queryViewData?.dbIndexId} />
+                                <PgDbIndexCard />
                             </div>
                         </Panel>
                     </PanelGroup>
@@ -87,7 +85,7 @@ const PgCardPanel = () => {
                         <ResizeHandle />
                         <Panel minSize={20} defaultSize={45}>
                             <div className="pg-card-panel-item">
-                                <PgDataSourceCard dataSourceId={queryViewData?.dataSourceId} />
+                                <PgDataSourceCard />
                             </div>
                         </Panel>
                     </PanelGroup>
