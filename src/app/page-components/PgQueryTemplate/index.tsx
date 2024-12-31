@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 import { pgGetQueryNavbarData } from "@/app/utils/services";
 import { usePlaygroundContext } from "../PlaygroundContext";
+import Loader from "@/app/components/Loader";
 
 interface IQueryTemplateProps {
     onClose?: () => void;
@@ -19,12 +20,14 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
     const { setSelectedQuery, queryTemplateData, setQueryTemplateData, setApiCallInProgress } = usePlaygroundContext();
 
     const [filteredTemplateData, setFilteredTemplateData] = useState<IQueryTemplateData[]>(queryTemplateData);
+    const [isShowLoader, setIsShowLoader] = useState(false);
 
     useEffect(() => {
         if (queryTemplateData?.length === 0) {
-
             const fetchQueryTemplateData = async () => {
-                setApiCallInProgress(prev => prev + 1);
+                setIsShowLoader(true);
+
+                //setApiCallInProgress(prev => prev + 1);
 
                 const result = await pgGetQueryNavbarData();
                 if (result?.data?.length > 0) {
@@ -32,7 +35,8 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
                     setFilteredTemplateData(result?.data);
                 }
 
-                setApiCallInProgress(prev => prev - 1);
+                setIsShowLoader(false);
+                //setApiCallInProgress(prev => prev - 1);
             };
             fetchQueryTemplateData();
         }
@@ -71,6 +75,8 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
                 <input type="text" placeholder={labels.searchPlaceholder} onChange={handleSearchChange} className="query-search-input" />
             </div>
         </div>
+        <Loader isShow={isShowLoader} />
+
         <div className="query-category-container">
             {filteredTemplateData.map((category, index) => (
                 <div key={index} className="query-category">
@@ -86,7 +92,7 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
                 </div>
             ))}
 
-            {filteredTemplateData.length === 0 && <div className="query-no-result">No matching queries found !</div>}
+            {filteredTemplateData.length === 0 && !isShowLoader && <div className="query-no-result">No matching queries found !</div>}
 
         </div>
     </div>
