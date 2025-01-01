@@ -1,0 +1,111 @@
+.theme-container {
+  flex-grow: 1;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-black);
+
+  .header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .theme-container-body {
+    overflow: auto;
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .group {
+      display: flex;
+      flex-direction: column;
+
+      .item {
+        width: 300px;
+        height: 50px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .item-label-black {
+          color: var(--color-black);
+        }
+        .item-label-white {
+          color: var(--color-white);
+        }
+      }
+    }
+
+    .black {
+      background-color: var(--color-black);
+    }
+    .black-gray {
+      background-color: var(--color-black-gray);
+    }
+    .black-gray-light1 {
+      background-color: var(--color-black-gray-light1);
+    }
+    .black-gray-light2 {
+      background-color: var(--color-black-gray-light2);
+    }
+    .black-gray-light3 {
+      background-color: var(--color-black-gray-light3);
+    }
+
+    .gray {
+      background-color: var(--color-gray);
+    }
+    .white {
+      background-color: var(--color-white);
+    }
+    .white-gray {
+      background-color: var(--color-white-gray);
+    }
+
+    .success-green {
+      background-color: var(--color-success-green);
+    }
+    .success-green-light {
+      background-color: var(--color-success-green-light);
+    }
+    .error-red {
+      background-color: var(--color-error-red);
+    }
+    .btn-border {
+      background-color: var(--color-btn-border);
+    }
+
+    .primary {
+      background-color: var(--color-primary);
+    }
+    .primary-light1 {
+      background-color: var(--color-primary-light1);
+    }
+    .primary-light2 {
+      background-color: var(--color-primary-light2);
+    }
+    .primary-light3 {
+      background-color: var(--color-primary-light3);
+    }
+    .primary-light4 {
+      background-color: var(--color-primary-light4);
+    }
+    .primary-light5 {
+      background-color: var(--color-primary-light5);
+    }
+    .primary-light7 {
+      background-color: var(--color-primary-light7);
+    }
+
+    .loader-gradient1 {
+      background-color: var(--color-loader-gradient1);
+    }
+    .loader-gradient2 {
+      background-color: var(--color-loader-gradient2);
+    }
+  }
+}
