@@ -1,6 +1,10 @@
 .pg-query-card {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .pg-info-content {
+    margin-bottom: var(--space-8);
+  }
 }

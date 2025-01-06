@@ -3,10 +3,12 @@ import './PgCardHeader.scss';
 import { useState } from 'react';
 
 import TooltipIcon from '../../components/TooltipIcon';
+import { TooltipIconType } from '../../components/TooltipIcon';
 
 interface PgCardHeaderProps {
     headerTitle: string;
     infoIconContent?: string;
+    infoIconContentType?: TooltipIconType;
     showCopyIcon?: boolean;
     showSwitchViewIcon?: boolean;
     handleIconClick?: (icon: HeaderIcon) => void;
@@ -18,7 +20,7 @@ enum HeaderIcon {
 }
 
 
-const PgCardHeader = ({ headerTitle, infoIconContent, showCopyIcon, showSwitchViewIcon, handleIconClick }: PgCardHeaderProps) => {
+const PgCardHeader = ({ headerTitle, infoIconContent, infoIconContentType, showCopyIcon, showSwitchViewIcon, handleIconClick }: PgCardHeaderProps) => {
 
     const [copied, setCopied] = useState(false);
 
@@ -43,7 +45,8 @@ const PgCardHeader = ({ headerTitle, infoIconContent, showCopyIcon, showSwitchVi
                 {headerTitle}
 
                 {infoIconContent && (
-                    <TooltipIcon iconCls="fa fa-info-circle" title={infoIconContent} />
+                    <TooltipIcon iconCls="fa fa-info-circle"
+                        title={infoIconContent} titleType={infoIconContentType} />
                 )}
 
 

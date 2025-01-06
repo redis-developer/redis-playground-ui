@@ -7,13 +7,15 @@ interface IQueryViewData {
   dataSourceId: string;
 }
 
+interface IQueryTemplateItem {
+  queryId: string;
+  label: string;
+  description: string;
+}
+
 interface IQueryTemplateData {
   category: string;
-  items: {
-    queryId: string;
-    label: string;
-    description: string;
-  }[];
+  items: IQueryTemplateItem[];
 }
 
 interface ISelectedQuery {
@@ -32,6 +34,7 @@ interface IQueryResponse {
 export type {
   IQueryViewData,
   IQueryTemplateData,
+  IQueryTemplateItem,
   ISelectedQuery,
   IQueryResponse,
 };

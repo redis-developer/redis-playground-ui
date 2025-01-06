@@ -3,6 +3,7 @@ import type {
   IQueryTemplateData,
   ISelectedQuery,
   IQueryResponse,
+  IQueryTemplateItem,
 } from "@/app/types";
 
 import { useState } from "react";
@@ -26,6 +27,26 @@ const usePlayground = () => {
     null
   );
 
+  const fnGetSelectedQueryTemplate = () => {
+    let result: {
+      template?: IQueryTemplateData;
+      query?: IQueryTemplateItem;
+    } | null = null;
+
+    if (selectedQuery && queryTemplateData) {
+      const resultCategory = queryTemplateData.find(
+        (item) => item.category === selectedQuery.category
+      );
+      if (resultCategory) {
+        const resultQuery = resultCategory.items.find(
+          (item) => item.queryId === selectedQuery.queryId
+        );
+        result = { template: resultCategory, query: resultQuery };
+      }
+    }
+    return result;
+  };
+
   return {
     queryTemplateData,
     setQueryTemplateData,
@@ -39,6 +60,8 @@ const usePlayground = () => {
     setQueryResponse,
     apiCallInProgress,
     setApiCallInProgress,
+
+    fnGetSelectedQueryTemplate,
   };
 };
 

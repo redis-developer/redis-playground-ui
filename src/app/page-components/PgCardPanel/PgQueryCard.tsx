@@ -1,6 +1,6 @@
 import './PgQueryCard.scss';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { EditorView } from 'codemirror';
 
 import PgCardHeader from './PgCardHeader';
@@ -8,22 +8,43 @@ import { HeaderIcon } from './PgCardHeader';
 import CodeMirrorEditor from '../../components/CodeMirrorEditor';
 import { CodeMirrorMode, updateCode } from '../../components/CodeMirrorEditor';
 import { usePlaygroundContext } from '../PlaygroundContext';
+import { TooltipIconType } from '@/app/components/TooltipIcon';
 
 
 const pageData = {
-    infoIconContent: 'Try different queries to see how your data changes.',
+    infoIconDefaultContent: 'Try different queries to see how your data changes',
     headerTitle: 'QUERY',
 }
 
 const PgQueryCard = () => {
-    const { setCustomQuery, queryViewData } = usePlaygroundContext();
+    const { setCustomQuery, queryViewData, queryTemplateData, selectedQuery, fnGetSelectedQueryTemplate } = usePlaygroundContext();
     const editorRef = useRef<EditorView | null>(null);
+    const [infoIconContent, setInfoIconContent] = useState<string>(pageData.infoIconDefaultContent);
+
+    const updateInfoIconContent = () => {
+        setInfoIconContent(pageData.infoIconDefaultContent);
+        const result = fnGetSelectedQueryTemplate();
+        if (result?.query) {
+            const infoIconContent = `
+                    <div>
+                        <div class="pg-info-content">Query: ${result.query.label}</div>
+                        <div class="pg-info-content">Description: ${result.query.description}</div>
+                        <div class="pg-info-content">(${pageData.infoIconDefaultContent})</div>
+                    </div>
+                    `;
+
+            setInfoIconContent(infoIconContent);
+        }
+    }
 
     useEffect(() => {
         if (editorRef?.current && queryViewData?.query) {
             updateCode(editorRef.current, queryViewData.query);
+
+            updateInfoIconContent();
         }
     }, [queryViewData]);
+
 
     const handleQueryChange = (newQuery: string) => {
 
@@ -64,7 +85,8 @@ const PgQueryCard = () => {
     }
 
     return <div className="pg-query-card">
-        <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent} handleIconClick={handleIconClick} />
+        <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true}
+            infoIconContent={infoIconContent} infoIconContentType={TooltipIconType.html} handleIconClick={handleIconClick} />
         <CodeMirrorEditor initialValue={queryViewData?.query} mode={CodeMirrorMode.redis}
             ref={editorRef} onBlur={handleQueryChange} onExecute={handleExecute} />
     </div>

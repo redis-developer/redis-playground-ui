@@ -16,19 +16,21 @@ const labels = {
 
 const linkItems = [
     { label: "Visit Docs", icon: "fa fa-book", url: "https://redis.io/docs/latest/" },
-    { label: "Redis Cloud (Free)", icon: "fa fa-cloud", url: "https://cloud.redis.io/" }
+    { label: "Redis University", icon: "fa fa-university", url: "https://university.redis.io/" },
+    { label: "Redis Cloud (Free)", icon: "fa fa-cloud", url: "https://cloud.redis.io/" },
+
 ]
 
 const PgSidebar = () => {
-    const { queryTemplateData, selectedQuery, setSelectedQuery } = usePlaygroundContext();
+    const { selectedQuery, setSelectedQuery, fnGetSelectedQueryTemplate } = usePlaygroundContext();
     const [selectedCategory, setSelectedCategory] = useState<IQueryTemplateData | null>(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     useEffect(() => {
-        if (selectedQuery && queryTemplateData) {
-            const result = queryTemplateData.find(item => item.category === selectedQuery.category);
-            if (result) {
-                setSelectedCategory(result);
+        if (selectedQuery) {
+            const result = fnGetSelectedQueryTemplate();
+            if (result?.template) {
+                setSelectedCategory(result.template);
             }
         }
     }, [selectedQuery]);
