@@ -2,30 +2,19 @@ import { z } from "zod";
 
 import { postRequest, consoleLogError, errorAPIAlert } from "./axios-util";
 import { errorToast } from "./toast-util";
+import { apiCacheInst } from "./api-cache";
 
-const apiCache: Record<string, any> = {};
-
-const getCacheKey = (prefixKey: string, suffixArr?: string[]) => {
-  let retValue = prefixKey;
-  if (suffixArr && suffixArr.length > 0) {
-    retValue = `${prefixKey}-${suffixArr.join("-")}`;
-  }
-  return retValue;
+const cacheCollection = {
+  getQueryByIdGroup: {
+    name: "getQueryByIdGroup",
+    limit: 30,
+  },
 };
 
-const getApiCache = (cacheKey: string) => {
-  let cacheValue = null;
-  if (apiCache[cacheKey]) {
-    cacheValue = apiCache[cacheKey];
-  }
-  return cacheValue;
-};
-
-const setApiCache = (cacheKey: string, cacheValue: any) => {
-  if (cacheKey && cacheValue) {
-    apiCache[cacheKey] = cacheValue;
-  }
-};
+apiCacheInst.setCappedCollection(
+  cacheCollection.getQueryByIdGroup.name,
+  cacheCollection.getQueryByIdGroup.limit
+);
 
 //#region API input schema
 
@@ -60,13 +49,13 @@ const API_PATHS = {
 //#region API calls
 
 const pgGetQueryNavbarData = async () => {
-  const cacheKey = getCacheKey(API_PATHS.pgGetQueryNavbarData);
-  let retValue = getApiCache(cacheKey);
+  const cacheKey = apiCacheInst.getCacheKey(API_PATHS.pgGetQueryNavbarData);
+  let retValue = apiCacheInst.getApiCache(cacheKey);
   if (!retValue) {
     try {
       const response = await postRequest(API_PATHS.pgGetQueryNavbarData, {});
       retValue = response?.data;
-      setApiCache(cacheKey, retValue);
+      apiCacheInst.setApiCache(cacheKey, retValue);
     } catch (axiosError: any) {
       consoleLogError(axiosError);
       errorAPIAlert(API_PATHS.pgGetQueryNavbarData);
@@ -79,29 +68,46 @@ const pgGetQueryNavbarData = async () => {
 const pgGetQueryDataById = async (
   input: z.infer<typeof pgGetQueryDataByIdSchema>
 ) => {
-  try {
-    pgGetQueryDataByIdSchema.parse(input); // validate input
+  const cacheKey = apiCacheInst.getCacheKey(
+    API_PATHS.pgGetQueryDataById,
+    input.queryIds
+  );
+  let retValue = apiCacheInst.getApiCache(cacheKey);
+  if (!retValue) {
+    try {
+      pgGetQueryDataByIdSchema.parse(input); // validate input
 
-    const response = await postRequest(API_PATHS.pgGetQueryDataById, input);
-    return response?.data;
-  } catch (axiosError: any) {
-    consoleLogError(axiosError);
-    errorAPIAlert(API_PATHS.pgGetQueryDataById);
+      const response = await postRequest(API_PATHS.pgGetQueryDataById, input);
+      retValue = response?.data;
+      apiCacheInst.setCappedApiCache(
+        cacheCollection.getQueryByIdGroup.name,
+        cacheKey,
+        retValue
+      );
+    } catch (axiosError: any) {
+      consoleLogError(axiosError);
+      errorAPIAlert(API_PATHS.pgGetQueryDataById);
+    }
   }
+
+  return retValue;
 };
 
 const pgGetDbIndexById = async (
   input: z.infer<typeof pgGetDbIndexByIdSchema>
 ) => {
-  const cacheKey = getCacheKey(API_PATHS.pgGetDbIndexById, input.dbIndexIds);
-  let retValue = getApiCache(cacheKey);
+  const cacheKey = apiCacheInst.getCacheKey(
+    API_PATHS.pgGetDbIndexById,
+    input.dbIndexIds
+  );
+  let retValue = apiCacheInst.getApiCache(cacheKey);
   if (!retValue) {
     try {
       pgGetDbIndexByIdSchema.parse(input); // validate input
 
       const response = await postRequest(API_PATHS.pgGetDbIndexById, input);
       retValue = response?.data;
-      setApiCache(cacheKey, retValue);
+      apiCacheInst.setApiCache(cacheKey, retValue);
     } catch (axiosError: any) {
       consoleLogError(axiosError);
       errorAPIAlert(API_PATHS.pgGetDbIndexById);
@@ -114,10 +120,11 @@ const pgGetDbIndexById = async (
 const pgGetSampleDataByDataSourceId = async (
   input: z.infer<typeof pgGetSampleDataByDataSourceIdSchema>
 ) => {
-  const cacheKey = getCacheKey(API_PATHS.pgGetSampleDataByDataSourceId, [
-    input.dataSourceId,
-  ]);
-  let retValue = getApiCache(cacheKey);
+  const cacheKey = apiCacheInst.getCacheKey(
+    API_PATHS.pgGetSampleDataByDataSourceId,
+    [input.dataSourceId]
+  );
+  let retValue = apiCacheInst.getApiCache(cacheKey);
   if (!retValue) {
     try {
       pgGetSampleDataByDataSourceIdSchema.parse(input); // validate input
@@ -128,7 +135,7 @@ const pgGetSampleDataByDataSourceId = async (
       );
 
       retValue = response?.data;
-      setApiCache(cacheKey, retValue);
+      apiCacheInst.setApiCache(cacheKey, retValue);
     } catch (axiosError: any) {
       consoleLogError(axiosError);
       errorAPIAlert(API_PATHS.pgGetSampleDataByDataSourceId);
