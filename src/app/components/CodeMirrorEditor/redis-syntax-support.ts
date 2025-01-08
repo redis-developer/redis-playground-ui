@@ -56,6 +56,11 @@ const redisLanguage = StreamLanguage.define({
       return "bracket";
     }
 
+    // Start of line Comments with # or //
+    if (stream.sol() && (stream.match(/^#.*$/) || stream.match(/^\/\/.*$/))) {
+      return "comment";
+    }
+
     stream.next();
     return null;
   },
@@ -83,6 +88,9 @@ const redisHighlightStyle = HighlightStyle.define([
 
   // Brackets and delimiters
   { tag: tags.bracket, color: "#56b6c2" },
+
+  // Comments
+  { tag: tags.comment, color: "#666666" },
 ]);
 
 // Language support with highlighting

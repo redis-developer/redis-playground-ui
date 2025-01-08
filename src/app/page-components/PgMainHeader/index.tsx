@@ -49,21 +49,35 @@ const getQueryMatchLabel = (result: any) => {
 const detectResultFormatType = (currentQuery: string, result: any[]) => {
     let retType = QueryResultFormat.string;
 
-    if (result?.length > 0 && Array.isArray(result) && currentQuery?.startsWith('FT.SEARCH')) {
-        retType = QueryResultFormat.hash;
+    if (currentQuery) {
+        //remove all empty lines and comments starting with # or //
+        currentQuery = currentQuery
+            .split("\n")
+            .filter((line: string) => {
+                const trimmedLine = line.trim();
+                return (
+                    trimmedLine &&
+                    !(trimmedLine.startsWith("#") || trimmedLine.startsWith("//"))
+                );
+            })
+            .join("\n");
 
-        if (result.length > 2) {
-            // const matchedCount = result[0];
-            // const firstKey = result[1];
-            const firstValue = result[2];
-            /*
-                firstValue = [
-                    "$",  // JSON path
-                    "{...json content...}"
-                ]
-             */
-            if (firstValue?.length == 2 && firstValue[0].startsWith("$")) {
-                retType = QueryResultFormat.json;
+        if (result?.length > 0 && Array.isArray(result) && currentQuery?.startsWith('FT.SEARCH')) {
+            retType = QueryResultFormat.hash;
+
+            if (result.length > 2) {
+                // const matchedCount = result[0];
+                // const firstKey = result[1];
+                const firstValue = result[2];
+                /*
+                    firstValue = [
+                        "$",  // JSON path
+                        "{...json content...}"
+                    ]
+                 */
+                if (firstValue?.length == 2 && firstValue[0].startsWith("$")) {
+                    retType = QueryResultFormat.json;
+                }
             }
         }
     }
