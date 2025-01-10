@@ -1,17 +1,21 @@
 .pg-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+
+  font-size: var(--font-size-12);
+  max-height: 100vh;
+
+  i {
+    font-size: var(--font-size-14);
+  }
+
+  .pg-container-body {
     flex-grow: 1;
     display: flex;
-    flex-direction: column;
+  }
+}
 
-    font-size: var(--font-size-12);
-    max-height: 100vh;
-
-    i {
-        font-size: var(--font-size-14);
-    }
-
-    .pg-container-body {
-        flex-grow: 1;
-        display: flex;
-    }
+.pg-custom-nowrap-toast {
+  white-space: nowrap;
 }

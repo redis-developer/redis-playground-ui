@@ -8,10 +8,11 @@ import Image from 'next/image';
 import IconButton from '@/app/components/IconButton';
 
 import { usePlaygroundContext } from '../PlaygroundContext';
-import { pgRunQuery } from '@/app/utils/services';
+import { pgRunQuery, pgSaveQuery } from '@/app/utils/services';
 import { QueryResultFormat } from '@/app/constants';
 import { IconButtonType } from '@/app/components/IconButton';
 import Loader from "@/app/components/Loader";
+import { infoToast } from '@/app/utils/toast-util';
 
 const logoImgPath = '/logo-small.png';
 const labels = {
@@ -146,8 +147,38 @@ const PgMainHeader = () => {
         }
     }
 
-    const handleShareQuery = () => {
-        alert('Not implemented');
+    const handleShareQuery = async () => {
+
+        let queryStr = '';
+
+        if (customQuery) {
+            setApiCallInProgress(prev => prev + 1);
+
+            const result = await pgSaveQuery({
+                customQuery: customQuery,
+                category: selectedQuery?.category,
+                queryId: queryViewData?.queryId, //for default query
+            });
+            if (result?.data?._id) {
+                // "pg:savedQueries:7a428c70-8745-41f8-8dc7-6076fe4defcf"
+                const splitArray = result.data._id.split(":");
+                const partialId = splitArray[splitArray.length - 1];
+                queryStr = `?cid=${partialId}`;
+            }
+            setApiCallInProgress(prev => prev - 1);
+
+        }
+        else {
+            queryStr = `?qid=${queryViewData?.queryId}`;
+        }
+
+        if (queryStr) {
+            const shareUrl = `${window.location.origin}${queryStr}`;
+            navigator.clipboard.writeText(shareUrl);
+            infoToast(`Share URL copied to clipboard !`, {
+                className: "pg-custom-nowrap-toast",
+            });
+        }
     }
 
     return (
