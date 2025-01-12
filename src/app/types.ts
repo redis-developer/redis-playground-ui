@@ -15,11 +15,12 @@ interface IQueryTemplateItem {
 
 interface IQueryTemplateData {
   category: string;
+  categoryId: string;
   items: IQueryTemplateItem[];
 }
 
 interface ISelectedQuery {
-  category: string;
+  categoryId: string;
   queryId: string;
 }
 
@@ -34,7 +35,7 @@ interface IQueryResponse {
 interface ISavedQueryData {
   title?: string;
   customQuery?: string;
-  category?: string;
+  categoryId?: string;
   queryId?: string;
 }
 

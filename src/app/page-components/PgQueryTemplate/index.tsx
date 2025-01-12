@@ -38,8 +38,8 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
         }
     }, []);
 
-    const handleQueryItemClick = (queryId: string, category: string) => {
-        setSelectedQuery({ queryId, category });
+    const handleQueryItemClick = (queryId: string, categoryId: string) => {
+        setSelectedQuery({ queryId, categoryId });
         if (onClose) {
             onClose();
         }
@@ -56,13 +56,13 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
         searchTerm = searchTerm?.toLowerCase().trim();
 
         if (searchTerm) {
-            const filteredData = queryTemplateData.map((category) => ({
-                ...category,
-                items: category.items.filter((item) =>
+            const filteredData = queryTemplateData.map((queryTmpl) => ({
+                ...queryTmpl,
+                items: queryTmpl.items.filter((item) =>
                     item.label.toLowerCase().includes(searchTerm) ||
                     item.description?.toLowerCase().includes(searchTerm)
                 )
-            })).filter(category => category.items.length > 0);
+            })).filter(queryTmpl => queryTmpl.items.length > 0);
             setFilteredTemplateData(filteredData);
         }
         else {
@@ -81,13 +81,13 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
         <Loader isShow={isShowLoader} />
 
         <div className="query-category-container">
-            {filteredTemplateData.map((category, index) => (
+            {filteredTemplateData.map((queryTmpl, index) => (
                 <div key={index} className="query-category">
-                    <div className="query-category-title font-bold">{category.category}
+                    <div className="query-category-title font-bold">{queryTmpl.category}
                     </div>
                     <div className="query-category-items">
-                        {category.items.map((item, index) => (
-                            <div key={index} className="query-item" onClick={() => handleQueryItemClick(item.queryId, category.category)}>
+                        {queryTmpl.items.map((item, index) => (
+                            <div key={index} className="query-item" onClick={() => handleQueryItemClick(item.queryId, queryTmpl.categoryId)}>
                                 <div className="query-item-label font-bold">
                                     <Highlighter
                                         highlightClassName={highlightClassName}

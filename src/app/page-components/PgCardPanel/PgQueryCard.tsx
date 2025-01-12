@@ -22,7 +22,7 @@ const pageData = {
 }
 
 const PgQueryCard = forwardRef<PgQueryCardRef, {}>((props, ref) => {
-    const { setCustomQuery, queryViewData, queryTemplateData, selectedQuery, fnGetSelectedQueryTemplate } = usePlaygroundContext();
+    const { setCustomQuery, queryViewData, fnGetSelectedQueryTemplate } = usePlaygroundContext();
     const editorRef = useRef<EditorView | null>(null);
     const [infoIconContent, setInfoIconContent] = useState<string>(pageData.infoIconDefaultContent);
 

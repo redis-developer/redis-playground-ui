@@ -40,7 +40,7 @@ const pgRunQuerySchema = z.object({
 const pgSaveQuerySchema = z.object({
   title: z.string().optional(),
   customQuery: z.string(),
-  category: z.string().optional(),
+  categoryId: z.string().optional(),
   queryId: z.string().optional(),
 });
 

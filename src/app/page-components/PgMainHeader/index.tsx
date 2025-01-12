@@ -156,20 +156,20 @@ const PgMainHeader = () => {
 
             const result = await pgSaveQuery({
                 customQuery: customQuery,
-                category: selectedQuery?.category,
+                categoryId: selectedQuery?.categoryId,
                 queryId: queryViewData?.queryId, //for default query
             });
             if (result?.data?._id) {
                 // "pg:savedQueries:7a428c70-8745-41f8-8dc7-6076fe4defcf"
                 const splitArray = result.data._id.split(":");
                 const partialId = splitArray[splitArray.length - 1];
-                queryStr = `?cid=${partialId}`;
+                queryStr = `?cQueryId=${partialId}`;
             }
             setApiCallInProgress(prev => prev - 1);
 
         }
         else {
-            queryStr = `?qid=${queryViewData?.queryId}`;
+            queryStr = `?queryId=${queryViewData?.queryId?.toLowerCase()}&catId=${selectedQuery?.categoryId}`;
         }
 
         if (queryStr) {

@@ -36,7 +36,7 @@ const usePlayground = () => {
 
     if (selectedQuery && queryTemplateData) {
       const resultCategory = queryTemplateData.find(
-        (item) => item.category === selectedQuery.category
+        (item) => item.categoryId === selectedQuery.categoryId
       );
       if (resultCategory) {
         const resultQuery = resultCategory.items.find(

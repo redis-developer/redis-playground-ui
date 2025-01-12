@@ -39,6 +39,17 @@ const PgCardPanel = () => {
     const [savedQueryData, setSavedQueryData] = useState<ISavedQueryData | null>(null);
     const queryCardRef = useRef<PgQueryCardRef>(null);
 
+    const updateSavedQueryInEditor = (queryData?: ISavedQueryData | null) => {
+        setTimeout(() => {
+            const data = queryData || savedQueryData;
+            if (data?.customQuery) {
+                setCustomQuery(data.customQuery);
+                queryCardRef.current?.updateEditorContent(data.customQuery);
+                setSavedQueryData(null);
+            }
+        }, 10);
+    }
+
     useEffect(() => {
         const loadSharedUrl = async () => {
 
@@ -46,30 +57,46 @@ const PgCardPanel = () => {
 
             if (window.location.search) {
                 const queryParams = new URLSearchParams(window.location.search);
-                const cid = queryParams.get("cid") || "";
-                const qid = queryParams.get("qid") || "";//TODO: 
+                const cQueryId = queryParams.get("cQueryId") || "";
+                const queryId = queryParams.get("queryId")?.toUpperCase() || "";
+                const catId = queryParams.get("catId") || "";
 
-                if (cid) {
+                if (cQueryId) {
                     const promObj1 = fnLoadQueryTemplateData();
-                    const promObjSq = pgGetSavedQuery({ partialId: cid });
+                    const promObjSq = pgGetSavedQuery({ partialId: cQueryId });
 
                     const [result1, resultSq] = await Promise.all([promObj1, promObjSq]);
 
                     if (resultSq?.data) {
 
-                        setSavedQueryData({
+                        const savedQueryResult = {
                             title: resultSq?.data.title,
                             customQuery: resultSq?.data.customQuery,
-                            category: resultSq?.data.category,
+                            categoryId: resultSq?.data.categoryId,
                             queryId: resultSq?.data.queryId,
-                        })
+                        };
 
-                        //trigger selectedQuery change
-                        setSelectedQuery({
-                            category: resultSq?.data.category,
-                            queryId: resultSq?.data.queryId,
-                        })
+                        setSavedQueryData(savedQueryResult)
+
+                        if (resultSq?.data.queryId) {
+                            //trigger selectedQuery change
+                            setSelectedQuery({
+                                categoryId: resultSq?.data.categoryId,
+                                queryId: resultSq?.data.queryId,
+                            })
+                        }
+                        else {
+                            updateSavedQueryInEditor(savedQueryResult);
+                        }
                     }
+                }
+                else if (queryId && catId) {
+                    await fnLoadQueryTemplateData();
+
+                    setSelectedQuery({
+                        categoryId: catId,
+                        queryId: queryId,
+                    })
                 }
 
 
@@ -99,13 +126,7 @@ const PgCardPanel = () => {
                 }
                 setApiCallInProgress(prev => prev - 1);
 
-                setTimeout(() => {
-                    if (savedQueryData?.customQuery) {
-                        setCustomQuery(savedQueryData.customQuery);
-                        queryCardRef.current?.updateEditorContent(savedQueryData.customQuery);
-                        setSavedQueryData(null);
-                    }
-                }, 10);
+                updateSavedQueryInEditor();
 
             }
         };

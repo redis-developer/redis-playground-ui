@@ -35,8 +35,8 @@ const PgSidebar = () => {
         }
     }, [selectedQuery]);
 
-    const handleQueryItemClick = (queryId: string, category: string) => {
-        setSelectedQuery({ queryId, category });
+    const handleQueryItemClick = (queryId: string, categoryId: string) => {
+        setSelectedQuery({ queryId, categoryId });
     };
 
 
@@ -66,7 +66,7 @@ const PgSidebar = () => {
                         {selectedCategory?.items.map(item => (
                             <div className={`pg-list-item anime-line-hover ${item.queryId === selectedQuery?.queryId ? "pg-list-item-active" : ""}`}
                                 key={item.label}
-                                onClick={() => handleQueryItemClick(item.queryId, selectedCategory?.category)}>
+                                onClick={() => handleQueryItemClick(item.queryId, selectedCategory?.categoryId)}>
 
                                 <div className="pg-list-item-icon">
                                     <i className="fa fa-arrow-right"></i>
