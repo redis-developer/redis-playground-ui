@@ -1,6 +1,6 @@
 import './PgQueryCard.scss';
 
-import { useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { EditorView } from 'codemirror';
 
 import PgCardHeader from './PgCardHeader';
@@ -11,12 +11,17 @@ import { usePlaygroundContext } from '../PlaygroundContext';
 import { TooltipIconType } from '@/app/components/TooltipIcon';
 
 
+interface PgQueryCardRef {
+    // Expose methods of this component
+    updateEditorContent: (_code: string) => void;
+}
+
 const pageData = {
     infoIconDefaultContent: 'Try different queries to see how your data changes',
     headerTitle: 'QUERY',
 }
 
-const PgQueryCard = () => {
+const PgQueryCard = forwardRef<PgQueryCardRef, {}>((props, ref) => {
     const { setCustomQuery, queryViewData, queryTemplateData, selectedQuery, fnGetSelectedQueryTemplate } = usePlaygroundContext();
     const editorRef = useRef<EditorView | null>(null);
     const [infoIconContent, setInfoIconContent] = useState<string>(pageData.infoIconDefaultContent);
@@ -37,13 +42,24 @@ const PgQueryCard = () => {
         }
     }
 
-    useEffect(() => {
-        if (editorRef?.current && queryViewData?.query) {
-            updateCode(editorRef.current, queryViewData.query);
-
+    const updateEditorContent = (_code: string) => {
+        if (editorRef?.current && _code) {
+            updateCode(editorRef.current, _code);
             updateInfoIconContent();
         }
+    }
+
+
+    useImperativeHandle(ref, () => ({
+        updateEditorContent
+    }));
+
+
+    useEffect(() => {
+        const code = queryViewData?.query || "";
+        updateEditorContent(code);
     }, [queryViewData]);
+
 
 
     const handleQueryChange = (newQuery: string) => {
@@ -90,6 +106,24 @@ const PgQueryCard = () => {
         <CodeMirrorEditor initialValue={queryViewData?.query} mode={CodeMirrorMode.redis}
             ref={editorRef} onBlur={handleQueryChange} onExecute={handleExecute} />
     </div>
-}
+
+});
+
+PgQueryCard.displayName = 'PgQueryCard';
 
 export default PgQueryCard;
+
+export type { PgQueryCardRef };
+
+/*
+
+const ParentComponent = () => {
+    const queryCardRef = useRef<PgQueryCardRef>(null);
+    
+    const someFunction = () => {
+        queryCardRef.current?.updateEditorContent("new code here");
+    }
+
+    return <PgQueryCard ref={queryCardRef} />;
+}
+*/

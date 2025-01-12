@@ -43,6 +43,10 @@ const pgSaveQuerySchema = z.object({
   category: z.string().optional(),
   queryId: z.string().optional(),
 });
+
+const pgGetSavedQuerySchema = z.object({
+  partialId: z.string(),
+});
 //#endregion
 
 const API_PATHS = {
@@ -52,6 +56,7 @@ const API_PATHS = {
   pgGetSampleDataByDataSourceId: "/pgGetSampleDataByDataSourceId",
   pgRunQuery: "/pgRunQuery",
   pgSaveQuery: "/pgSaveQuery",
+  pgGetSavedQuery: "/pgGetSavedQuery",
 };
 
 //#region API calls
@@ -196,6 +201,24 @@ const pgSaveQuery = async (input: z.infer<typeof pgSaveQuerySchema>) => {
 
   return retValue;
 };
+
+const pgGetSavedQuery = async (
+  input: z.infer<typeof pgGetSavedQuerySchema>
+) => {
+  let retValue: any;
+
+  try {
+    pgGetSavedQuerySchema.parse(input); // validate input
+
+    const response = await postRequest(API_PATHS.pgGetSavedQuery, input);
+    retValue = response?.data;
+  } catch (axiosError: any) {
+    consoleLogError(axiosError);
+    errorAPIAlert(API_PATHS.pgGetSavedQuery);
+  }
+
+  return retValue;
+};
 //#endregion
 
 export {
@@ -206,4 +229,5 @@ export {
   pgGetSampleDataByDataSourceId,
   pgRunQuery,
   pgSaveQuery,
+  pgGetSavedQuery,
 };

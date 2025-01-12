@@ -31,10 +31,18 @@ interface IQueryResponse {
   resultFormatType: QueryResultFormat;
 }
 
+interface ISavedQueryData {
+  title?: string;
+  customQuery?: string;
+  category?: string;
+  queryId?: string;
+}
+
 export type {
   IQueryViewData,
   IQueryTemplateData,
   IQueryTemplateItem,
   ISelectedQuery,
   IQueryResponse,
+  ISavedQueryData,
 };

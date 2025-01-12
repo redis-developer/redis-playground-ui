@@ -7,6 +7,7 @@ import type {
 } from "@/app/types";
 
 import { useState } from "react";
+import { pgGetQueryNavbarData } from "../utils/services";
 
 const usePlayground = () => {
   const [apiCallInProgress, setApiCallInProgress] = useState(0);
@@ -47,6 +48,21 @@ const usePlayground = () => {
     return result;
   };
 
+  const fnLoadQueryTemplateData = async () => {
+    let retData: IQueryTemplateData[] = queryTemplateData;
+    if (queryTemplateData?.length === 0) {
+      setApiCallInProgress((prev) => prev + 1);
+      const result = await pgGetQueryNavbarData();
+      if (result?.data?.length > 0) {
+        setQueryTemplateData(result?.data);
+        retData = result?.data;
+      }
+      setApiCallInProgress((prev) => prev - 1);
+    }
+
+    return retData;
+  };
+
   return {
     queryTemplateData,
     setQueryTemplateData,
@@ -61,6 +77,7 @@ const usePlayground = () => {
     apiCallInProgress,
     setApiCallInProgress,
 
+    fnLoadQueryTemplateData,
     fnGetSelectedQueryTemplate,
   };
 };

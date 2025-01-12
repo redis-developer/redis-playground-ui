@@ -5,7 +5,6 @@ import type { IQueryTemplateData } from "../usePlayground";
 import { useEffect, useState } from "react";
 import Highlighter from 'react-highlight-words';
 
-import { pgGetQueryNavbarData } from "@/app/utils/services";
 import { usePlaygroundContext } from "../PlaygroundContext";
 import Loader from "@/app/components/Loader";
 
@@ -19,7 +18,7 @@ const labels = {
 const highlightClassName = "pg-highlighted-text";
 
 const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
-    const { setSelectedQuery, queryTemplateData, setQueryTemplateData, setApiCallInProgress } = usePlaygroundContext();
+    const { setSelectedQuery, queryTemplateData, setQueryTemplateData, fnLoadQueryTemplateData } = usePlaygroundContext();
 
     const [filteredTemplateData, setFilteredTemplateData] = useState<IQueryTemplateData[]>(queryTemplateData);
     const [isShowLoader, setIsShowLoader] = useState(false);
@@ -30,16 +29,10 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
             const fetchQueryTemplateData = async () => {
                 setIsShowLoader(true);
 
-                //setApiCallInProgress(prev => prev + 1);
-
-                const result = await pgGetQueryNavbarData();
-                if (result?.data?.length > 0) {
-                    setQueryTemplateData(result?.data);
-                    setFilteredTemplateData(result?.data);
-                }
+                const result = await fnLoadQueryTemplateData();
+                setFilteredTemplateData(result);
 
                 setIsShowLoader(false);
-                //setApiCallInProgress(prev => prev - 1);
             };
             fetchQueryTemplateData();
         }

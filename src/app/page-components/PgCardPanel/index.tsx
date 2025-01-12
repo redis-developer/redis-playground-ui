@@ -1,7 +1,8 @@
 import './index.scss';
-import type { IQueryViewData } from "@/app/types";
+import type { IQueryViewData, ISavedQueryData } from "@/app/types";
+import type { PgQueryCardRef } from "./PgQueryCard";
 
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
     Panel,
     PanelGroup,
@@ -14,7 +15,7 @@ import PgDataSourceCard from "./PgDataSourceCard";
 import PgResultCard from "./PgResultCard";
 
 import { usePlaygroundContext } from "../PlaygroundContext";
-import { pgGetQueryDataById } from "@/app/utils/services";
+import { pgGetQueryDataById, pgGetSavedQuery } from "@/app/utils/services";
 
 const ResizeHandle = () => {
     return (
@@ -27,11 +28,58 @@ const ResizeHandle = () => {
 const PgCardPanel = () => {
     const {
         selectedQuery,
+        setSelectedQuery,
         setQueryViewData,
         setCustomQuery,
         setQueryResponse,
-        setApiCallInProgress
+        setApiCallInProgress,
+        fnLoadQueryTemplateData
     } = usePlaygroundContext();
+
+    const [savedQueryData, setSavedQueryData] = useState<ISavedQueryData | null>(null);
+    const queryCardRef = useRef<PgQueryCardRef>(null);
+
+    useEffect(() => {
+        const loadSharedUrl = async () => {
+
+            setSavedQueryData(null);
+
+            if (window.location.search) {
+                const queryParams = new URLSearchParams(window.location.search);
+                const cid = queryParams.get("cid") || "";
+                const qid = queryParams.get("qid") || "";//TODO: 
+
+                if (cid) {
+                    const promObj1 = fnLoadQueryTemplateData();
+                    const promObjSq = pgGetSavedQuery({ partialId: cid });
+
+                    const [result1, resultSq] = await Promise.all([promObj1, promObjSq]);
+
+                    if (resultSq?.data) {
+
+                        setSavedQueryData({
+                            title: resultSq?.data.title,
+                            customQuery: resultSq?.data.customQuery,
+                            category: resultSq?.data.category,
+                            queryId: resultSq?.data.queryId,
+                        })
+
+                        //trigger selectedQuery change
+                        setSelectedQuery({
+                            category: resultSq?.data.category,
+                            queryId: resultSq?.data.queryId,
+                        })
+                    }
+                }
+
+
+                //delete query params
+                const newUrl = window.location.href.split("?")[0];
+                window.history.replaceState({}, "", newUrl);
+            }
+        };
+        loadSharedUrl();
+    }, []);
 
     useEffect(() => {
         // on change of selectedQuery
@@ -49,8 +97,16 @@ const PgCardPanel = () => {
                     const resultData: IQueryViewData = result?.data[0];
                     setQueryViewData(resultData);
                 }
-
                 setApiCallInProgress(prev => prev - 1);
+
+                setTimeout(() => {
+                    if (savedQueryData?.customQuery) {
+                        setCustomQuery(savedQueryData.customQuery);
+                        queryCardRef.current?.updateEditorContent(savedQueryData.customQuery);
+                        setSavedQueryData(null);
+                    }
+                }, 10);
+
             }
         };
         fetchQueryData();
@@ -63,7 +119,7 @@ const PgCardPanel = () => {
                     <PanelGroup direction="horizontal">
                         <Panel minSize={20} defaultSize={55}>
                             <div className="pg-card-panel-item">
-                                <PgQueryCard />
+                                <PgQueryCard ref={queryCardRef} />
                             </div>
                         </Panel>
                         <ResizeHandle />
