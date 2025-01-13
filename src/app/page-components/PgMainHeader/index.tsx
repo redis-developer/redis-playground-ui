@@ -4,6 +4,7 @@ import type { IQueryResponse } from '@/app/types';
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { v4 as uuidv4 } from "uuid";
 
 import IconButton from '@/app/components/IconButton';
 
@@ -149,36 +150,44 @@ const PgMainHeader = () => {
 
     const handleShareQuery = async () => {
 
+        let isSuccess = false;
         let queryStr = '';
+        let partialId = uuidv4();
+        if (customQuery) {
+            queryStr = `?cQueryId=${partialId}`;
+        }
+        else if (queryViewData?.queryId && selectedQuery?.categoryId) {
+            queryStr = `?queryId=${queryViewData?.queryId?.toLowerCase()}&catId=${selectedQuery?.categoryId}`;
+        }
+        if (queryStr) {
+            //for safari, clipboard copy must happen before the api call
+            const shareUrl = `${window.location.origin}${queryStr}`;
+            navigator.clipboard.writeText(shareUrl);
+        }
 
         if (customQuery) {
             setApiCallInProgress(prev => prev + 1);
 
             const result = await pgSaveQuery({
+                partialId: partialId,
                 customQuery: customQuery,
                 categoryId: selectedQuery?.categoryId,
                 queryId: queryViewData?.queryId, //for default query
             });
             if (result?.data?._id) {
-                // "pg:savedQueries:7a428c70-8745-41f8-8dc7-6076fe4defcf"
-                const splitArray = result.data._id.split(":");
-                const partialId = splitArray[splitArray.length - 1];
-                queryStr = `?cQueryId=${partialId}`;
+                isSuccess = true;
             }
-            setApiCallInProgress(prev => prev - 1);
 
+            setApiCallInProgress(prev => prev - 1);
         }
         else {
-            queryStr = `?queryId=${queryViewData?.queryId?.toLowerCase()}&catId=${selectedQuery?.categoryId}`;
+            isSuccess = true;
         }
 
-        if (queryStr) {
-            const shareUrl = `${window.location.origin}${queryStr}`;
-            navigator.clipboard.writeText(shareUrl);
-            infoToast(`Share URL copied to clipboard !`, {
-                className: "pg-custom-nowrap-toast",
-            });
-        }
+        const toastMsg = isSuccess ? 'Share URL copied to clipboard !' : 'Failed to save query !';
+        infoToast(toastMsg, {
+            className: "pg-custom-nowrap-toast",
+        });
     }
 
     return (

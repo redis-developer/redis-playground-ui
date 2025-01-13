@@ -27,22 +27,34 @@ const getOptions = (customOptions?: ToastOptions) => {
   return options;
 };
 
-const errorToast = (message: string, customOptions?: ToastOptions) => {
+const errorToast = (
+  message: string | JSX.Element,
+  customOptions?: ToastOptions
+) => {
   let options = getOptions(customOptions);
   toast.error(message, options);
 };
 
-const successToast = (message: string, customOptions?: ToastOptions) => {
+const successToast = (
+  message: string | JSX.Element,
+  customOptions?: ToastOptions
+) => {
   let options = getOptions(customOptions);
   toast.success(message, options);
 };
 
-const infoToast = (message: string, customOptions?: ToastOptions) => {
+const infoToast = (
+  message: string | JSX.Element,
+  customOptions?: ToastOptions
+) => {
   let options = getOptions(customOptions);
   toast.info(message, options);
 };
 
-const warnToast = (message: string, customOptions?: ToastOptions) => {
+const warnToast = (
+  message: string | JSX.Element,
+  customOptions?: ToastOptions
+) => {
   let options = getOptions(customOptions);
   toast.warn(message, options);
 };
