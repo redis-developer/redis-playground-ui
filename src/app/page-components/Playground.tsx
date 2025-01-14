@@ -7,9 +7,10 @@ import React, { useEffect, useState } from "react";
 import PgMainHeader from "./PgMainHeader";
 import PgCardPanel from "./PgCardPanel";
 import PgSidebar from "./PgSidebar";
-
+import PgWalkthrough from "./PgWalkthrough";
 import { getConfigData, setConfigData } from "../config";
 import { PlaygroundProvider } from "./PlaygroundContext";
+
 
 
 function Playground() {
@@ -27,7 +28,8 @@ function Playground() {
     <>
       {isConfigLoaded &&
         <PlaygroundProvider>
-          <div className="pg-container theme-custom-component font-regular" id="main-app">
+          <div className="pg-container pg-walkthrough-container" id="main-app">
+            {/* <PgWalkthrough /> */}
             <PgMainHeader />
             <div className="pg-container-body">
               <PgSidebar />

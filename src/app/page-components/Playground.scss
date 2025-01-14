@@ -19,3 +19,10 @@
 .pg-custom-nowrap-toast {
   white-space: nowrap;
 }
+
+.pg-walkthrough-container {
+  /*Prevent flickering on next*/
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}

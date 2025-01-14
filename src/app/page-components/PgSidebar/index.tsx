@@ -50,7 +50,7 @@ const PgSidebar = () => {
                 <div className="pg-list-item-icon">
                     <i className="fa fa-object-group"></i>
                 </div>
-                <div className="pg-list-item-label">
+                <div className="pg-list-item-label select-query-label">
                     {labels.selectQuery}
                 </div>
             </div>

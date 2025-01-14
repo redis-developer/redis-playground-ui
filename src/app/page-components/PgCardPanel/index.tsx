@@ -47,7 +47,7 @@ const PgCardPanel = () => {
                 queryCardRef.current?.updateEditorContent(data.customQuery);
                 setSavedQueryData(null);
             }
-        }, 10);
+        }, 50);
     }
 
     useEffect(() => {
