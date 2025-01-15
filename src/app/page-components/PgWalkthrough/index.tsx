@@ -1,7 +1,7 @@
 import './index.css';
 
 import { useEffect, useState } from 'react';
-import Joyride, { ACTIONS, EVENTS, ORIGIN, STATUS, CallBackProps, Step } from 'react-joyride';
+import Joyride, { ACTIONS, EVENTS, ORIGIN, STATUS, CallBackProps, Step, Placement } from 'react-joyride';
 
 import { usePlaygroundContext } from "../PlaygroundContext";
 
@@ -10,6 +10,27 @@ const labels = {
     last: 'Done',
 }
 
+
+const topCardConfig = {
+    placement: 'bottom' as Placement,
+    floaterProps: {
+        styles: {
+            floater: {
+                marginTop: '-200px',
+            }
+        }
+    }
+};
+const bottomCardConfig = {
+    placement: 'top' as Placement,
+    floaterProps: {
+        styles: {
+            floater: {
+                marginBottom: '-200px'
+            }
+        }
+    }
+};
 
 
 const steps: Step[] = [
@@ -20,14 +41,17 @@ const steps: Step[] = [
     {
         target: '.pg-query-card',
         content: 'Here you can view or edit your Redis query',
+        ...topCardConfig
     },
     {
         target: '.pg-db-index-card',
         content: 'View respective index for your Redis query',
+        ...topCardConfig
     },
     {
         target: '.pg-data-source-card',
         content: 'View sample source data for your Redis query',
+        ...bottomCardConfig
     },
     {
         target: '.header-run-btn',
@@ -36,6 +60,7 @@ const steps: Step[] = [
     {
         target: '.pg-result-card',
         content: 'View results of your Redis query after running it',
+        ...bottomCardConfig
         // disableBeacon: true,
     },
 
@@ -57,10 +82,10 @@ const PgWalkthrough = () => {
         //https://github.com/gilbarbara/react-joyride/blob/main/docs/callback.md
         const { action, index, origin, status, type } = data;
 
-        if (type === EVENTS.STEP_AFTER || type === EVENTS.TARGET_NOT_FOUND) {
-            setStepIndex(index + (action === ACTIONS.PREV ? -1 : 1));
-        } else if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {
+        if (status === STATUS.FINISHED || status === STATUS.SKIPPED || action === "close") {
             endTour();
+        } else if (type === EVENTS.STEP_AFTER || type === EVENTS.TARGET_NOT_FOUND) {
+            setStepIndex(index + (action === ACTIONS.PREV ? -1 : 1));
         }
     };
 
