@@ -29,7 +29,7 @@ function Playground() {
       {isConfigLoaded &&
         <PlaygroundProvider>
           <div className="pg-container pg-walkthrough-container" id="main-app">
-            {/* <PgWalkthrough /> */}
+            <PgWalkthrough />
             <PgMainHeader />
             <div className="pg-container-body">
               <PgSidebar />

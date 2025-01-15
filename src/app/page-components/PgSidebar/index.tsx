@@ -11,18 +11,18 @@ import PgQueryTemplate from '../PgQueryTemplate';
 const labels = {
     configure: "CONFIGURE",
     selectQuery: "SELECT QUERY",
-    links: "RESOURCES"
+    links: "RESOURCES",
+    replayTour: "Replay Tour"
 }
 
 const linkItems = [
     { label: "Visit Docs", icon: "fa fa-book", url: "https://redis.io/docs/latest/" },
     { label: "Redis University", icon: "fa fa-university", url: "https://university.redis.io/" },
     { label: "Redis Cloud (Free)", icon: "fa fa-cloud", url: "https://cloud.redis.io/" },
-
 ]
 
 const PgSidebar = () => {
-    const { selectedQuery, setSelectedQuery, fnGetSelectedQueryTemplate } = usePlaygroundContext();
+    const { selectedQuery, setSelectedQuery, fnGetSelectedQueryTemplate, runTour, setRunTour, fnSetTourCompleted } = usePlaygroundContext();
     const [selectedCategory, setSelectedCategory] = useState<IQueryTemplateData | null>(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -38,6 +38,10 @@ const PgSidebar = () => {
     const handleQueryItemClick = (queryId: string, categoryId: string) => {
         setSelectedQuery({ queryId, categoryId });
     };
+
+    const handleReplayTourClick = () => {
+        setRunTour(true);
+    }
 
 
     return <div className="pg-sidebar">
@@ -86,6 +90,7 @@ const PgSidebar = () => {
             <div className="pg-list-title font-bold">
                 {labels.links}
             </div>
+
             {linkItems.map(item => (
                 <div className="pg-list-item anime-line-hover" key={item.label}>
                     <div className="pg-list-item-icon">
@@ -96,6 +101,16 @@ const PgSidebar = () => {
                     </div>
                 </div>
             ))}
+
+            <div className="pg-list-item anime-line-hover" key="replay-tour">
+                <div className="pg-list-item-icon">
+                    <i className="fa fa-redo"></i>
+                </div>
+                <div className="pg-list-item-label" onClick={handleReplayTourClick}>
+                    {labels.replayTour}
+                </div>
+            </div>
+
         </div>
 
 

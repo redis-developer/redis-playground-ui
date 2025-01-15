@@ -8,6 +8,9 @@ import type {
 
 import { useState } from "react";
 import { pgGetQueryNavbarData } from "../utils/services";
+import BrowserCache from "../utils/browser-cache";
+
+const TOUR_COMPLETED_KEY = "pgTourCompleted";
 
 const usePlayground = () => {
   const [apiCallInProgress, setApiCallInProgress] = useState(0);
@@ -27,6 +30,19 @@ const usePlayground = () => {
   const [queryResponse, setQueryResponse] = useState<IQueryResponse | null>(
     null
   );
+
+  const fnIsTourCompleted = () => {
+    return BrowserCache.getItem(TOUR_COMPLETED_KEY) === "true";
+  };
+  const [runTour, setRunTour] = useState(!fnIsTourCompleted());
+
+  const fnSetTourCompleted = (isCompleted: boolean) => {
+    if (isCompleted) {
+      BrowserCache.setItem(TOUR_COMPLETED_KEY, "true");
+    } else {
+      BrowserCache.removeItem(TOUR_COMPLETED_KEY);
+    }
+  };
 
   const fnGetSelectedQueryTemplate = () => {
     let result: {
@@ -76,9 +92,13 @@ const usePlayground = () => {
     setQueryResponse,
     apiCallInProgress,
     setApiCallInProgress,
+    runTour,
+    setRunTour,
 
     fnLoadQueryTemplateData,
     fnGetSelectedQueryTemplate,
+    fnIsTourCompleted,
+    fnSetTourCompleted,
   };
 };
 

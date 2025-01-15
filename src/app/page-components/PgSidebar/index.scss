@@ -1,54 +1,53 @@
 .pg-sidebar {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    width: var(--pg-sidebar-width);
-    padding: var(--space-8);
+  width: var(--pg-sidebar-width);
+  padding: var(--space-8);
+  background-color: var(--pg-sidebar-bg-clr);
+  color: var(--pg-sidebar-txt-clr);
+
+  .pg-list {
+    margin-bottom: var(--space-32);
+  }
+
+  .pg-list-title {
+    font-size: var(--font-size-14);
+    color: var(--pg-sidebar-header-txt-clr);
+    margin-bottom: var(--space-16);
+  }
+
+  .pg-list-item {
+    display: flex;
+    cursor: pointer;
+    margin-bottom: var(--space-12);
+  }
+
+  .pg-list-item-icon {
     background-color: var(--pg-sidebar-bg-clr);
     color: var(--pg-sidebar-txt-clr);
+    min-width: 20px;
+  }
 
-    .pg-list {
-        margin-bottom: var(--space-32);
-    }
+  .pg-list-item-label {
+    flex-grow: 1;
+    padding: 0 var(--space-8) var(--space-4) var(--space-4);
+    background-color: var(--pg-sidebar-bg-clr);
+    color: var(--pg-sidebar-txt-clr);
+  }
 
-    .pg-list-title {
-        font-size: var(--font-size-14);
-        color: var(--pg-sidebar-header-txt-clr);
-        margin-bottom: var(--space-16);
-    }
+  .pg-list-item-active div {
+    color: var(--pg-sidebar-header-txt-clr) !important;
+  }
 
-    .pg-list-item {
-        display: flex;
-        cursor: pointer;
-        margin-bottom: var(--space-12);
-    }
+  .pg-query-category {
+    flex-grow: 1;
+    overflow-y: auto;
+    /*trigger scrollbar*/
+    height: 100px;
+  }
 
-    .pg-list-item-icon {
-        background-color: var(--pg-sidebar-bg-clr);
-        color: var(--pg-sidebar-txt-clr);
-    }
-
-    .pg-list-item-label {
-        flex-grow: 1;
-        padding: 0 var(--space-8) var(--space-4) var(--space-8);
-        background-color: var(--pg-sidebar-bg-clr);
-        color: var(--pg-sidebar-txt-clr);
-    }
-
-    .pg-list-item-active div {
-        color: var(--pg-sidebar-header-txt-clr) !important;
-    }
-
-    .pg-query-category {
-        flex-grow: 1;
-        overflow-y: auto;
-        /*trigger scrollbar*/
-        height: 100px;
-    }
-
-
-    .pg-links {
-        margin-bottom: 0 !important;
-    }
-
+  .pg-links {
+    margin-bottom: 0 !important;
+  }
 }

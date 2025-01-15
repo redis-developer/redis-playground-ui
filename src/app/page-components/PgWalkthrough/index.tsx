@@ -3,11 +3,14 @@ import './index.css';
 import { useEffect, useState } from 'react';
 import Joyride, { ACTIONS, EVENTS, ORIGIN, STATUS, CallBackProps, Step } from 'react-joyride';
 
+import { usePlaygroundContext } from "../PlaygroundContext";
 
 const primaryColor = '#007bff';
 const labels = {
     last: 'Done',
 }
+
+
 
 const steps: Step[] = [
     {
@@ -40,8 +43,15 @@ const steps: Step[] = [
 
 const PgWalkthrough = () => {
 
-    const [runTour, setRunTour] = useState(true);
+    const { runTour, setRunTour, fnSetTourCompleted } = usePlaygroundContext();
     const [stepIndex, setStepIndex] = useState(0);
+
+
+    const endTour = () => {
+        setRunTour(false);
+        fnSetTourCompleted(true);
+        setStepIndex(0);
+    }
 
     const handleJoyrideCallback = (data: CallBackProps) => {
         //https://github.com/gilbarbara/react-joyride/blob/main/docs/callback.md
@@ -50,13 +60,15 @@ const PgWalkthrough = () => {
         if (type === EVENTS.STEP_AFTER || type === EVENTS.TARGET_NOT_FOUND) {
             setStepIndex(index + (action === ACTIONS.PREV ? -1 : 1));
         } else if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {
-            setRunTour(false);
+            endTour();
         }
     };
 
-    useEffect(() => {
-        // Add keyboard navigation
 
+
+    useEffect(() => {
+
+        // Add keyboard navigation
         const handleKeyPress = (event: KeyboardEvent) => {
 
             if (runTour) {
@@ -70,7 +82,7 @@ const PgWalkthrough = () => {
 
                         break;
                     case 'Escape':
-                        setRunTour(false);
+                        endTour();
                         break;
                 }
             }
