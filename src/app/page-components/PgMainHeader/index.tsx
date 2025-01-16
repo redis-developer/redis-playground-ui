@@ -184,10 +184,11 @@ const PgMainHeader = () => {
             isSuccess = true;
         }
 
-        const toastMsg = isSuccess ? 'Share URL copied to clipboard !' : 'Failed to save query !';
-        infoToast(toastMsg, {
-            className: "pg-custom-nowrap-toast",
-        });
+        if (isSuccess) {
+            infoToast('Share URL copied to clipboard !', {
+                className: "pg-custom-nowrap-toast",
+            });
+        }
     }
 
     return (

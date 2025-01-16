@@ -196,8 +196,12 @@ const pgSaveQuery = async (input: z.infer<typeof pgSaveQuerySchema>) => {
     const response = await postRequest(API_PATHS.pgSaveQuery, input);
     retValue = response?.data;
   } catch (axiosError: any) {
-    consoleLogError(axiosError);
-    errorAPIAlert(API_PATHS.pgSaveQuery);
+    const error = consoleLogError(axiosError);
+    if (error?.userMessage) {
+      errorToast(error.userMessage);
+    } else {
+      errorAPIAlert(API_PATHS.pgSaveQuery);
+    }
   }
 
   return retValue;
