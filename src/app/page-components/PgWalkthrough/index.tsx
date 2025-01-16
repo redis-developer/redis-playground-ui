@@ -33,7 +33,7 @@ const bottomCardConfig = {
 };
 
 
-const steps: Step[] = [
+let steps: Step[] = [
     {
         target: '.select-query-label',
         content: 'Select a sample query from the popup',
@@ -79,6 +79,15 @@ const steps: Step[] = [
     },
 
 ];
+
+const keyboardHint = '(Use ← → arrow keys to navigate)';
+steps = steps.map((step, index) => ({
+    ...step,
+    content: (<div className='pg-joyride-content'>
+        {step.content}
+        {index === 0 && <div className='pg-joyride-footer' dangerouslySetInnerHTML={{ __html: keyboardHint }} />}
+    </div>)
+}));
 
 const PgWalkthrough = () => {
 
