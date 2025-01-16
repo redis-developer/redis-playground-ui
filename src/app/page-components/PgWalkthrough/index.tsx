@@ -37,6 +37,18 @@ const steps: Step[] = [
     {
         target: '.select-query-label',
         content: 'Select a sample query from the popup',
+        disableBeacon: true, //direct step open instead of beacon (dot)
+        data: {
+            //custom props
+            performClick: true
+        }
+    },
+    {
+        target: '.query-item:nth-child(1)',
+        content: 'Click on the query to load it',
+        data: {
+            performClick: true
+        }
     },
     {
         target: '.pg-query-card',
@@ -56,12 +68,14 @@ const steps: Step[] = [
     {
         target: '.header-run-btn',
         content: 'Run your Redis query',
+        data: {
+            performClick: true
+        }
     },
     {
         target: '.pg-result-card',
         content: 'View results of your Redis query after running it',
         ...bottomCardConfig
-        // disableBeacon: true,
     },
 
 ];
@@ -71,7 +85,6 @@ const PgWalkthrough = () => {
     const { runTour, setRunTour, fnSetTourCompleted } = usePlaygroundContext();
     const [stepIndex, setStepIndex] = useState(0);
 
-
     const endTour = () => {
         setRunTour(false);
         fnSetTourCompleted(true);
@@ -80,12 +93,34 @@ const PgWalkthrough = () => {
 
     const handleJoyrideCallback = (data: CallBackProps) => {
         //https://github.com/gilbarbara/react-joyride/blob/main/docs/callback.md
-        const { action, index, origin, status, type } = data;
+
+        const { action, index, origin, status, type, step, lifecycle } = data;
+
+        // console.debug(`Step ${index + 1} - Type: ${type}, Lifecycle: ${lifecycle}`);
 
         if (status === STATUS.FINISHED || status === STATUS.SKIPPED || action === "close") {
             endTour();
-        } else if (type === EVENTS.STEP_AFTER || type === EVENTS.TARGET_NOT_FOUND) {
-            setStepIndex(index + (action === ACTIONS.PREV ? -1 : 1));
+            return;
+        }
+
+        const targetElement = document.querySelector(step.target as string);
+
+        //on next 
+        if (type === EVENTS.STEP_AFTER) {
+
+            if (step.data?.performClick) {
+                if (targetElement && targetElement instanceof HTMLElement) {
+                    targetElement.click();
+                }
+                setRunTour(false); //React modal popup issue : Force reposition by temporarily stopping and restarting the tour
+                setTimeout(() => {
+                    setRunTour(true);
+                    setStepIndex(index + (action === ACTIONS.PREV ? -1 : 1));
+                }, 500); //setTimeout for any UI transitions
+            }
+            else {
+                setStepIndex(index + (action === ACTIONS.PREV ? -1 : 1));
+            }
         }
     };
 
@@ -126,6 +161,7 @@ const PgWalkthrough = () => {
             showSkipButton={true}
             stepIndex={stepIndex}
             callback={handleJoyrideCallback}
+            //disableScrolling={true}
             styles={{
                 options: {
                     // arrowColor: '#e3ffeb',
@@ -134,8 +170,11 @@ const PgWalkthrough = () => {
                     // textColor: '#004a14',
 
                     primaryColor: primaryColor,
+                    zIndex: 10000,
                 },
             }}
+
+
             locale={{
                 last: labels.last,
             }}

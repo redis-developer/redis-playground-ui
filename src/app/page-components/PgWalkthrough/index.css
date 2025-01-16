@@ -1,5 +1,6 @@
 .react-joyride__spotlight {
-    background-color: var(--pg-walkthrough-spotlight-bg-clr) !important;
+    /* background-color: var(--pg-walkthrough-spotlight-bg-clr) !important; */
+    background-color: transparent !important;
     opacity: 0.5 !important;
 }
 

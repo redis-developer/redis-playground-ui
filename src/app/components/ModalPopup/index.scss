@@ -1,28 +1,29 @@
 .ReactModal__Content {
-    display: flex;
+  display: flex;
+  overflow: hidden !important;
 }
 
 .comp-modal-popup {
-    flex-grow: 1;
-    position: relative;
-    display: flex;
+  flex-grow: 1;
+  position: relative;
+  display: flex;
 
-    background-color: var(--comp-modal-popup-bg-clr);
-    color: var(--comp-modal-popup-txt-clr);
+  background-color: var(--comp-modal-popup-bg-clr);
+  color: var(--comp-modal-popup-txt-clr);
 
-    .icon-close {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        cursor: pointer;
-        padding: var(--space-4) var(--space-8);
-        border-radius: var(--radius-4);
-        /*reverse colors*/
-        color: var(--comp-modal-popup-bg-clr);
-        background-color: var(--comp-modal-popup-txt-clr);
+  .icon-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    padding: var(--space-4) var(--space-8);
+    border-radius: var(--radius-4);
+    /*reverse colors*/
+    color: var(--comp-modal-popup-bg-clr);
+    background-color: var(--comp-modal-popup-txt-clr);
 
-        i {
-            font-size: var(--font-size-18);
-        }
+    i {
+      font-size: var(--font-size-18);
     }
+  }
 }

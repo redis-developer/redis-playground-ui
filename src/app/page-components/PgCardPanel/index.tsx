@@ -51,10 +51,13 @@ const PgCardPanel = () => {
     }
 
     useEffect(() => {
-        const loadSharedUrl = async () => {
+
+        const onload = async () => {
+            const promObj1 = fnLoadQueryTemplateData();
 
             setSavedQueryData(null);
 
+            //load shared url
             if (window.location.search) {
                 const queryParams = new URLSearchParams(window.location.search);
                 const cQueryId = queryParams.get("cQueryId") || "";
@@ -62,7 +65,6 @@ const PgCardPanel = () => {
                 const catId = queryParams.get("catId") || "";
 
                 if (cQueryId) {
-                    const promObj1 = fnLoadQueryTemplateData();
                     const promObjSq = pgGetSavedQuery({ partialId: cQueryId });
 
                     const [result1, resultSq] = await Promise.all([promObj1, promObjSq]);
@@ -104,8 +106,11 @@ const PgCardPanel = () => {
                 const newUrl = window.location.href.split("?")[0];
                 window.history.replaceState({}, "", newUrl);
             }
+            else {
+                await promObj1;
+            }
         };
-        loadSharedUrl();
+        onload();
     }, []);
 
     useEffect(() => {
