@@ -82,6 +82,9 @@ const detectResultFormatType = (currentQuery: string, result: any[]) => {
                 }
             }
         }
+        else if (result?.length > 0 && Array.isArray(result) && currentQuery?.startsWith('FT.AGGREGATE')) {
+            retType = QueryResultFormat.aggregate;
+        }
     }
     return retType;
 }

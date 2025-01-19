@@ -13,6 +13,7 @@ enum QueryResultFormat {
   hash = "hash",
   string = "string",
   error = "error",
+  aggregate = "aggregate",
 }
 
 export { PAGE_THEMES, QueryResultFormat };

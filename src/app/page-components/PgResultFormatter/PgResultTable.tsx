@@ -5,63 +5,6 @@ import { useEffect, useState } from 'react';
 import { QueryResultFormat } from '@/app/constants';
 import { usePlaygroundContext } from '../PlaygroundContext';
 
-/**
-const sampleResult = [
-    650,
-    "pg:fashion:5862",
-    [
-        "$",
-        "{\"productId\":5862,\"price\":1699,\"productDisplayName\":\"ADIDAS Men's Stripe Black T-shirt\",\"variantName\":\"Adidas Stripe tee\",\"brandName\":\"adidas\",\"ageGroup\":\"Adults-Men\",\"gender\":\"men\",\"displayCategories\":\"Tshirts,Casual Wear and Clearance,Sale and Clearance,Casual Wear,Sale\",\"productColors\":\"Black,NA\",\"season\":\"Summer\",\"usage\":\"Casual\",\"masterCategoryType\":\"apparel\",\"subCategoryType\":\"topwear\",\"productDescription\":\"-\",\"imageLink\":\"http://assets.myntassets.com/v1/images/style/properties/9f9f083996862e825eb0ffb32ed9db31_images.jpg\"}"
-    ],
-    "pg:fashion:5859",
-    [
-        "$",
-        "{\"productId\":5859,\"price\":1699,\"productDisplayName\":\"ADIDAS Men's Allover White T-shirt\",\"variantName\":\"Adidas ST allover Tee\",\"brandName\":\"adidas\",\"ageGroup\":\"Adults-Men\",\"gender\":\"men\",\"displayCategories\":\"Casual Wear,Sale\",\"productColors\":\"White,NA\",\"season\":\"Summer\",\"usage\":\"Casual\",\"masterCategoryType\":\"apparel\",\"subCategoryType\":\"topwear\",\"productDescription\":\"-\",\"imageLink\":\"http://assets.myntassets.com/v1/images/style/properties/c3219eba7f6553f3d3bac56450569e67_images.jpg\"}"
-    ],
-    "pg:fashion:7439",
-    [
-        "$",
-        "{\"productId\":7439,\"price\":599,\"productDisplayName\":\"Proline Men Navy Striped T-shirt\",\"variantName\":\"PROLINE SS11/VS14 PC/JR/BD T shirt\",\"brandName\":\"proline\",\"ageGroup\":\"Adults-Men\",\"gender\":\"men\",\"displayCategories\":\"Sale and Clearance,Casual Wear,Sale\",\"productColors\":\"Navy Blue,NA\",\"season\":\"Summer\",\"usage\":\"Casual\",\"masterCategoryType\":\"apparel\",\"subCategoryType\":\"topwear\",\"productDescription\":\"Navy blue striped T-shirt with printed detail, has a round neck, short sleeves\",\"imageLink\":\"http://assets.myntassets.com/v1/images/style/properties/4f560e45a0816dea59ef5a562daf4902_images.jpg\"}"
-    ],
-    "pg:fashion:6969",
-    [
-        "$",
-        "{\"productId\":6969,\"price\":1599,\"productDisplayName\":\"s.Oliver Women's Green Blouse Shirt\",\"variantName\":\"Green blouse\",\"brandName\":\"s.oliver\",\"ageGroup\":\"Adults-Women\",\"gender\":\"women\",\"displayCategories\":\"Casual Wear and Clearance,Sale and Clearance,Casual Wear,Sale\",\"productColors\":\"Green,NA\",\"season\":\"Summer\",\"usage\":\"Casual\",\"masterCategoryType\":\"apparel\",\"subCategoryType\":\"topwear\",\"productDescription\":\"Blue casual shirt, has a spread collar,a full buttoned placket, sleeveless, curved hem\",\"imageLink\":\"http://assets.myntassets.com/v1/images/style/properties/a42f2140bf105f3327f02c3ca033d354_images.jpg\"}"
-    ],
-    "pg:fashion:7462",
-    [
-        "$",
-        "{\"productId\":7462,\"price\":525,\"productDisplayName\":\"Proline Men Grey Printed T-shirt\",\"variantName\":\"PROLINE SS11/VS01 VNTGGMRL T shirt\",\"brandName\":\"proline\",\"ageGroup\":\"Adults-Men\",\"gender\":\"men\",\"displayCategories\":\"Tshirts,Casual Wear and Clearance,Sale and Clearance,Casual Wear,Sale\",\"productColors\":\"Grey,NA\",\"season\":\"Summer\",\"usage\":\"Casual\",\"masterCategoryType\":\"apparel\",\"subCategoryType\":\"topwear\",\"productDescription\":\"Grey printed T-shirt, has a round neck, short sleeves\",\"imageLink\":\"http://assets.myntassets.com/v1/images/style/properties/fd6027bd35ddb9dd5fbe262235df9ee5_images.jpg\"}"
-    ],
-    "pg:fashion:7479",
-    [
-        "$",
-        "{\"productId\":7479,\"price\":399,\"productDisplayName\":\"Proline Men Black V-Neck T-shirt\",\"variantName\":\"PROLINE SS11/BEP7A BLK/WHT T shirt\",\"brandName\":\"proline\",\"ageGroup\":\"Adults-Men\",\"gender\":\"men\",\"displayCategories\":\"Casual Wear,Sale\",\"productColors\":\"Black,NA\",\"season\":\"Summer\",\"usage\":\"Casual\",\"masterCategoryType\":\"apparel\",\"subCategoryType\":\"topwear\",\"productDescription\":\"Black T-shirt, has a V-neck, short sleeves\",\"imageLink\":\"http://assets.myntassets.com/v1/images/style/properties/592b57f42c67cc2afd9e10d35da9ef11_images.jpg\"}"
-    ],
-    "pg:fashion:53781",
-    [
-        "$",
-        "{\"productId\":53781,\"price\":1299,\"productDisplayName\":\"Puma Men Blue Sless Round Neck T-shirt\",\"variantName\":\"Sless Tee\",\"brandName\":\"puma\",\"ageGroup\":\"Adults-Men\",\"gender\":\"men\",\"displayCategories\":\"Casual Wear,Sports Wear,Sale\",\"productColors\":\"Blue,NA\",\"season\":\"\",\"usage\":\"Sports\",\"masterCategoryType\":\"apparel\",\"subCategoryType\":\"topwear\",\"productDescription\":\"Blue solid T-shirt, has a round neck, sleeveless\",\"imageLink\":\"http://assets.myntassets.com/assets/images/53781/2017/8/1/11501582752754-Puma-Men-Tshirts-5881501582752475-1.jpg\"}"
-    ],
-    "pg:fashion:23872",
-    [
-        "$",
-        "{\"productId\":23872,\"price\":1599,\"productDisplayName\":\"ADIDAS Men White Polo T-shirt\",\"variantName\":\"Solid\",\"brandName\":\"adidas\",\"ageGroup\":\"Adults-Men\",\"gender\":\"men\",\"displayCategories\":\"Casual Wear,Sale\",\"productColors\":\"White,\",\"season\":\"Summer\",\"usage\":\"Casual\",\"masterCategoryType\":\"apparel\",\"subCategoryType\":\"topwear\",\"productDescription\":\"<p>White polo T-shirt made of 100% polyester, has a ribbed collar with red tipping, short sleeves with ribbed cuffs and red tipping, adidas&nbsp; three patented stripes from the shoulder to the cuffs, buttoned chest placket, embroidered logo on left chest, brand tag on the left vented hem <br /></p>\",\"imageLink\":\"http://assets.myntassets.com/v1/images/style/properties/14a309181573e426cb1e5f7377a0926d_images.jpg\"}"
-    ],
-    "pg:fashion:3065",
-    [
-        "$",
-        "{\"productId\":3065,\"price\":399,\"productDisplayName\":\"Tantra Women Tiger Black T-shirt\",\"variantName\":\"Tantra Tiger Purple Womens Tee\",\"brandName\":\"tantra\",\"ageGroup\":\"Adults-Women\",\"gender\":\"women\",\"displayCategories\":\"Casual Wear,Sale\",\"productColors\":\"Black,NA\",\"season\":\"Summer\",\"usage\":\"Casual\",\"masterCategoryType\":\"apparel\",\"subCategoryType\":\"topwear\",\"productDescription\":\"<p style=\\\"text-align: justify;\\\"><strong>Composition</strong><br />Black printed round neck t-shirt in 100% cotton with chest print<br /></p>\",\"imageLink\":\"http://assets.myntassets.com/v1/images/style/properties/Tantra-Women-Tiger-Purple-T-shirt_fea79c8db9b4d201ca5593662883e83e_images.jpg\"}"
-    ],
-    "pg:fashion:7443",
-    [
-        "$",
-        "{\"productId\":7443,\"price\":399,\"productDisplayName\":\"Proline Men White Polo T-shirt\",\"variantName\":\"PROLINE SS11/BE53 SLVRGMRL T shirt\",\"brandName\":\"proline\",\"ageGroup\":\"Adults-Men\",\"gender\":\"men\",\"displayCategories\":\"Casual Wear,Sale\",\"productColors\":\"White,NA\",\"season\":\"Summer\",\"usage\":\"Casual\",\"masterCategoryType\":\"apparel\",\"subCategoryType\":\"topwear\",\"productDescription\":\"White polo T-shirt, has a polo collar, short button placket, short sleeves\",\"imageLink\":\"http://assets.myntassets.com/v1/images/style/properties/4ccc2e6d776645be5f17b439d17552a3_images.jpg\"}"
-    ],
-    //... so on
-];
- */
-
 
 interface PgResultTableProps {
     result: any[];
@@ -73,77 +16,171 @@ interface IHeader {
     text: string;
 }
 
-
-
-const formatJsonResult = (key: string, value: any[]) => {
-    let retObj: any = null;
-    if (key && value?.length) {
-        /*
-        value = [
-            "$",  // JSON path
-            "{...json content...}"
-        ]
-         */
-        const jsonPath = value[0];
-        const jsonData = value[1];
-        try {
-            const parsedData = JSON.parse(jsonData as string);
-            retObj = {
-                key,
-                path: jsonPath,
-                ...parsedData
-            };
-        } catch (e) {
-            console.error('Error parsing JSON:', e);
-        }
-    }
-    return retObj;
-}
-
-const formatHashResult = (key: string, value: any[]) => {
-    let retObj: any = null;
-    if (key && value?.length && value.length % 2 === 0) {
-        /*
-        value = [field1, value1, field2, value2, ...]
-         */
-        retObj = {
-            key: key
-        };
-        for (let i = 0; i < value.length; i += 2) {
-            const field = value[i];
-            const fieldValue = value[i + 1];
-            retObj[field] = fieldValue;
-        }
-
-    }
-
-    return retObj;
-}
-
-const formatResult = (_result: any[], _formatType: QueryResultFormat) => {
+const formatResultHash = (_result: any[]) => {
+    /**
+    const sampleResult = [
+    3,
+    "pg:bike:10008",
+    [
+        "score",
+        "0.940289616585",
+        "brand",
+        "Bold bicycles",
+        "type",
+        "eBikes",
+        "description",
+        "A city eBike .."
+    ],
+    "pg:bike:10058",
+    [
+        "score",
+        "0.950955808163",
+        "brand",
+        "Nord",
+        "type",
+        "Commuter bikes",
+        "description",
+        "This bike is the ...."
+    ],
+    // ... so on
+    ];
+    */
     const objArr: any[] = [];
 
-    if (_result?.length && _formatType) {
+    if (_result?.length) {
         // const mCount = result[0];, start from 1
         for (let i = 1; i < _result.length; i += 2) {
             const key = _result[i] as string;
             const value = _result[i + 1] as any[];
 
-            if (_formatType === QueryResultFormat.json) {
-                const jsonObj = formatJsonResult(key, value);
-                if (jsonObj) {
-                    objArr.push(jsonObj);
+            let hashObj: any = null;
+            if (key && value?.length && value.length % 2 === 0) {
+                /*
+                value = [field1, value1, field2, value2, ...]
+                 */
+                hashObj = {
+                    key: key
+                };
+                for (let j = 0; j < value.length; j += 2) {
+                    const field = value[j];
+                    const fieldValue = value[j + 1];
+                    hashObj[field] = fieldValue;
                 }
-            } else if (_formatType === QueryResultFormat.hash) {
-                const hashObj = formatHashResult(key, value);
-                if (hashObj) {
-                    objArr.push(hashObj);
+
+            }
+            if (hashObj) {
+                objArr.push(hashObj);
+            }
+        }
+    }
+    return objArr;
+}
+
+const formatResultJson = (_result: any[]) => {
+    /**
+   const sampleResult = [
+    650,
+    "pg:fashion:5862",
+    [
+        "$",
+        "{\"productId\":5862,\"price\":1699,\"productDisplayName\":\"ADIDAS Men's Stripe Black T-shirt\",\"variantName\":\"Adidas Stripe tee\",\"brandName\":\"adidas\",\"ageGroup\":\"Adults-Men\",\"gender\":\"men\",\"displayCategories\":\"Tshirts,Casual Wear and Clearance,Sale and Clearance,Casual Wear,Sale\",\"productColors\":\"Black,NA\",\"season\":\"Summer\",\"usage\":\"Casual\",\"masterCategoryType\":\"apparel\",\"subCategoryType\":\"topwear\",\"productDescription\":\"-\",\"imageLink\":\"http://assets.myntassets.com/v1/images/style/properties/9f9f083996862e825eb0ffb32ed9db31_images.jpg\"}"
+    ],
+    "pg:fashion:5859",
+    [
+        "$",
+        "{\"productId\":5859,\"price\":1699,\"productDisplayName\":\"ADIDAS Men's Allover White T-shirt\",\"variantName\":\"Adidas ST allover Tee\",\"brandName\":\"adidas\",\"ageGroup\":\"Adults-Men\",\"gender\":\"men\",\"displayCategories\":\"Casual Wear,Sale\",\"productColors\":\"White,NA\",\"season\":\"Summer\",\"usage\":\"Casual\",\"masterCategoryType\":\"apparel\",\"subCategoryType\":\"topwear\",\"productDescription\":\"-\",\"imageLink\":\"http://assets.myntassets.com/v1/images/style/properties/c3219eba7f6553f3d3bac56450569e67_images.jpg\"}"
+    ],
+    //... so on
+];
+ */
+
+    const objArr: any[] = [];
+
+    if (_result?.length) {
+        // const mCount = result[0];, start from 1
+        for (let i = 1; i < _result.length; i += 2) {
+            const key = _result[i] as string;
+            const value = _result[i + 1] as any[];
+
+            let jsonObj: any = null;
+            if (key && value?.length) {
+                /*
+                value = [
+                    "$",  // JSON path
+                    "{...json content...}"
+                ]
+                 */
+                const jsonPath = value[0];
+                const jsonData = value[1];
+                try {
+                    const parsedData = JSON.parse(jsonData as string);
+                    jsonObj = {
+                        key,
+                        path: jsonPath,
+                        ...parsedData
+                    };
+                } catch (e) {
+                    console.error('Error parsing JSON:', e);
                 }
+            }
+            if (jsonObj) {
+                objArr.push(jsonObj);
             }
         }
     }
     return objArr;
 };
+
+const formatResultAggregate = (_result: any[]) => {
+    /**
+ const sampleResult = 
+ [
+    1, //Matched count
+    [ //row 1
+        "__key", //field 1
+        "pg:bicycle:6", // value 1
+        "price", 
+        "2300", 
+        "discounted", 
+        "2070" 
+    ],
+    [ //row 2
+        "__key", // field 1
+        "pg:bicycle:0", // value 1
+        "price",
+        "270",
+        "discounted",
+        "243"
+    ],
+    //... so on
+];
+ */
+
+    const objArr: any[] = [];
+
+    if (_result?.length) {
+        // const mCount = result[0];, start from 1
+        for (let i = 1; i < _result.length; i++) {
+            const rowArray = _result[i];
+            let obj: any = null;
+            if (rowArray?.length && rowArray.length % 2 === 0) {
+                obj = {};
+                for (let j = 0; j < rowArray.length; j += 2) {
+                    let field = rowArray[j];
+                    if (field === '__key') {
+                        field = 'key';
+                    }
+                    const value = rowArray[j + 1];
+                    obj[field] = value;
+                }
+            }
+            if (obj) {
+                objArr.push(obj);
+            }
+        }
+    }
+    return objArr;
+}
 
 
 const prioritizeTableHeaders = (_headers: IHeader[], _query: string = "") => {
@@ -221,7 +258,16 @@ const PgResultTable = ({ result, formatType }: PgResultTableProps) => {
 
     useEffect(() => {
         if (result?.length) {
-            const tData = formatResult(result, formatType);
+            let tData: any[] = [];
+            if (formatType === QueryResultFormat.aggregate) {
+                tData = formatResultAggregate(result);
+            }
+            else if (formatType === QueryResultFormat.json) {
+                tData = formatResultJson(result);
+            }
+            else if (formatType === QueryResultFormat.hash) {
+                tData = formatResultHash(result);
+            }
             setTableData(tData);
 
             const headers = getTableHeaders(tData);
