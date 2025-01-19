@@ -92,21 +92,21 @@ const PgSidebar = () => {
             </div>
 
             {linkItems.map(item => (
-                <div className="pg-list-item anime-line-hover" key={item.label}>
+                <div className="pg-list-item anime-line-hover" key={item.label} onClick={() => window.open(item.url, '_blank', 'noopener,noreferrer')}>
                     <div className="pg-list-item-icon">
                         <i className={item.icon}></i>
                     </div>
-                    <div className="pg-list-item-label" onClick={() => window.open(item.url, '_blank', 'noopener,noreferrer')}>
+                    <div className="pg-list-item-label" >
                         {item.label}
                     </div>
                 </div>
             ))}
 
-            <div className="pg-list-item anime-line-hover" key="replay-tour">
+            <div className="pg-list-item anime-line-hover" key="replay-tour" onClick={handleReplayTourClick}>
                 <div className="pg-list-item-icon">
                     <i className="fa fa-redo"></i>
                 </div>
-                <div className="pg-list-item-label" onClick={handleReplayTourClick}>
+                <div className="pg-list-item-label pg-replay-tour-lbl">
                     {labels.replayTour}
                 </div>
             </div>

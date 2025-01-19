@@ -77,10 +77,22 @@ let steps: Step[] = [
         content: 'View results of your Redis query after running it',
         ...bottomCardConfig
     },
+    {
+        target: '.header-share-btn',
+        content: 'Can share your Redis query',
+    },
+    {
+        target: '.pg-query-category .pg-list-item:last-child',
+        content: 'Can click on other queries in the category to view them',
+    },
+    {
+        target: '.pg-replay-tour-lbl',
+        content: 'Can replay the tour to view the steps again',
+    },
 
 ];
 
-const keyboardHint = '(Use ← → arrow keys to navigate)';
+const keyboardHint = '(Use ← → arrow keys to navigate steps)';
 steps = steps.map((step, index) => ({
     ...step,
     content: (<div className='pg-joyride-content'>
