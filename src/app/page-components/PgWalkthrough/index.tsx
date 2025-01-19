@@ -45,49 +45,53 @@ let steps: Step[] = [
     },
     {
         target: '.query-item:nth-child(1)',
-        content: 'Click on the query to load it',
+        content: 'Click on any query to load it',
         data: {
             performClick: true
         }
     },
     {
         target: '.pg-query-card',
-        content: 'Here you can view or edit your Redis query',
+        content: 'View and edit your Redis query here',
         ...topCardConfig
     },
     {
         target: '.pg-db-index-card',
-        content: 'View respective index for your Redis query',
+        content: 'View the corresponding index for your Redis query',
         ...topCardConfig
     },
     {
         target: '.pg-data-source-card',
-        content: 'View sample source data for your Redis query',
+        content: 'View the sample source data used by your Redis query',
         ...bottomCardConfig
     },
     {
         target: '.header-run-btn',
-        content: 'Run your Redis query',
+        content: 'Execute your Redis query',
         data: {
             performClick: true
         }
     },
     {
         target: '.pg-result-card',
-        content: 'View results of your Redis query after running it',
+        content: 'View the query results here',
         ...bottomCardConfig
     },
     {
         target: '.header-share-btn',
-        content: 'Can share your Redis query',
+        content: 'Share your Redis query using a generated URL',
+    },
+    {
+        target: '.header-reset-btn',
+        content: 'Reset your modified Redis query back to its default state',
     },
     {
         target: '.pg-query-category .pg-list-item:last-child',
-        content: 'Can click on other queries in the category to view them',
+        content: 'Click on other related queries in the category to view them',
     },
     {
         target: '.pg-replay-tour-lbl',
-        content: 'Can replay the tour to view the steps again',
+        content: 'Replay this tour anytime to review the steps',
     },
 
 ];
