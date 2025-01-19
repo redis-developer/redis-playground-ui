@@ -171,7 +171,11 @@ const formatResultAggregate = (_result: any[]) => {
                         field = 'key';
                     }
                     const value = rowArray[j + 1];
-                    obj[field] = value;
+                    if (Array.isArray(value)) {
+                        obj[field] = value.join(', ');
+                    } else {
+                        obj[field] = value;
+                    }
                 }
             }
             if (obj) {
