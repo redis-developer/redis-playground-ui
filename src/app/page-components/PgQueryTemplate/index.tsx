@@ -56,13 +56,20 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
         searchTerm = searchTerm?.toLowerCase().trim();
 
         if (searchTerm) {
-            const filteredData = queryTemplateData.map((queryTmpl) => ({
-                ...queryTmpl,
-                items: queryTmpl.items.filter((item) =>
-                    item.label.toLowerCase().includes(searchTerm) ||
-                    item.description?.toLowerCase().includes(searchTerm)
-                )
-            })).filter(queryTmpl => queryTmpl.items.length > 0);
+            const filteredData = queryTemplateData.map((queryTmpl) => {
+                const isCategoryMatch = queryTmpl.category.toLowerCase().includes(searchTerm);
+                return {
+                    ...queryTmpl,
+                    score: isCategoryMatch ? 2 : 1,
+                    items: isCategoryMatch
+                        ? queryTmpl.items
+                        : queryTmpl.items.filter((item) =>
+                            item.label.toLowerCase().includes(searchTerm) ||
+                            item.description?.toLowerCase().includes(searchTerm)
+                        )
+                };
+            }).filter(queryTmpl => queryTmpl.items.length > 0)
+                .sort((a, b) => a.score - b.score);
             setFilteredTemplateData(filteredData);
         }
         else {
@@ -83,7 +90,13 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
         <div className="query-category-container">
             {filteredTemplateData.map((queryTmpl, index) => (
                 <div key={index} className="query-category">
-                    <div className="query-category-title font-bold">{queryTmpl.category}
+                    <div className="query-category-title font-bold">
+                        <Highlighter
+                            highlightClassName={highlightClassName}
+                            searchWords={[searchValue]}
+                            autoEscape={true}
+                            textToHighlight={queryTmpl.category}
+                        />
                     </div>
                     <div className="query-category-items">
                         {queryTmpl.items.map((item, index) => (
