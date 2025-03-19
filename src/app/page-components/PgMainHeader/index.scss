@@ -37,6 +37,10 @@
         align-items: center;
         justify-content: center;
         gap: 10px;
+
+        .comp-icon-button {
+          min-width: 80px;
+        }
       }
     }
   }

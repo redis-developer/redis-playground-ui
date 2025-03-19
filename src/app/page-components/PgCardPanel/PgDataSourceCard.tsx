@@ -15,7 +15,7 @@ import { usePlaygroundContext } from '../PlaygroundContext';
 
 const pageData = {
   infoIconContent: 'A data source is a collection of data in Redis that we want to search.',
-  headerTitle: 'DATA SOURCE',
+  headerTitle: 'Data Source',
   defaultFooterText: 'NO RECORDS FOUND',
   dataCount: 30,
 }

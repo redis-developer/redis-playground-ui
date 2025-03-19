@@ -16,9 +16,9 @@ const labels = {
 }
 
 const linkItems = [
-    { label: "Visit Docs", icon: "fa fa-book", url: "https://redis.io/docs/latest/" },
+    { label: "Docs", icon: "fa fa-book", url: "https://redis.io/docs/latest/" },
     { label: "Redis University", icon: "fa fa-user-graduate", url: "https://university.redis.io/" },
-    { label: "Redis Cloud (Free)", icon: "fa fa-cloud", url: "https://cloud.redis.io/" },
+    { label: "Redis Cloud", icon: "fa fa-cloud", url: "https://cloud.redis.io/" },
 ]
 
 const PgSidebar = () => {

@@ -91,7 +91,7 @@ const redisHighlightStyle = HighlightStyle.define([
   { tag: tags.bracket, color: "#5E5C64" },
 
   // Comments
-  { tag: tags.comment, color: "#666666" },
+  { tag: tags.comment, color: "#888888" },
 ]);
 
 // Language support with highlighting

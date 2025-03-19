@@ -205,9 +205,9 @@ const PgMainHeader = () => {
                         {labels.title}
                     </div>
                     <div className="header-buttons">
-                        <IconButton buttonLbl={labels.buttonRun} iconCls="fa fa-play" buttonCls="header-run-btn anime-success-button-hover" onClick={handleRunQuery} buttonType={IconButtonType.SUCCESS} isDisabled={isRunButtonDisabled} />
-                        <IconButton buttonLbl={labels.buttonReset} iconCls="fa-solid fa-rotate-left" buttonCls="header-reset-btn anime-button-hover" onClick={handleResetQuery} />
-                        <IconButton buttonLbl={labels.buttonShare} iconCls="fa fa-share" buttonCls="header-share-btn anime-button-hover" onClick={handleShareQuery} />
+                        <IconButton buttonLbl={labels.buttonRun} iconCls="fa fa-play" buttonCls="header-run-btn" onClick={handleRunQuery} buttonType={IconButtonType.SUCCESS} isDisabled={isRunButtonDisabled} />
+                        <IconButton buttonLbl={labels.buttonReset} iconCls="fa-solid fa-rotate-left" buttonCls="header-reset-btn" onClick={handleResetQuery} />
+                        <IconButton buttonLbl={labels.buttonShare} iconCls="fa fa-share" buttonCls="header-share-btn" onClick={handleShareQuery} />
                     </div>
                 </div>
                 <Loader isShow={apiCallInProgress > 0} />

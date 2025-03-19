@@ -15,7 +15,7 @@ import { HeaderIcon } from './PgCardHeader';
 
 const pageData = {
     infoIconContent: 'Search results for your query.',
-    headerTitle: 'RESULT',
+    headerTitle: 'Result',
     defaultFooterText: "NO RESULTS FOUND"
 }
 

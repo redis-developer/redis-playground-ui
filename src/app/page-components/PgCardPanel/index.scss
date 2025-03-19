@@ -10,26 +10,26 @@
     height: calc(
       100% - (var(--space-16) + var(--space-8))
     ); // space left and right
-    border-radius: var(--radius-8);
+    border-radius: var(--radius-4);
     box-shadow: 0 0 var(--shadow-size-1) var(--pg-card-panel-box-shadow-clr);
     overflow: hidden;
     box-sizing: border-box;
   }
 
   .pg-card-panel-query {
-    margin: var(--space-16) var(--space-8) var(--space-8) var(--space-16);
+    margin: var(--space-16) var(--space-6) var(--space-6) var(--space-16);
   }
 
   .pg-card-panel-db-index {
-    margin: var(--space-16) var(--space-16) var(--space-8) var(--space-8);
+    margin: var(--space-16) var(--space-16) var(--space-6) var(--space-6);
   }
 
   .pg-card-panel-result {
-    margin: var(--space-8) var(--space-8) var(--space-16) var(--space-16);
+    margin: var(--space-6) var(--space-6) var(--space-16) var(--space-16);
   }
 
   .pg-card-panel-data-source {
-    margin: var(--space-8) var(--space-16) var(--space-16) var(--space-8);
+    margin: var(--space-6) var(--space-16) var(--space-16) var(--space-6);
   }
 
   .resize-handle {

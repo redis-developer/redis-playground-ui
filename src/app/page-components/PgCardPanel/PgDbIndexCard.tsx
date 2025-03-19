@@ -13,7 +13,7 @@ import { usePlaygroundContext } from '../PlaygroundContext';
 
 const pageData = {
     infoIconContent: 'To search data in Redis, we must create an index.',
-    headerTitle: 'DB INDEX',
+    headerTitle: 'DB Index',
     dbIndexName: "fashionSearchIndex",
 }
 

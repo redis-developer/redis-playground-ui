@@ -18,7 +18,7 @@ interface PgQueryCardRef {
 
 const pageData = {
     infoIconDefaultContent: 'Try different queries to see how your data changes',
-    headerTitle: 'QUERY',
+    headerTitle: 'Query',
 }
 
 const PgQueryCard = forwardRef<PgQueryCardRef, {}>((props, ref) => {

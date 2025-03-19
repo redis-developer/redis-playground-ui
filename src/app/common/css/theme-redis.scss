@@ -23,7 +23,7 @@
   --color-error: #fe4336;
 
   /* UI Element colors */
-  --color-border-base: #d9d9d9;
+  --color-border-base: #e6e6e6; /*d9d9d9*/
   --color-shadow-base: #d1d3d4;
   --color-resize-handle: #bcbec0;
 
@@ -50,10 +50,10 @@
   /*Component colors*/
   --comp-code-mirror-bg-clr: var(--color-primary-light1);
   --comp-code-mirror-gutter-bg-clr: var(--color-primary);
-  --comp-code-mirror-disabled-bg-clr: var(--color-primary-light2);
-  --comp-code-mirror-border-clr: var(--color-border-base); /*new*/
-  --comp-code-mirror-active-line-bg-clr: var(--color-primary-light2); /*new*/
-  --comp-code-mirror-active-gutter-txt-clr: var(--color-primary-txt); /*new*/
+  --comp-code-mirror-disabled-bg-clr: var(--color-primary-light1);
+  --comp-code-mirror-border-clr: var(--color-border-base);
+  --comp-code-mirror-active-line-bg-clr: var(--color-primary-light2);
+  --comp-code-mirror-active-gutter-txt-clr: var(--color-gray-base);
 
   --comp-icon-button-bg-clr: var(--color-primary);
   --comp-icon-button-txt-clr: var(--color-btn-default);
@@ -63,8 +63,8 @@
   --comp-icon-success-button-txt-clr: var(--color-primary);
   --comp-icon-success-button-icon-clr: var(--color-primary);
   --comp-icon-success-button-border-clr: var(--color-primary);
-  --comp-icon-button-hover-bg-clr: var(--color-btn-hover); /*new*/
-  --comp-icon-button-active-bg-clr: var(--color-btn-active); /*new*/
+  --comp-icon-button-hover-bg-clr: var(--color-btn-hover);
+  --comp-icon-button-active-bg-clr: var(--color-btn-active);
 
   --comp-loader-bg-clr: var(--color-primary-light7);
   --comp-loader-gradient1: var(--color-loader-gradient1);
@@ -72,14 +72,14 @@
 
   --comp-modal-popup-bg-clr: var(--color-primary-light5);
   --comp-modal-popup-txt-clr: var(--color-white-gray);
-  --comp-modal-popup-close-txt-clr: var(--color-primary-light7); /*new*/
+  --comp-modal-popup-close-txt-clr: var(--color-primary-light7);
 
   --comp-tooltip-bg-clr: var(--color-slate-dark);
   --comp-tooltip-txt-clr: var(--color-white-base);
 
   --pg-main-header-bg-clr: var(--color-primary);
   --pg-main-header-txt-clr: var(--color-primary-txt);
-  --pg-main-header-box-shadow-clr: var(--color-shadow-base); /*new*/
+  --pg-main-header-box-shadow-clr: var(--color-shadow-base);
 
   --pg-card-header-bg-clr: var(--color-primary);
   --pg-card-header-txt-clr: var(--color-primary-txt);
@@ -88,18 +88,18 @@
   --pg-card-footer-txt-clr: var(--color-primary-txt);
 
   --pg-result-bg-clr: var(--color-border-base);
-  --pg-result-table-border-clr: var(--color-border);
-  --pg-result-table-header-bg-clr: var(--color-primary-light2);
-  --pg-result-table-header-txt-clr: var(--color-primary-light2-clr);
+  --pg-result-table-border-clr: var(--color-shadow-base);
+  --pg-result-table-header-bg-clr: var(--color-border-base);
+  --pg-result-table-header-txt-clr: var(--color-primary-txt);
   --pg-result-table-row-bg-even-clr: var(--color-primary-light1);
-  --pg-result-table-row-bg-odd-clr: var(--color-primary);
-  --pg-result-table-row-bg-hover-clr: var(--color-primary-light1);
+  --pg-result-table-row-bg-odd-clr: var(--color-white-base);
+  --pg-result-table-row-bg-hover-clr: var(--color-primary-light4);
   --pg-result-table-row-txt-clr: var(--color-primary-txt);
 
   --pg-result-error-txt-clr: var(--color-error-red);
 
   --pg-card-panel-resize-handle-bg-clr: var(--color-resize-handle);
-  --pg-card-panel-box-shadow-clr: var(--color-shadow-base); /*new*/
+  --pg-card-panel-box-shadow-clr: var(--color-shadow-base);
 
   --pg-query-template-bg-clr: var(--color-primary-light2);
   --pg-query-template-txt-clr: var(--color-primary-txt);
@@ -111,10 +111,10 @@
   --pg-sidebar-bg-clr: var(--color-primary);
   --pg-sidebar-txt-clr: var(--color-primary-txt);
   --pg-sidebar-header-txt-clr: var(--color-primary-txt);
-  --pg-sidebar-shadow-clr: var(--color-shadow-base); /*new*/
-  --pg-sidebar-border-clr: var(--color-border-base); /*new*/
-  --pg-sidebar-item-hover-bg-clr: var(--color-primary-light2); /*new*/
-  --pg-sidebar-item-active-bg-clr: var(--color-primary-light3); /*new*/
+  --pg-sidebar-shadow-clr: var(--color-shadow-base);
+  --pg-sidebar-border-clr: var(--color-border-base);
+  --pg-sidebar-item-hover-bg-clr: var(--color-primary-light3);
+  --pg-sidebar-item-active-bg-clr: var(--color-primary-light2);
 
   --pg-walkthrough-txt-clr: var(--color-primary-txt);
 
