@@ -16,6 +16,7 @@ const redisCommands = [
   "LRANGE",
   "FT.CREATE",
   "FT.SEARCH",
+  "FT.AGGREGATE",
 ];
 
 // /^(GET|HGET|PING|KEYS|LRANGE)\b/i  where \b is word boundary
@@ -52,7 +53,7 @@ const redisLanguage = StreamLanguage.define({
     }
 
     // Brackets and delimiters
-    if (stream.match(/^[\[\](),;]/)) {
+    if (stream.match(/^[\[\](){},;:]/)) {
       return "bracket";
     }
 
@@ -70,24 +71,24 @@ const redisHighlightStyle = HighlightStyle.define([
   // Commands or keywords
   {
     tag: tags.keyword,
-    color: "#c8b6f3",
+    color: "#B76BE2",
     //fontWeight: "bold",
   },
 
   // Variables and identifiers
-  { tag: tags.variableName, color: "#c98e75" },
+  { tag: tags.variableName, color: "#1A5FB4" },
 
   // Numbers
-  { tag: tags.number, color: "#98c379" },
+  { tag: tags.number, color: "#26A269" },
 
   // JSON paths ($.productId)
-  { tag: tags.propertyName, color: "#e5c07b" },
+  { tag: tags.propertyName, color: "#C64600" },
 
   // Strings (quoted values)
-  { tag: tags.string, color: "#e06c75" },
+  { tag: tags.string, color: "#EB352A" },
 
   // Brackets and delimiters
-  { tag: tags.bracket, color: "#56b6c2" },
+  { tag: tags.bracket, color: "#5E5C64" },
 
   // Comments
   { tag: tags.comment, color: "#666666" },

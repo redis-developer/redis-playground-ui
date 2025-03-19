@@ -1,35 +1,43 @@
 .pg-main-header-container {
-    background-color: var(--pg-main-header-bg-clr);
-    color: var(--pg-main-header-txt-clr);
-}
+  display: flex;
+  height: var(--pg-main-header-height);
+  background-color: var(--pg-main-header-bg-clr);
+  color: var(--pg-main-header-txt-clr);
 
-.pg-main-header {
+  .header-logo {
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: var(--space-8);
+    width: var(--pg-sidebar-width);
+    padding-left: var(--space-16);
+    box-shadow: 0 0 var(--shadow-size-1) var(--pg-main-header-box-shadow-clr);
+  }
 
-    .header-title {
+  .header-right-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    .header-right-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-grow: 1;
+      padding: var(--space-4) var(--space-24) 0;
+
+      .header-title {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 20px;
-        font-size: var(--font-size-18);
-    }
+        font-size: var(--font-size-20);
+      }
 
-    .header-query-list {
-        flex-grow: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .header-buttons {
+      .header-buttons {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 10px;
+      }
     }
-
-
+  }
 }

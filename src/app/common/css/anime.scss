@@ -1,37 +1,60 @@
 /*custom animations*/
-
-.anime-line-hover {
+.theme-custom-component {
+  .anime-line-hover {
     /*for colored line hover effect (from left to right)*/
 
     padding-bottom: var(--space-2);
-    background: linear-gradient(115deg, #4fcf70, #fad648, #a767e5, #12bcfe, #44ce7b 50%, transparent 50%);
+    background: linear-gradient(
+      115deg,
+      #4fcf70,
+      #fad648,
+      #a767e5,
+      #12bcfe,
+      #44ce7b 50%,
+      transparent 50%
+    );
     background-size: 200% 100%;
     background-position: 100% 0;
     background-repeat: no-repeat;
     transition: all 0.2s;
-}
+  }
 
-.anime-line-hover:hover {
+  .anime-line-hover:hover {
     background-position: 0 0;
-}
+  }
 
-/*----------------------------------*/
+  /*----------------------------------*/
 
-.anime-line-hover-normal {
+  .anime-line-hover-normal {
     /*for colored line hover effect*/
     padding-bottom: var(--space-2);
     background-color: transparent;
-}
+  }
 
-.anime-line-hover-normal:hover {
-    background: linear-gradient(115deg, #4fcf70, #fad648, #a767e5, #12bcfe, #44ce7b);
-}
+  .anime-line-hover-normal:hover {
+    background: linear-gradient(
+      115deg,
+      #4fcf70,
+      #fad648,
+      #a767e5,
+      #12bcfe,
+      #44ce7b
+    );
+  }
 
-/*----------------------------------*/
+  /*----------------------------------*/
 
-
-.anime-button-hover {
-    background: linear-gradient(90deg, var(--comp-icon-button-bg-clr) 33.33%, #4fcf70 33.33%, #fad648, #a767e5, #12bcfe, #44ce7b 66.66%, var(--comp-icon-button-bg-clr) 66.66%);
+  .anime-button-hover {
+    background: linear-gradient(
+      90deg,
+      var(--comp-icon-button-bg-clr) 33.33%,
+      #4fcf70 33.33%,
+      #fad648,
+      #a767e5,
+      #12bcfe,
+      #44ce7b 66.66%,
+      var(--comp-icon-button-bg-clr) 66.66%
+    );
     color: var(--comp-icon-button-txt-clr);
 
     background-repeat: no-repeat !important;
@@ -40,13 +63,22 @@
     transition: all 0s;
 
     &:hover {
-        background-position: 0 0;
-        transition: all .5s;
+      background-position: 0 0;
+      transition: all 0.5s;
     }
-}
+  }
 
-.anime-success-button-hover {
-    background: linear-gradient(90deg, var(--comp-icon-success-button-bg-clr) 33.33%, #4fcf70 33.33%, #fad648, #a767e5, #12bcfe, #44ce7b 66.66%, var(--comp-icon-success-button-bg-clr) 66.66%);
+  .anime-success-button-hover {
+    background: linear-gradient(
+      90deg,
+      var(--comp-icon-success-button-bg-clr) 33.33%,
+      #4fcf70 33.33%,
+      #fad648,
+      #a767e5,
+      #12bcfe,
+      #44ce7b 66.66%,
+      var(--comp-icon-success-button-bg-clr) 66.66%
+    );
     color: var(--comp-icon-success-button-txt-clr);
 
     background-repeat: no-repeat !important;
@@ -55,7 +87,8 @@
     transition: all 0s;
 
     &:hover {
-        background-position: 0 0;
-        transition: all .5s;
+      background-position: 0 0;
+      transition: all 0.5s;
     }
+  }
 }

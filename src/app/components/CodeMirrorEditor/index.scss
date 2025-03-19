@@ -1,26 +1,37 @@
-   .comp-code-mirror {
-       flex-grow: 1;
-       box-sizing: border-box;
-       overflow: auto;
+.comp-code-mirror {
+  flex-grow: 1;
+  box-sizing: border-box;
+  overflow: auto;
 
-       .cm-editor {
-           background-color: var(--comp-code-mirror-bg-clr);
-           height: 100%;
-           width: 100%;
-       }
+  .cm-editor {
+    background-color: var(--comp-code-mirror-bg-clr);
+    border-top: 1px solid var(--comp-code-mirror-border-clr);
 
-       .cm-gutters {
-           background-color: var(--comp-code-mirror-gutter-bg-clr);
-       }
-   }
+    height: 100%;
+    width: 100%;
 
-   .comp-code-mirror.disabled {
-       .cm-editor {
-           background-color: var(--comp-code-mirror-disabled-bg-clr);
-           cursor: no-drop;
+    .cm-activeLine {
+      background-color: var(--comp-code-mirror-active-line-bg-clr);
+    }
+  }
 
-           .cm-activeLine {
-               background-color: transparent;
-           }
-       }
-   }
+  .cm-gutters {
+    background-color: var(--comp-code-mirror-gutter-bg-clr);
+  }
+
+  .cm-activeLineGutter {
+    background-color: var(--comp-code-mirror-bg-clr);
+    color: var(--comp-code-mirror-active-gutter-txt-clr);
+  }
+}
+
+.comp-code-mirror.disabled {
+  .cm-editor {
+    background-color: var(--comp-code-mirror-disabled-bg-clr);
+    cursor: no-drop;
+
+    .cm-activeLine {
+      background-color: transparent;
+    }
+  }
+}

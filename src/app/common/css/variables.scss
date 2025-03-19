@@ -1,42 +1,46 @@
 body {
-    /* common variables */
+  /* common variables */
 
-    --radius-4: 4px;
-    --radius-12: 12px;
+  --radius-4: 4px;
+  --radius-8: 8px;
+  --radius-12: 12px;
 
-    --space-2: 2px;
-    --space-4: 4px;
-    --space-8: 8px;
-    --space-12: 12px;
-    --space-16: 16px;
-    --space-32: 32px;
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
 
-    /*base font size is defined in typography.css file */
-    --font-size-12: 0.75rem;
-    --font-size-14: 0.875rem;
-    --font-size-16: 1rem;
-    --font-size-18: 1.125rem;
-    --font-size-20: 1.25rem;
-    --font-size-24: 1.5rem;
-    --font-size-30: 1.875rem;
-    --font-size-36: 2.25rem;
-    --font-size-48: 3rem;
-    --font-size-60: 3.75rem;
-    --font-size-72: 4.5rem;
-    --font-size-96: 6rem;
-    --font-size-128: 8rem;
+  /*base font size is defined in typography.css file */
+  --font-size-12: 0.75rem;
+  --font-size-14: 0.875rem;
+  --font-size-16: 1rem;
+  --font-size-18: 1.125rem;
+  --font-size-20: 1.25rem;
+  --font-size-24: 1.5rem;
+  --font-size-30: 1.875rem;
+  --font-size-36: 2.25rem;
+  --font-size-48: 3rem;
+  --font-size-60: 3.75rem;
+  --font-size-72: 4.5rem;
+  --font-size-96: 6rem;
+  --font-size-128: 8rem;
 
+  --success-clr: #30b330;
+  --error-clr: #e74c3c;
+  --error-txt-clr: #ffffff;
 
-    --success-clr: #30b330;
-    --error-clr: #e74c3c;
-    --error-txt-clr: #ffffff;
+  --white: #ffffff;
+  --black: #000000;
 
-    --white: #ffffff;
-    --black: #000000;
+  --border: var(--primary-10);
 
-    --border: var(--primary-10);
+  --comp-loader-height: 4px;
 
-    --comp-loader-height: 4px;
+  --pg-sidebar-width: 200px;
+  --pg-main-header-height: 50px;
 
-    --pg-sidebar-width: 200px;
+  --shadow-size-1: 6px;
 }

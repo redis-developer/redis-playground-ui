@@ -15,9 +15,9 @@ import { IconButtonType } from '@/app/components/IconButton';
 import Loader from "@/app/components/Loader";
 import { infoToast } from '@/app/utils/toast-util';
 
-const logoImgPath = '/logo-small.png';
+const logoImgPath = '/redis.png';
 const labels = {
-    title: 'Redis Playground',
+    title: 'Redis Sandbox',
     buttonRun: 'Run',
     buttonReset: 'Reset',
     buttonShare: 'Share',
@@ -196,22 +196,22 @@ const PgMainHeader = () => {
 
     return (
         <div className="pg-main-header-container">
-            <div className="pg-main-header">
-
-                <div className="header-title font-bold">
-                    <Image src={logoImgPath} alt="logo" width={30} height={30} />
-
-                    {labels.title}
-                </div>
-                <div className="header-query-list">
-                </div>
-                <div className="header-buttons">
-                    <IconButton buttonLbl={labels.buttonRun} iconCls="fa fa-play" buttonCls="header-run-btn anime-success-button-hover" onClick={handleRunQuery} buttonType={IconButtonType.SUCCESS} isDisabled={isRunButtonDisabled} />
-                    <IconButton buttonLbl={labels.buttonReset} iconCls="fa fa-refresh" buttonCls="header-reset-btn anime-button-hover" onClick={handleResetQuery} />
-                    <IconButton buttonLbl={labels.buttonShare} iconCls="fa fa-share" buttonCls="header-share-btn anime-button-hover" onClick={handleShareQuery} />
-                </div>
+            <div className="header-logo">
+                <Image src={logoImgPath} alt="logo" width={60} height={20} />
             </div>
-            <Loader isShow={apiCallInProgress > 0} />
+            <div className="header-right-container">
+                <div className="header-right-top">
+                    <div className="header-title font-medium">
+                        {labels.title}
+                    </div>
+                    <div className="header-buttons">
+                        <IconButton buttonLbl={labels.buttonRun} iconCls="fa fa-play" buttonCls="header-run-btn anime-success-button-hover" onClick={handleRunQuery} buttonType={IconButtonType.SUCCESS} isDisabled={isRunButtonDisabled} />
+                        <IconButton buttonLbl={labels.buttonReset} iconCls="fa-solid fa-rotate-left" buttonCls="header-reset-btn anime-button-hover" onClick={handleResetQuery} />
+                        <IconButton buttonLbl={labels.buttonShare} iconCls="fa fa-share" buttonCls="header-share-btn anime-button-hover" onClick={handleShareQuery} />
+                    </div>
+                </div>
+                <Loader isShow={apiCallInProgress > 0} />
+            </div>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import './index.css';
+import './index.scss';
 
 import { useEffect, useState } from 'react';
 import Joyride, { ACTIONS, EVENTS, ORIGIN, STATUS, CallBackProps, Step, Placement } from 'react-joyride';

@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import './common/css/typography.scss';
 import './common/css/variables.scss';
 import './common/css/theme.scss';
+import './common/css/theme-redis.scss';
 import './common/css/anime.scss';
 
 import "./globals.scss";
@@ -29,7 +30,7 @@ export default function RootLayout({
       <head>
         <link rel="stylesheet" href="/fontawesome-free-6.6.0-web/css/all.min.css" />
       </head>
-      <body className={`${inter.className} theme-custom-component font-regular`}>
+      <body className={`${inter.className} theme-redis font-regular`}>
         {children}
 
         <ToastContainer />

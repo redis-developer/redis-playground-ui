@@ -59,32 +59,24 @@
         .query-item {
           display: flex;
           flex-direction: column;
-
           cursor: pointer;
-          border-radius: var(--radius-4);
+          border-radius: var(--radius-8);
           width: calc((100% / 3) - var(--space-32));
           max-width: calc((100% / 3) - var(--space-32));
           min-height: 140px;
 
-          /*for colored hover effect*/
           padding: var(--space-2);
-          background-color: transparent;
+          background-color: var(--pg-query-template-item-bg-clr);
+          color: var(--pg-query-template-item-txt-clr);
+          border: 1px solid var(--pg-query-template-item-border-clr);
         }
 
         .query-item:hover {
-          background: linear-gradient(
-            115deg,
-            #4fcf70,
-            #fad648,
-            #a767e5,
-            #12bcfe,
-            #44ce7b
-          );
+          border-color: var(--pg-query-template-item-hover-border-clr);
         }
 
         .query-item-label {
           padding: var(--space-12);
-          background-color: var(--pg-query-template-label-bg-clr);
         }
 
         .query-item-description {
@@ -94,8 +86,6 @@
           align-items: center;
 
           padding: 0 var(--space-12) 0 var(--space-12);
-          background-color: var(--pg-query-template-description-bg-clr);
-          color: var(--pg-query-template-description-txt-clr);
         }
       }
     }

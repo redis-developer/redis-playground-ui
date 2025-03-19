@@ -13,6 +13,8 @@
   .pg-container-body {
     flex-grow: 1;
     display: flex;
+    background-color: var(--pg-container-bg-clr);
+    color: var(--pg-container-txt-clr);
   }
 }
 

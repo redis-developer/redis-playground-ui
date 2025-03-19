@@ -76,7 +76,7 @@ const PgDataSourceCard = () => {
   return <div className="pg-data-source-card">
     <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true} infoIconContent={pageData.infoIconContent} handleIconClick={handleIconClick} />
 
-    <CodeMirrorEditor initialValue={sampleData} mode={CodeMirrorMode.javascript} ref={editorRef} disabled={true} />
+    <CodeMirrorEditor initialValue={sampleData} mode={CodeMirrorMode.redis} ref={editorRef} disabled={true} />
 
     <PgCardFooter footerText={footerText} />
   </div>
