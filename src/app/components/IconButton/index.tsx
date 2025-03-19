@@ -25,8 +25,8 @@ const IconButton = ({ buttonLbl, onClick, iconCls = "", buttonCls = "",
 
     return (<div className={`comp-icon-button ${buttonType}  ${buttonCls} ${isDisabled ? 'disabled' : ''}`}
         onClick={handleClick}>
-        {iconCls && <i className={`icon ${iconCls}`} />}
         <span className="button-lbl">{buttonLbl}</span>
+        {iconCls && <i className={`icon ${iconCls}`} />}
     </div>);
 }
 

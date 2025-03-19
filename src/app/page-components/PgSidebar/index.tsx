@@ -9,15 +9,15 @@ import ModalPopup from '@/app/components/ModalPopup';
 import PgQueryTemplate from '../PgQueryTemplate';
 
 const labels = {
-    configure: "CONFIGURE",
-    selectQuery: "SELECT QUERY",
-    links: "RESOURCES",
+    configure: "Configure",
+    selectQuery: "Select query",
+    links: "Resources",
     replayTour: "Replay Tour"
 }
 
 const linkItems = [
     { label: "Visit Docs", icon: "fa fa-book", url: "https://redis.io/docs/latest/" },
-    { label: "Redis University", icon: "fa fa-university", url: "https://university.redis.io/" },
+    { label: "Redis University", icon: "fa fa-user-graduate", url: "https://university.redis.io/" },
     { label: "Redis Cloud (Free)", icon: "fa fa-cloud", url: "https://cloud.redis.io/" },
 ]
 
@@ -47,12 +47,12 @@ const PgSidebar = () => {
     return <div className="pg-sidebar">
 
         <div className="pg-list">
-            <div className="pg-list-title font-bold">
+            <div className="pg-list-title font-medium">
                 {labels.configure}
             </div>
             <div className="pg-list-item anime-line-hover" onClick={() => setModalIsOpen(true)}>
                 <div className="pg-list-item-icon">
-                    <i className="fa fa-object-group"></i>
+                    <i className="fa fa-arrows-up-down-left-right"></i>
                 </div>
                 <div className="pg-list-item-label select-query-label">
                     {labels.selectQuery}
@@ -63,7 +63,7 @@ const PgSidebar = () => {
         <div className="pg-query-category pg-list">
             {selectedCategory && (
                 <div>
-                    <div className="pg-list-title font-bold">
+                    <div className="pg-list-title font-medium">
                         {selectedCategory?.category}
                     </div>
                     <div>
@@ -87,7 +87,7 @@ const PgSidebar = () => {
         </div>
 
         <div className="pg-links pg-list">
-            <div className="pg-list-title font-bold">
+            <div className="pg-list-title font-medium">
                 {labels.links}
             </div>
 
@@ -104,7 +104,7 @@ const PgSidebar = () => {
 
             <div className="pg-list-item anime-line-hover" key="replay-tour" onClick={handleReplayTourClick}>
                 <div className="pg-list-item-icon">
-                    <i className="fa fa-redo"></i>
+                    <i className="fa fa-rotate"></i>
                 </div>
                 <div className="pg-list-item-label pg-replay-tour-lbl">
                     {labels.replayTour}

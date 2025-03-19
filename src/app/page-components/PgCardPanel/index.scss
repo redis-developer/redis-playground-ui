@@ -4,13 +4,32 @@
   max-height: 100vh;
 
   .pg-card-panel-item {
-    width: calc(100% - (2 * (var(--space-12))));
-    height: calc(100% - (2 * (var(--space-12))));
-    margin: var(--space-12);
+    width: calc(
+      100% - (var(--space-16) + var(--space-8))
+    ); // space left and right
+    height: calc(
+      100% - (var(--space-16) + var(--space-8))
+    ); // space left and right
     border-radius: var(--radius-8);
     box-shadow: 0 0 var(--shadow-size-1) var(--pg-card-panel-box-shadow-clr);
     overflow: hidden;
     box-sizing: border-box;
+  }
+
+  .pg-card-panel-query {
+    margin: var(--space-16) var(--space-8) var(--space-8) var(--space-16);
+  }
+
+  .pg-card-panel-db-index {
+    margin: var(--space-16) var(--space-16) var(--space-8) var(--space-8);
+  }
+
+  .pg-card-panel-result {
+    margin: var(--space-8) var(--space-8) var(--space-16) var(--space-16);
+  }
+
+  .pg-card-panel-data-source {
+    margin: var(--space-8) var(--space-16) var(--space-16) var(--space-8);
   }
 
   .resize-handle {

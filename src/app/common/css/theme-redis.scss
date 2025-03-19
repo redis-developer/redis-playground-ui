@@ -15,6 +15,7 @@
   --color-white-base: #ffffff;
   --color-white-gray: #bdc3d7;
   --color-gray-base: #5c6d75;
+  --color-slate-dark: #2d4754;
 
   /* Semantic colors */
   --color-success: #237a40;
@@ -73,8 +74,8 @@
   --comp-modal-popup-txt-clr: var(--color-white-gray);
   --comp-modal-popup-close-txt-clr: var(--color-primary-light7); /*new*/
 
-  --comp-tooltip-bg-clr: var(--color-dusk-07);
-  --comp-tooltip-txt-clr: var(--color-white);
+  --comp-tooltip-bg-clr: var(--color-slate-dark);
+  --comp-tooltip-txt-clr: var(--color-white-base);
 
   --pg-main-header-bg-clr: var(--color-primary);
   --pg-main-header-txt-clr: var(--color-primary-txt);
@@ -82,6 +83,7 @@
 
   --pg-card-header-bg-clr: var(--color-primary);
   --pg-card-header-txt-clr: var(--color-primary-txt);
+  --pg-card-header-icon-clr: var(--color-slate-dark);
   --pg-card-footer-bg-clr: var(--color-primary);
   --pg-card-footer-txt-clr: var(--color-primary-txt);
 
@@ -116,6 +118,6 @@
 
   --pg-walkthrough-txt-clr: var(--color-primary-txt);
 
-  --pg-container-bg-clr: var(--color-primary-light2);
+  --pg-container-bg-clr: var(--color-primary-light5);
   --pg-container-txt-clr: var(--color-primary-txt);
 }

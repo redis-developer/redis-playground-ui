@@ -41,7 +41,7 @@ const PgCardHeader = ({ headerTitle, infoIconContent, infoIconContentType, showC
 
     return (
         <div className="pg-card-header">
-            <div className="header-title font-bold">
+            <div className="header-title font-medium">
                 {headerTitle}
 
                 {infoIconContent && (

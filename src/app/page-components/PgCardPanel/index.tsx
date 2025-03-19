@@ -144,13 +144,13 @@ const PgCardPanel = () => {
                 <Panel minSize={20}>
                     <PanelGroup direction="horizontal">
                         <Panel minSize={20} defaultSize={55}>
-                            <div className="pg-card-panel-item">
+                            <div className="pg-card-panel-item pg-card-panel-query">
                                 <PgQueryCard ref={queryCardRef} />
                             </div>
                         </Panel>
                         <ResizeHandle />
                         <Panel minSize={20} defaultSize={45}>
-                            <div className="pg-card-panel-item">
+                            <div className="pg-card-panel-item pg-card-panel-db-index">
                                 <PgDbIndexCard />
                             </div>
                         </Panel>
@@ -160,13 +160,13 @@ const PgCardPanel = () => {
                 <Panel minSize={20}>
                     <PanelGroup direction="horizontal">
                         <Panel minSize={20} defaultSize={55}>
-                            <div className="pg-card-panel-item">
+                            <div className="pg-card-panel-item pg-card-panel-result">
                                 <PgResultCard />
                             </div>
                         </Panel>
                         <ResizeHandle />
                         <Panel minSize={20} defaultSize={45}>
-                            <div className="pg-card-panel-item">
+                            <div className="pg-card-panel-item pg-card-panel-data-source">
                                 <PgDataSourceCard />
                             </div>
                         </Panel>
