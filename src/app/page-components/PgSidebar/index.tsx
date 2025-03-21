@@ -3,6 +3,7 @@ import "./index.scss";
 import type { IQueryTemplateData } from "@/app/types";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 import { usePlaygroundContext } from "../PlaygroundContext";
 import ModalPopup from '@/app/components/ModalPopup';
@@ -16,9 +17,24 @@ const labels = {
 }
 
 const linkItems = [
-    { label: "Docs", icon: "fa fa-book", url: "https://redis.io/docs/latest/" },
-    { label: "Redis University", icon: "fa fa-user-graduate", url: "https://university.redis.io/" },
-    { label: "Redis Cloud", icon: "fa fa-cloud", url: "https://cloud.redis.io/" },
+    {
+        label: "Docs",
+        //icon: "fa fa-book", 
+        url: "https://redis.io/docs/latest/",
+        image: "/icons/profiler.svg"
+    },
+    {
+        label: "Redis University",
+        //icon: "fa fa-user-graduate",
+        url: "https://university.redis.io/",
+        image: "/icons/university.svg"
+    },
+    {
+        label: "Redis Cloud",
+        //icon: "fa fa-cloud",
+        url: "https://cloud.redis.io/",
+        image: "/icons/cloud-midnight.svg"
+    },
 ]
 
 const PgSidebar = () => {
@@ -52,7 +68,8 @@ const PgSidebar = () => {
             </div>
             <div className="pg-list-item anime-line-hover" onClick={() => setModalIsOpen(true)}>
                 <div className="pg-list-item-icon">
-                    <i className="fa fa-arrows-up-down-left-right"></i>
+                    {/* <i className="fa fa-arrows-up-down-left-right"></i> */}
+                    <Image src="/icons/move.svg" alt="move" width={16} height={16} />
                 </div>
                 <div className="pg-list-item-label select-query-label">
                     {labels.selectQuery}
@@ -73,7 +90,8 @@ const PgSidebar = () => {
                                 onClick={() => handleQueryItemClick(item.queryId, selectedCategory?.categoryId)}>
 
                                 <div className="pg-list-item-icon">
-                                    <i className="fa fa-arrow-right"></i>
+                                    {/* <i className="fa fa-arrow-right"></i> */}
+                                    <Image src="/icons/arrow-right-slim.svg" alt={item.label} width={16} height={16} />
                                 </div>
                                 <div className="pg-list-item-label">
                                     {item.label}
@@ -94,7 +112,8 @@ const PgSidebar = () => {
             {linkItems.map(item => (
                 <div className="pg-list-item anime-line-hover" key={item.label} onClick={() => window.open(item.url, '_blank', 'noopener,noreferrer')}>
                     <div className="pg-list-item-icon">
-                        <i className={item.icon}></i>
+                        {/* <i className={item.icon}></i> */}
+                        <Image src={item.image} alt={item.label} width={16} height={16} />
                     </div>
                     <div className="pg-list-item-label" >
                         {item.label}
@@ -104,7 +123,8 @@ const PgSidebar = () => {
 
             <div className="pg-list-item anime-line-hover" key="replay-tour" onClick={handleReplayTourClick}>
                 <div className="pg-list-item-icon">
-                    <i className="fa fa-rotate"></i>
+                    {/* <i className="fa fa-rotate"></i> */}
+                    <Image src="/icons/refresh.svg" alt="rotate" width={16} height={16} />
                 </div>
                 <div className="pg-list-item-label pg-replay-tour-lbl">
                     {labels.replayTour}

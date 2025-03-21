@@ -2,11 +2,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: var(--space-8);
-
   padding: var(--space-8);
   border-radius: var(--radius-4);
   cursor: pointer;
+}
+
+.comp-icon-button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-4);
 }
 
 .comp-icon-button.regular {

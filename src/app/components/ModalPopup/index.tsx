@@ -2,6 +2,7 @@ import './index.scss';
 
 import { ReactNode, useEffect } from 'react';
 import ReactModal from 'react-modal';
+import Image from "next/image";
 
 
 
@@ -46,7 +47,8 @@ const ModalPopup = ({ isOpen, onClose, children, styles }: ModalPopupProps) => {
         >
             <div className="comp-modal-popup">
                 <div className="icon-close" onClick={onClose}>
-                    <i className="fa fa-times"></i>
+                    {/* <i className="fa fa-times"></i> */}
+                    <Image src="/icons/close.svg" alt="close" width={20} height={20} />
                 </div>
                 {children}
             </div>

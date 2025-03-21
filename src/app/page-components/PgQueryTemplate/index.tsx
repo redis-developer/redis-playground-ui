@@ -4,6 +4,7 @@ import type { IQueryTemplateData } from "../usePlayground";
 
 import { useEffect, useState } from "react";
 import Highlighter from 'react-highlight-words';
+import Image from "next/image";
 
 import { usePlaygroundContext } from "../PlaygroundContext";
 import Loader from "@/app/components/Loader";
@@ -80,7 +81,8 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
     return <div className="pg-query-template">
         <div className="query-search-bar-container">
             <div className="query-search-bar">
-                <i className="fa fa-search"></i>
+                {/* <i className="fa fa-search"></i> */}
+                <Image src="/icons/search.svg" alt={labels.searchPlaceholder} width={18} height={18} />
                 <input type="text" placeholder={labels.searchPlaceholder} onChange={handleSearchChange} className="query-search-input" value={searchValue} />
                 {searchValue && <i className="fa fa-times clear-icon" onClick={handleClearSearch}></i>}
             </div>
