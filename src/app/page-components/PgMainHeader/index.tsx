@@ -206,13 +206,13 @@ const PgMainHeader = () => {
                     </div>
                     <div className="header-buttons">
                         <IconButton buttonLbl={labels.buttonRun}
-                            imgSrc='/icons/play.svg' imgWidth={24} imgHeight={24}
+                            imgSrc='/icons/play.svg' imgWidth="1.5rem" imgHeight="1.5rem"
                             buttonCls="header-run-btn" onClick={handleRunQuery} buttonType={IconButtonType.SUCCESS} isDisabled={isRunButtonDisabled} />
                         <IconButton buttonLbl={labels.buttonReset}
-                            imgSrc='/icons/redo.svg' imgWidth={24} imgHeight={24}
+                            imgSrc='/icons/redo.svg' imgWidth="1.25rem" imgHeight="1.25rem"
                             buttonCls="header-reset-btn" onClick={handleResetQuery} />
                         <IconButton buttonLbl={labels.buttonShare}
-                            imgSrc='/icons/arrow-up-right.svg' imgWidth={24} imgHeight={24}
+                            imgSrc='/icons/arrow-up-right.svg' imgWidth="1.25rem" imgHeight="1.25rem"
                             buttonCls="header-share-btn" onClick={handleShareQuery} />
                     </div>
                 </div>

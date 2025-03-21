@@ -1,5 +1,6 @@
 import './index.scss';
-import Image from 'next/image';
+
+import ImageIcon from '../ImageIcon';
 
 enum IconButtonType {
     REGULAR = 'regular',
@@ -11,14 +12,14 @@ interface IconButtonProps {
     onClick?: () => void;
     iconCls?: string;
     imgSrc?: string;
-    imgWidth?: number;
-    imgHeight?: number;
+    imgWidth?: number | string;
+    imgHeight?: number | string;
     buttonCls?: string;
     buttonType?: IconButtonType;
     isDisabled?: boolean;
 }
 
-const IconButton = ({ buttonLbl, onClick, iconCls = "", imgSrc = "", imgWidth = 16, imgHeight = 16, buttonCls = "",
+const IconButton = ({ buttonLbl, onClick, iconCls = "", imgSrc = "", imgWidth = "1rem", imgHeight = "1rem", buttonCls = "",
     buttonType = IconButtonType.REGULAR, isDisabled = false }: IconButtonProps) => {
 
     const handleClick = () => {
@@ -32,7 +33,7 @@ const IconButton = ({ buttonLbl, onClick, iconCls = "", imgSrc = "", imgWidth = 
         <div className='comp-icon-button-wrapper'>
             <span className="button-lbl">{buttonLbl}</span>
             {iconCls && <i className={`icon ${iconCls}`} />}
-            {imgSrc && <Image src={imgSrc} alt={buttonLbl} width={imgWidth} height={imgHeight} />}
+            {imgSrc && <ImageIcon imgSrc={imgSrc} alt={buttonLbl} imgWidth={imgWidth} imgHeight={imgHeight} />}
         </div>
     </div>);
 }

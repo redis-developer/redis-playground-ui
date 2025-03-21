@@ -3,10 +3,11 @@ import "./index.scss";
 import type { IQueryTemplateData } from "@/app/types";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
 import { usePlaygroundContext } from "../PlaygroundContext";
 import ModalPopup from '@/app/components/ModalPopup';
+import ImageIcon from "@/app/components/ImageIcon";
+
 import PgQueryTemplate from '../PgQueryTemplate';
 
 const labels = {
@@ -69,7 +70,7 @@ const PgSidebar = () => {
             <div className="pg-list-item anime-line-hover" onClick={() => setModalIsOpen(true)}>
                 <div className="pg-list-item-icon">
                     {/* <i className="fa fa-arrows-up-down-left-right"></i> */}
-                    <Image src="/icons/move.svg" alt="move" width={16} height={16} />
+                    <ImageIcon imgSrc="/icons/move.svg" alt="move" imgWidth="1rem" imgHeight="1rem" />
                 </div>
                 <div className="pg-list-item-label select-query-label">
                     {labels.selectQuery}
@@ -91,7 +92,7 @@ const PgSidebar = () => {
 
                                 <div className="pg-list-item-icon">
                                     {/* <i className="fa fa-arrow-right"></i> */}
-                                    <Image src="/icons/arrow-right-slim.svg" alt={item.label} width={16} height={16} />
+                                    <ImageIcon imgSrc="/icons/arrow-right-slim.svg" alt={item.label} imgWidth="1rem" imgHeight="1rem" />
                                 </div>
                                 <div className="pg-list-item-label">
                                     {item.label}
@@ -113,7 +114,7 @@ const PgSidebar = () => {
                 <div className="pg-list-item anime-line-hover" key={item.label} onClick={() => window.open(item.url, '_blank', 'noopener,noreferrer')}>
                     <div className="pg-list-item-icon">
                         {/* <i className={item.icon}></i> */}
-                        <Image src={item.image} alt={item.label} width={16} height={16} />
+                        <ImageIcon imgSrc={item.image} alt={item.label} imgWidth="1rem" imgHeight="1rem" />
                     </div>
                     <div className="pg-list-item-label" >
                         {item.label}
@@ -124,7 +125,7 @@ const PgSidebar = () => {
             <div className="pg-list-item anime-line-hover" key="replay-tour" onClick={handleReplayTourClick}>
                 <div className="pg-list-item-icon">
                     {/* <i className="fa fa-rotate"></i> */}
-                    <Image src="/icons/refresh.svg" alt="rotate" width={16} height={16} />
+                    <ImageIcon imgSrc="/icons/refresh.svg" alt="rotate" imgWidth="1rem" imgHeight="1rem" />
                 </div>
                 <div className="pg-list-item-label pg-replay-tour-lbl">
                     {labels.replayTour}
