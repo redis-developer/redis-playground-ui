@@ -48,9 +48,9 @@
   --color-loader-gradient2: #a767e5;
 
   /*Component colors*/
-  --comp-code-mirror-bg-clr: var(--color-primary-light1);
+  --comp-code-mirror-bg-clr: var(--color-primary);
   --comp-code-mirror-gutter-bg-clr: var(--color-primary);
-  --comp-code-mirror-disabled-bg-clr: var(--color-primary-light1);
+  --comp-code-mirror-disabled-bg-clr: var(--color-primary);
   --comp-code-mirror-border-clr: var(--color-border-base);
   --comp-code-mirror-active-line-bg-clr: var(--color-primary-light2);
   --comp-code-mirror-active-gutter-txt-clr: var(--color-gray-base);
@@ -118,6 +118,6 @@
 
   --pg-walkthrough-txt-clr: var(--color-primary-txt);
 
-  --pg-container-bg-clr: var(--color-primary-light5);
+  --pg-container-bg-clr: var(--color-primary);
   --pg-container-txt-clr: var(--color-primary-txt);
 }

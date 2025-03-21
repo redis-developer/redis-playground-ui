@@ -19,6 +19,7 @@ interface PgQueryCardRef {
 const pageData = {
     infoIconDefaultContent: 'Try different queries to see how your data changes',
     headerTitle: 'Query',
+    defaultQueryContent: '// Select a query from the sidebar',
 }
 
 const PgQueryCard = forwardRef<PgQueryCardRef, {}>((props, ref) => {
@@ -103,7 +104,7 @@ const PgQueryCard = forwardRef<PgQueryCardRef, {}>((props, ref) => {
     return <div className="pg-query-card">
         <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true}
             infoIconContent={infoIconContent} infoIconContentType={TooltipIconType.html} handleIconClick={handleIconClick} />
-        <CodeMirrorEditor initialValue={queryViewData?.query} mode={CodeMirrorMode.redis}
+        <CodeMirrorEditor initialValue={queryViewData?.query || pageData.defaultQueryContent} mode={CodeMirrorMode.redis}
             ref={editorRef} onBlur={handleQueryChange} onExecute={handleExecute} />
     </div>
 
