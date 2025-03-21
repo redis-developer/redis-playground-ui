@@ -11,6 +11,10 @@
   --color-black-gray-200: #252525;
   --color-black-gray-300: #2a2a2a;
   --color-black-gray-400: #333333;
+  --color-gray-02: #e6e6e6;
+  --color-gray-03: #d1d3d4;
+  --color-gray-06: #939598;
+  --color-gray-07: #6d6e71;
 
   --color-white-base: #ffffff;
   --color-white-gray: #bdc3d7;
@@ -50,10 +54,11 @@
   /*Component colors*/
   --comp-code-mirror-bg-clr: var(--color-primary);
   --comp-code-mirror-gutter-bg-clr: var(--color-primary);
+  --comp-code-mirror-gutter-txt-clr: var(--color-primary-light4);
   --comp-code-mirror-disabled-bg-clr: var(--color-primary);
   --comp-code-mirror-border-clr: var(--color-border-base);
   --comp-code-mirror-active-line-bg-clr: var(--color-primary-light2);
-  --comp-code-mirror-active-gutter-txt-clr: var(--color-gray-base);
+  --comp-code-mirror-active-gutter-txt-clr: var(--color-gray-07);
 
   --comp-icon-button-bg-clr: var(--color-primary);
   --comp-icon-button-txt-clr: var(--color-btn-default);
@@ -83,18 +88,21 @@
 
   --pg-card-header-bg-clr: var(--color-primary);
   --pg-card-header-txt-clr: var(--color-primary-txt);
+  --pg-card-header-title-txt-clr: var(--color-slate-dark);
   --pg-card-header-icon-clr: var(--color-slate-dark);
   --pg-card-footer-bg-clr: var(--color-primary);
-  --pg-card-footer-txt-clr: var(--color-primary-txt);
+  --pg-card-footer-txt-clr: var(--color-slate-dark);
+  --pg-card-footer-border-clr: var(--color-border-base);
 
-  --pg-result-bg-clr: var(--color-border-base);
-  --pg-result-table-border-clr: var(--color-shadow-base);
-  --pg-result-table-header-bg-clr: var(--color-border-base);
-  --pg-result-table-header-txt-clr: var(--color-primary-txt);
-  --pg-result-table-row-bg-even-clr: var(--color-primary-light1);
-  --pg-result-table-row-bg-odd-clr: var(--color-white-base);
-  --pg-result-table-row-bg-hover-clr: var(--color-primary-light4);
-  --pg-result-table-row-txt-clr: var(--color-primary-txt);
+  // --pg-result-bg-clr: var(--color-border-base);
+  --pg-result-table-border-clr: var(--color-gray-02);
+  --pg-result-table-header-border-clr: var(--color-gray-03);
+  --pg-result-table-header-bg-clr: var(--color-gray-02);
+  // --pg-result-table-header-txt-clr: var(--color-primary-txt);
+  // --pg-result-table-row-bg-even-clr: var(--color-primary-light1);
+  // --pg-result-table-row-bg-odd-clr: var(--color-white-base);
+  --pg-result-table-row-bg-hover-clr: var(--color-gray-03);
+  // --pg-result-table-row-txt-clr: var(--color-primary-txt);
 
   --pg-result-error-txt-clr: var(--color-error-red);
 

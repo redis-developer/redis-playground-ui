@@ -1,49 +1,48 @@
 .pg-result-table-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  /* default height */
+  height: 100px;
+  overflow: auto;
+
+  .pg-result-table {
     flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    /* default height */
-    height: 100px;
-    overflow: auto;
+    border-collapse: collapse;
+    border: 1px solid var(--pg-result-table-border-clr);
 
-    .pg-result-table {
-        flex-grow: 1;
-        border-collapse: collapse;
-        border: 1px solid var(--pg-result-table-border-clr);
+    thead {
+      position: sticky;
+      top: 0;
+      z-index: 1;
 
-        thead {
-            position: sticky;
-            top: 0;
-            z-index: 1;
-
-            th {
-                color: var(--pg-result-table-header-txt-clr);
-                background-color: var(--pg-result-table-header-bg-clr);
-                white-space: nowrap;
-            }
-        }
-
-        th,
-        td {
-            padding: var(--space-12) var(--space-16);
-            border: 1px solid var(--pg-result-table-border-clr);
-            color: var(--pg-result-table-row-txt-clr);
-            text-align: left;
-            vertical-align: top;
-        }
-
-        tbody tr:nth-child(even) {
-            background-color: var(--pg-result-table-row-bg-even-clr);
-        }
-
-        tbody tr:nth-child(odd) {
-            background-color: var(--pg-result-table-row-bg-odd-clr);
-        }
-
-        tbody tr:hover {
-            background-color: var(--pg-result-table-row-bg-hover-clr);
-        }
-
+      th {
+        color: var(--pg-result-table-header-txt-clr);
+        background-color: var(--pg-result-table-header-bg-clr);
+        border: 1px solid var(--pg-result-table-header-border-clr);
+        white-space: nowrap;
+      }
     }
 
+    th,
+    td {
+      padding: var(--space-12) var(--space-16);
+      border: 1px solid var(--pg-result-table-border-clr);
+      color: var(--pg-result-table-row-txt-clr);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: var(--pg-result-table-row-bg-even-clr);
+    }
+
+    tbody tr:nth-child(odd) {
+      background-color: var(--pg-result-table-row-bg-odd-clr);
+    }
+
+    tbody tr:hover {
+      background-color: var(--pg-result-table-row-bg-hover-clr);
+    }
+  }
 }

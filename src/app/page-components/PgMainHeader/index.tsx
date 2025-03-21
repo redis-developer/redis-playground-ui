@@ -197,7 +197,7 @@ const PgMainHeader = () => {
     return (
         <div className="pg-main-header-container">
             <div className="header-logo">
-                <Image src={logoImgPath} alt="logo" width={60} height={20} />
+                <Image src={logoImgPath} alt="logo" width={84} height={28} />
             </div>
             <div className="header-right-container">
                 <div className="header-right-top">
@@ -209,10 +209,10 @@ const PgMainHeader = () => {
                             imgSrc='/icons/play.svg' imgWidth={24} imgHeight={24}
                             buttonCls="header-run-btn" onClick={handleRunQuery} buttonType={IconButtonType.SUCCESS} isDisabled={isRunButtonDisabled} />
                         <IconButton buttonLbl={labels.buttonReset}
-                            imgSrc='/icons/redo.svg' imgWidth={20} imgHeight={20}
+                            imgSrc='/icons/redo.svg' imgWidth={24} imgHeight={24}
                             buttonCls="header-reset-btn" onClick={handleResetQuery} />
                         <IconButton buttonLbl={labels.buttonShare}
-                            imgSrc='/icons/arrow-up-right.svg' imgWidth={20} imgHeight={20}
+                            imgSrc='/icons/arrow-up-right.svg' imgWidth={24} imgHeight={24}
                             buttonCls="header-share-btn" onClick={handleShareQuery} />
                     </div>
                 </div>

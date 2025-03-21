@@ -45,21 +45,21 @@ const PgCardHeader = ({ headerTitle, infoIconContent, infoIconContentType, showC
                 {headerTitle}
 
                 {infoIconContent && (
-                    <TooltipIcon imgSrc="/icons/info.svg"
+                    <TooltipIcon imgSrc="/icons/info.svg" imgWidth="0.875rem" imgHeight="0.875rem"
                         title={infoIconContent} titleType={infoIconContentType} />
                 )}
 
 
             </div>
             <div className="header-buttons">
-                {showSwitchViewIcon && <TooltipIcon imgSrc="/icons/columns.svg"
+                {showSwitchViewIcon && <TooltipIcon imgSrc="/icons/columns.svg" imgWidth="1.25rem" imgHeight="1.25rem"
                     title="Switch View"
                     onClick={() => handleClick(HeaderIcon.switchView)}
                 />
                 }
 
                 {showCopyIcon &&
-                    (copied ? <i className="fa fa-check"></i> : <TooltipIcon imgSrc="/icons/copy.svg" title="Copy" onClick={() => handleClick(HeaderIcon.copy)} />)}
+                    (copied ? <i className="fa fa-check"></i> : <TooltipIcon imgSrc="/icons/copy.svg" imgWidth="1.25rem" imgHeight="1.25rem" title="Copy" onClick={() => handleClick(HeaderIcon.copy)} />)}
 
             </div>
         </div>

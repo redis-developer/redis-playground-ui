@@ -92,7 +92,7 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
         <div className="query-category-container">
             {filteredTemplateData.map((queryTmpl, index) => (
                 <div key={index} className="query-category">
-                    <div className="query-category-title font-bold">
+                    <div className="query-category-title font-medium">
                         <Highlighter
                             highlightClassName={highlightClassName}
                             searchWords={[searchValue]}
@@ -103,7 +103,7 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
                     <div className="query-category-items">
                         {queryTmpl.items.map((item, index) => (
                             <div key={index} className="query-item" onClick={() => handleQueryItemClick(item.queryId, queryTmpl.categoryId)}>
-                                <div className="query-item-label font-bold">
+                                <div className="query-item-label font-medium">
                                     <Highlighter
                                         highlightClassName={highlightClassName}
                                         searchWords={[searchValue]}

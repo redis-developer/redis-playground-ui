@@ -13,10 +13,15 @@
     .cm-activeLine {
       background-color: var(--comp-code-mirror-active-line-bg-clr);
     }
+
+    .cm-content {
+      font-family: "Space Mono", monospace;
+    }
   }
 
   .cm-gutters {
     background-color: var(--comp-code-mirror-gutter-bg-clr);
+    color: var(--comp-code-mirror-gutter-txt-clr);
   }
 
   .cm-activeLineGutter {
@@ -32,6 +37,10 @@
 
     .cm-activeLine {
       background-color: transparent;
+    }
+
+    .cm-activeLineGutter {
+      color: var(--comp-code-mirror-gutter-txt-clr);
     }
   }
 }
