@@ -32,6 +32,7 @@ const bottomCardConfig = {
     }
 };
 
+const keyboardHint = '(Use ← → arrow keys to navigate steps)';
 
 let steps: Step[] = [
     {
@@ -40,69 +41,118 @@ let steps: Step[] = [
         disableBeacon: true, //direct step open instead of beacon (dot)
         data: {
             //custom props
-            performClick: true
+            performClick: true,
+            title: 'Select query',
+            footer: keyboardHint
         }
     },
     {
         target: '.query-item:nth-child(1)',
         content: 'Click on any query to load it',
         data: {
-            performClick: true
+            performClick: true,
+            title: 'Select query'
         }
     },
     {
         target: '.pg-query-card',
         content: 'View and edit your Redis query here',
-        ...topCardConfig
+        ...topCardConfig,
+        data: {
+            title: 'Query editor'
+        }
     },
     {
         target: '.pg-db-index-card',
         content: 'View the corresponding index for your Redis query',
-        ...topCardConfig
+        ...topCardConfig,
+        data: {
+            title: 'DB Index view'
+        }
     },
     {
         target: '.pg-data-source-card',
         content: 'View the sample source data used by your Redis query',
-        ...bottomCardConfig
+        ...bottomCardConfig,
+        data: {
+            title: 'Data source view'
+        }
     },
     {
         target: '.header-run-btn',
         content: 'Execute your Redis query',
         data: {
-            performClick: true
+            performClick: true,
+            title: 'Run'
         }
     },
     {
         target: '.pg-result-card',
         content: 'View the query results here',
-        ...bottomCardConfig
+        ...bottomCardConfig,
+        data: {
+            title: 'Results view'
+        }
     },
     {
         target: '.header-share-btn',
         content: 'Share your Redis query using a generated URL',
+        data: {
+            title: 'Share'
+        }
     },
     {
         target: '.header-reset-btn',
         content: 'Reset your modified Redis query back to its default state',
+        data: {
+            title: 'Reset'
+        }
     },
     {
         target: '.pg-query-category .pg-list-item:last-child',
         content: 'Click on other related queries in the category to view them',
+        data: {
+            title: 'Related queries'
+        }
     },
     {
         target: '.pg-replay-tour-lbl',
         content: 'Replay this tour anytime to review the steps',
+        data: {
+            title: 'Replay tour'
+        }
     },
 
 ];
 
-const keyboardHint = '(Use ← → arrow keys to navigate steps)';
+const CustomTooltip = ({ title, content, footer, index, total }: { title: string, content: string, footer?: string, index: number, total: number }) => (
+    <div className='pg-joyride-tooltip'>
+        <div className='pg-joyride-header'>
+            <span className='pg-joyride-title font-medium'>{title}</span>
+
+            <span className='pg-joyride-step-count'>(Step {index} of {total})</span>
+
+        </div>
+        <div className='pg-joyride-content'>
+            {content}
+        </div>
+        <div className='pg-joyride-footer'>
+            {footer}
+        </div>
+    </div>
+);
+
 steps = steps.map((step, index) => ({
     ...step,
-    content: (<div className='pg-joyride-content'>
-        {step.content}
-        {index === 0 && <div className='pg-joyride-footer' dangerouslySetInnerHTML={{ __html: keyboardHint }} />}
-    </div>)
+    content: (
+        <CustomTooltip
+            title={step.data?.title || ''}
+            content={step.content as string}
+            footer={step.data?.footer || ""}
+            index={index + 1}
+            total={steps.length}
+        />
+    )
 }));
 
 const PgWalkthrough = () => {
@@ -182,7 +232,7 @@ const PgWalkthrough = () => {
             steps={steps}
             run={runTour}
             continuous={true}
-            showProgress={true}
+            showProgress={false}
             showSkipButton={true}
             stepIndex={stepIndex}
             callback={handleJoyrideCallback}
