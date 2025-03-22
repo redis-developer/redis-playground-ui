@@ -6,7 +6,6 @@
   padding: var(--space-24) 0 var(--space-16) 0;
   background-color: var(--pg-sidebar-bg-clr);
   color: var(--pg-sidebar-txt-clr);
-  // border-top: 1px solid var(--pg-sidebar-border-clr);
   box-shadow: 0 var(--shadow-size-1) var(--shadow-size-1)
     var(--pg-sidebar-shadow-clr);
   box-sizing: border-box;
@@ -14,7 +13,6 @@
   .pg-list {
     margin-bottom: var(--space-24);
     padding-bottom: var(--space-8);
-    // border-bottom: 1px solid var(--pg-sidebar-border-clr);
   }
 
   .pg-list-title {

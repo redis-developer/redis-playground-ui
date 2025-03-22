@@ -6,7 +6,7 @@ import { ToastContainer } from 'react-toastify';
 
 import './common/css/typography.scss';
 import './common/css/variables.scss';
-import './common/css/theme.scss';
+import './common/css/redis-core.scss';
 import './common/css/theme-redis.scss';
 import './common/css/anime.scss';
 
