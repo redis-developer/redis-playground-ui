@@ -210,9 +210,11 @@ const PgMainHeader = () => {
                             buttonCls="header-run-btn" onClick={handleRunQuery} buttonType={IconButtonType.SUCCESS} isDisabled={isRunButtonDisabled} />
                         <IconButton buttonLbl={labels.buttonReset}
                             imgSrc='/icons/redo.svg' imgWidth="1.25rem" imgHeight="1.25rem"
+                            imgHoverSrc='/icons/redo-hover.svg'
                             buttonCls="header-reset-btn" onClick={handleResetQuery} />
                         <IconButton buttonLbl={labels.buttonShare}
                             imgSrc='/icons/arrow-up-right.svg' imgWidth="1.25rem" imgHeight="1.25rem"
+                            imgHoverSrc='/icons/arrow-up-right-hover.svg'
                             buttonCls="header-share-btn" onClick={handleShareQuery} />
                     </div>
                 </div>

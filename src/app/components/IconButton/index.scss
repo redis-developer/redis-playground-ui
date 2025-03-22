@@ -23,12 +23,28 @@
     color: var(--comp-icon-button-icon-clr);
   }
 
+  .default-image {
+    display: block;
+  }
+
+  .hover-image {
+    display: none;
+  }
+
   &:hover {
     color: var(--comp-icon-button-hover-bg-clr);
     border: 1px solid var(--comp-icon-button-hover-bg-clr);
 
     i {
       color: var(--comp-icon-button-hover-bg-clr) !important;
+    }
+
+    .default-image {
+      display: none;
+    }
+
+    .hover-image {
+      display: block;
     }
   }
 }
