@@ -6,9 +6,14 @@
   color: var(--comp-tooltip-txt-clr) !important;
   background-color: var(--comp-tooltip-bg-clr) !important;
   border-radius: var(--radius-12) !important;
+  border: 1px solid var(--comp-tooltip-border-clr) !important;
   font-size: var(--font-size-12) !important;
-  font-weight: 700 !important;
   z-index: 1000 !important;
+}
+
+.comp-custom-tooltip-arrow {
+  border-bottom: 1px solid var(--comp-tooltip-border-clr) !important;
+  border-right: 1px solid var(--comp-tooltip-border-clr) !important;
 }
 
 .comp-tooltip-icon-img {

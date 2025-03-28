@@ -11,6 +11,7 @@ enum TooltipIconType {
 
 interface ITooltipIconProps {
     id?: string;
+    className?: string;
     iconCls?: string;
     imgSrc?: string;
     imgWidth?: number | string;
@@ -24,19 +25,19 @@ const tooltipOptions: ITooltip = {
     // place: 'right',
     // variant: 'light',
     delayShow: 200,
-    className: 'comp-custom-tooltip',
-    //classNameArrow: 'comp-custom-tooltip-arrow'
+    className: 'comp-custom-tooltip font-regular',
+    classNameArrow: 'comp-custom-tooltip-arrow'
 }
 
 const generateTooltipId = () => {
     return `tooltip-id-${Math.random().toString(36).substring(2, 15)}`;
 }
 
-const TooltipIcon = ({ id, iconCls, imgSrc, imgWidth = "1rem", imgHeight = "1rem", title, titleType = TooltipIconType.text, onClick }: ITooltipIconProps) => {
+const TooltipIcon = ({ id, iconCls, imgSrc, imgWidth = "1rem", imgHeight = "1rem", title, titleType = TooltipIconType.text, onClick, className }: ITooltipIconProps) => {
     const [tooltipId, setTooltipId] = useState(id || generateTooltipId());
     return <>
         {iconCls && (
-            <i className={`comp-tooltip-icon ${iconCls}`}
+            <i className={`comp-tooltip-icon ${iconCls} ${className}`}
                 onClick={onClick}
                 data-tooltip-id={tooltipId}
                 data-tooltip-content={titleType === TooltipIconType.text ? title : undefined}
@@ -44,7 +45,7 @@ const TooltipIcon = ({ id, iconCls, imgSrc, imgWidth = "1rem", imgHeight = "1rem
             ></i>
         )}
         {imgSrc && (
-            <div className='comp-tooltip-icon-img' style={{ width: imgWidth, height: imgHeight }} >
+            <div className={`comp-tooltip-icon-img ${className}`} style={{ width: imgWidth, height: imgHeight }} >
                 <Image src={imgSrc} alt={title} fill
                     onClick={onClick}
                     data-tooltip-id={tooltipId}

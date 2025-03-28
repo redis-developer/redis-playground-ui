@@ -59,7 +59,7 @@ const PgCardHeader = ({ headerTitle, infoIconContent, infoIconContentType, showC
                 }
 
                 {showCopyIcon &&
-                    (copied ? <i className="fa fa-check"></i> : <TooltipIcon imgSrc="/icons/copy.svg" imgWidth="1.25rem" imgHeight="1.25rem" title="Copy" onClick={() => handleClick(HeaderIcon.copy)} />)}
+                    (copied ? <TooltipIcon imgSrc="/icons/check.svg" imgWidth="1.25rem" imgHeight="1.25rem" title="Copied" /> : <TooltipIcon imgSrc="/icons/copy.svg" imgWidth="1.25rem" imgHeight="1.25rem" title="Copy" onClick={() => handleClick(HeaderIcon.copy)} />)}
 
             </div>
         </div>

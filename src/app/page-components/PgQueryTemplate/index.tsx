@@ -8,6 +8,7 @@ import Highlighter from 'react-highlight-words';
 import { usePlaygroundContext } from "../PlaygroundContext";
 import Loader from "@/app/components/Loader";
 import ImageIcon from "@/app/components/ImageIcon";
+import TooltipIcon from '@/app/components/TooltipIcon';
 
 interface IQueryTemplateProps {
     onClose?: () => void;
@@ -106,7 +107,8 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
                         {/* <i className="fa fa-search"></i> */}
                         <ImageIcon imgSrc="/icons/search.svg" alt={labels.searchPlaceholder} imgWidth="1.125rem" imgHeight="1.125rem" />
                         <input type="text" placeholder={labels.searchPlaceholder} onChange={handleSearchChange} className="query-search-input" value={searchValue} />
-                        {searchValue && <i className="fa fa-times clear-icon" onClick={handleClearSearch}></i>}
+                        {/* {searchValue && <i className="fa fa-times clear-icon" onClick={handleClearSearch}></i>} */}
+                        {searchValue && <TooltipIcon imgSrc="/icons/close.svg" className='clear-icon' imgWidth="1rem" imgHeight="1rem" title="Clear" onClick={handleClearSearch} />}
                     </div>
                 </div>
                 <div className="query-sidebar-content">

@@ -6,6 +6,7 @@ import {
   syntaxHighlighting,
   StreamLanguage,
 } from "@codemirror/language";
+import { EditorView } from "@codemirror/view";
 import { tags } from "@lezer/highlight";
 
 const redisCommands = [
@@ -71,30 +72,38 @@ const redisHighlightStyle = HighlightStyle.define([
   // Commands or keywords
   {
     tag: tags.keyword,
-    color: "#B76BE2",
+    color: "#F28100",
     //fontWeight: "bold",
   },
 
   // Variables and identifiers
-  { tag: tags.variableName, color: "#1A5FB4" },
+  { tag: tags.variableName, color: "#8F2EC4" },
 
   // Numbers
-  { tag: tags.number, color: "#26A269" },
+  { tag: tags.number, color: "#1750EB" },
 
   // JSON paths ($.productId)
-  { tag: tags.propertyName, color: "#C64600" },
+  { tag: tags.propertyName, color: "#FF16B4" },
 
   // Strings (quoted values)
-  { tag: tags.string, color: "#EB352A" },
+  { tag: tags.string, color: "#018800" },
 
   // Brackets and delimiters
-  { tag: tags.bracket, color: "#5E5C64" },
+  { tag: tags.bracket, color: "#091A23" },
 
   // Comments
   { tag: tags.comment, color: "#939598" },
 ]);
 
+// Add selection theme configuration
+const selectionTheme = EditorView.theme({
+  "&.cm-focused .cm-selectionBackground, .cm-selectionBackground": {
+    backgroundColor: "#E9E9E9 !important",
+  },
+});
+
 // Language support with highlighting
 export const redisSyntaxSupport = new LanguageSupport(redisLanguage, [
   syntaxHighlighting(redisHighlightStyle),
+  selectionTheme,
 ]);

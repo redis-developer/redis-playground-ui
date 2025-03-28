@@ -19,16 +19,17 @@
   --comp-icon-button-hover-bg-clr: var(--hyper-09);
   --comp-icon-button-active-bg-clr: var(--hyper-08);
 
-  --comp-loader-bg-clr: var(--dusk-06);
-  --comp-loader-gradient1: var(--green-400);
-  --comp-loader-gradient2: var(--purple-06);
+  --comp-loader-bg-clr: var(--gradient-g-0);
+  --comp-loader-gradient1: var(--gradient-g-1);
+  --comp-loader-gradient2: var(--gradient-g-2);
 
   --comp-modal-popup-bg-clr: var(--dusk-01);
   --comp-modal-popup-txt-clr: var(--dusk-04);
   --comp-modal-popup-close-txt-clr: var(--dusk-06);
 
-  --comp-tooltip-bg-clr: var(--dusk-07);
-  --comp-tooltip-txt-clr: var(--white-base);
+  --comp-tooltip-bg-clr: var(--white-base);
+  --comp-tooltip-txt-clr: var(--dusk-08);
+  --comp-tooltip-border-clr: var(--dusk-03);
 
   --pg-main-header-bg-clr: var(--white-base);
   --pg-main-header-txt-clr: var(--midnight-base);
@@ -54,7 +55,7 @@
 
   --pg-result-error-txt-clr: var(--hyper-05);
 
-  --pg-card-panel-resize-handle-bg-clr: var(--gray-04);
+  --pg-card-panel-resize-handle-bg-clr: transparent; //var(--gray-04);
   --pg-card-panel-box-shadow-clr: var(--gray-03);
 
   --pg-query-template-bg-clr: var(--gray-02);
