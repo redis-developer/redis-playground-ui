@@ -20,6 +20,42 @@ const pageData = {
 }
 
 
+const formatJsonInRawResult = (_result: any[]) => {
+
+    if (Array.isArray(_result) && _result?.length) {
+
+        // deep clone
+        _result = JSON.parse(JSON.stringify(_result));
+
+        // const mCount = result[0];, start from 1
+        for (let i = 1; i < _result.length; i += 2) {
+            const key = _result[i] as string;
+            const value = _result[i + 1] as any[];
+
+            let jsonObj: any = null;
+            if (key && Array.isArray(value) && value?.length) {
+                /*
+                value = [
+                    "$",  // JSON path
+                    "{...json content...}"
+                ]
+                 */
+                const jsonPath = value[0];
+                const jsonData = value[1];
+                try {
+                    const parsedData = JSON.parse(jsonData as string);
+                    _result[i + 1][1] = parsedData;
+
+                } catch (e) {
+                    console.error('formatJsonInRawResult : Error parsing JSON:', e);
+                }
+            }
+
+        }
+    }
+    return _result;
+};
+
 const PgResultCard = () => {
     const { queryResponse } = usePlaygroundContext();
     const [showSwitchViewIcon, setShowSwitchViewIcon] = useState(false);
@@ -40,6 +76,7 @@ const PgResultCard = () => {
             }
             if (code) {
                 //beautify json
+                code = formatJsonInRawResult(code);
                 code = JSON.stringify(code, null, 4);
             }
             updateCode(editorRef.current, code);
@@ -114,7 +151,7 @@ const PgResultCard = () => {
                 {/* default view */}
                 <div className={`pg-result-card-content show-view`}>
                     <CodeMirrorEditor initialValue=''
-                        mode={CodeMirrorMode.javascript} disabled={true} ref={editorRef} />
+                        mode={CodeMirrorMode.redis} disabled={true} ref={editorRef} />
                 </div>
 
 

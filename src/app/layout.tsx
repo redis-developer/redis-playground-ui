@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="stylesheet" href="/fontawesome-free-6.6.0-web/css/all.min.css" />
+        {/* <link rel="stylesheet" href="/fontawesome-free-6.6.0-web/css/all.min.css" /> */}
       </head>
       <body className={`${inter.className} theme-redis font-regular`}>
         {children}
