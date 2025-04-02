@@ -1,9 +1,3 @@
-const isProd = process.env.NODE_ENV === "production";
-
-module.exports = {
-  basePath: isProd ? "/try/sandbox" : "",
-};
-
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: false, //process.env.ANALYZE === 'true',
 });
