@@ -9,6 +9,7 @@ import { usePlaygroundContext } from "../PlaygroundContext";
 import Loader from "@/app/components/Loader";
 import ImageIcon from "@/app/components/ImageIcon";
 import TooltipIcon from '@/app/components/TooltipIcon';
+import { useBasePath } from "@/app/utils/useBasePath";
 
 interface IQueryTemplateProps {
     onClose?: () => void;
@@ -22,6 +23,7 @@ const highlightClassName = "pg-highlighted-text";
 
 const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
     const { setSelectedQuery, queryTemplateData, setQueryTemplateData, fnLoadQueryTemplateData } = usePlaygroundContext();
+    const basePath = useBasePath;
 
     const [filteredTemplateData, setFilteredTemplateData] = useState<IQueryTemplateData[]>(queryTemplateData);
     const [isShowLoader, setIsShowLoader] = useState(false);
@@ -105,10 +107,10 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
                 <div className="query-search-bar-container">
                     <div className="query-search-bar">
                         {/* <i className="fa fa-search"></i> */}
-                        <ImageIcon imgSrc="/icons/search.svg" alt={labels.searchPlaceholder} imgWidth="1.125rem" imgHeight="1.125rem" />
+                        <ImageIcon imgSrc={basePath("/icons/search.svg")} alt={labels.searchPlaceholder} imgWidth="1.125rem" imgHeight="1.125rem" />
                         <input type="text" placeholder={labels.searchPlaceholder} onChange={handleSearchChange} className="query-search-input" value={searchValue} />
                         {/* {searchValue && <i className="fa fa-times clear-icon" onClick={handleClearSearch}></i>} */}
-                        {searchValue && <TooltipIcon imgSrc="/icons/close.svg" className='clear-icon' imgWidth="1rem" imgHeight="1rem" title="Clear" onClick={handleClearSearch} />}
+                        {searchValue && <TooltipIcon imgSrc={basePath("/icons/close.svg")} className='clear-icon' imgWidth="1rem" imgHeight="1rem" title="Clear" onClick={handleClearSearch} />}
                     </div>
                 </div>
                 <div className="query-sidebar-content">
@@ -117,7 +119,7 @@ const PgQueryTemplate = ({ onClose }: IQueryTemplateProps) => {
                             <div className="query-sidebar-item-label">
                                 {queryTmpl.category}
                             </div>
-                            <ImageIcon imgSrc="/icons/arrow-right-slim-red.svg" alt={queryTmpl.category} />
+                            <ImageIcon imgSrc={basePath("/icons/arrow-right-slim-red.svg")} alt={queryTmpl.category} />
                         </div>
 
                     ))}
