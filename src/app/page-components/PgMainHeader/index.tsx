@@ -98,7 +98,14 @@ const PgMainHeader = () => {
     } = usePlaygroundContext();
 
     const [isRunButtonDisabled, setIsRunButtonDisabled] = useState(false);
-    const basePath = useBasePath;
+
+    // Pre-compute all paths at the top level
+    const logoPath = useBasePath(logoImgPath);
+    const playIconPath = useBasePath('/icons/play.svg');
+    const redoIconPath = useBasePath('/icons/redo.svg');
+    const redoHoverPath = useBasePath('/icons/redo-hover.svg');
+    const arrowUpRightPath = useBasePath('/icons/arrow-up-right.svg');
+    const arrowUpRightHoverPath = useBasePath('/icons/arrow-up-right-hover.svg');
 
     const handleRunQuery = async () => {
         setQueryResponse(null);
@@ -198,7 +205,7 @@ const PgMainHeader = () => {
     return (
         <div className="pg-main-header-container">
             <div className="header-logo">
-                <Image src={basePath(logoImgPath)} alt="logo" width={84} height={28} />
+                <Image src={logoPath} alt="logo" width={84} height={28} />
             </div>
             <div className="header-right-container">
                 <div className="header-right-top">
@@ -207,15 +214,15 @@ const PgMainHeader = () => {
                     </div>
                     <div className="header-buttons">
                         <IconButton buttonLbl={labels.buttonRun}
-                            imgSrc={basePath('/icons/play.svg')} imgWidth="1.5rem" imgHeight="1.5rem"
+                            imgSrc={playIconPath} imgWidth="1.5rem" imgHeight="1.5rem"
                             buttonCls="header-run-btn" onClick={handleRunQuery} buttonType={IconButtonType.SUCCESS} isDisabled={isRunButtonDisabled} />
                         <IconButton buttonLbl={labels.buttonReset}
-                            imgSrc={basePath('/icons/redo.svg')} imgWidth="1.25rem" imgHeight="1.25rem"
-                            imgHoverSrc={basePath('/icons/redo-hover.svg')}
+                            imgSrc={redoIconPath} imgWidth="1.25rem" imgHeight="1.25rem"
+                            imgHoverSrc={redoHoverPath}
                             buttonCls="header-reset-btn" onClick={handleResetQuery} />
                         <IconButton buttonLbl={labels.buttonShare}
-                            imgSrc={basePath('/icons/arrow-up-right.svg')} imgWidth="1.25rem" imgHeight="1.25rem"
-                            imgHoverSrc={basePath('/icons/arrow-up-right-hover.svg')}
+                            imgSrc={arrowUpRightPath} imgWidth="1.25rem" imgHeight="1.25rem"
+                            imgHoverSrc={arrowUpRightHoverPath}
                             buttonCls="header-share-btn" onClick={handleShareQuery} />
                     </div>
                 </div>

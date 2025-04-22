@@ -18,6 +18,7 @@ interface ModalPopupProps {
 
 const ModalPopup = ({ isOpen, onClose, children, styles }: ModalPopupProps) => {
   const parentId = "main-app";
+  const closeIconPath = useBasePath("/icons/close.svg");
 
   const customStyles = {
     overlay: {
@@ -34,8 +35,6 @@ const ModalPopup = ({ isOpen, onClose, children, styles }: ModalPopupProps) => {
     },
   };
 
-  const closeSvg = useBasePath("/icons/close.svg");
-
   useEffect(() => {
     ReactModal.setAppElement(`#${parentId}`);
   }, []);
@@ -49,7 +48,7 @@ const ModalPopup = ({ isOpen, onClose, children, styles }: ModalPopupProps) => {
     >
       <div className="comp-modal-popup">
         <div className="icon-close" onClick={onClose}>
-          <Image src={closeSvg} alt="close" width={20} height={20} />
+          <Image src={closeIconPath} alt="close" width={20} height={20} />
         </div>
         {children}
       </div>

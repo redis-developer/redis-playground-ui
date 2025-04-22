@@ -22,9 +22,13 @@ enum HeaderIcon {
 
 
 const PgCardHeader = ({ headerTitle, infoIconContent, infoIconContentType, showCopyIcon, showSwitchViewIcon, handleIconClick }: PgCardHeaderProps) => {
-
     const [copied, setCopied] = useState(false);
-    const basePath = useBasePath;
+    
+    // Pre-compute all paths at the top level
+    const infoIconPath = useBasePath("/icons/info.svg");
+    const columnsIconPath = useBasePath("/icons/columns.svg");
+    const checkIconPath = useBasePath("/icons/check.svg");
+    const copyIconPath = useBasePath("/icons/copy.svg");
 
     const handleClick = (icon: HeaderIcon) => {
         if (handleIconClick) {
@@ -47,21 +51,21 @@ const PgCardHeader = ({ headerTitle, infoIconContent, infoIconContentType, showC
                 {headerTitle}
 
                 {infoIconContent && (
-                    <TooltipIcon imgSrc={basePath("/icons/info.svg")} imgWidth="0.875rem" imgHeight="0.875rem"
+                    <TooltipIcon imgSrc={infoIconPath} imgWidth="0.875rem" imgHeight="0.875rem"
                         title={infoIconContent} titleType={infoIconContentType} />
                 )}
 
 
             </div>
             <div className="header-buttons">
-                {showSwitchViewIcon && <TooltipIcon imgSrc={basePath("/icons/columns.svg")} imgWidth="1.25rem" imgHeight="1.25rem"
+                {showSwitchViewIcon && <TooltipIcon imgSrc={columnsIconPath} imgWidth="1.25rem" imgHeight="1.25rem"
                     title="Switch View"
                     onClick={() => handleClick(HeaderIcon.switchView)}
                 />
                 }
 
                 {showCopyIcon &&
-                    (copied ? <TooltipIcon imgSrc={basePath("/icons/check.svg")} imgWidth="1.25rem" imgHeight="1.25rem" title="Copied" /> : <TooltipIcon imgSrc={basePath("/icons/copy.svg")} imgWidth="1.25rem" imgHeight="1.25rem" title="Copy" onClick={() => handleClick(HeaderIcon.copy)} />)}
+                    (copied ? <TooltipIcon imgSrc={checkIconPath} imgWidth="1.25rem" imgHeight="1.25rem" title="Copied" /> : <TooltipIcon imgSrc={copyIconPath} imgWidth="1.25rem" imgHeight="1.25rem" title="Copy" onClick={() => handleClick(HeaderIcon.copy)} />)}
 
             </div>
         </div>

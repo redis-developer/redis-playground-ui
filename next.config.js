@@ -2,7 +2,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: false, //process.env.ANALYZE === 'true',
 });
 
-const isProd = process.env.VERCEL_ENV === "production"; // or NODE_ENV === 'production'
+const isProd = process.env.VERCEL_ENV === "production";
 
 module.exports = withBundleAnalyzer({
   swcMinify: true,
