@@ -21,6 +21,10 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
+
+    .comp-tooltip-icon-img {
+      cursor: pointer;
+    }
   }
 
   i {

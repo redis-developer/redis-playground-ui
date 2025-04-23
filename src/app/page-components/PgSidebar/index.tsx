@@ -17,6 +17,7 @@ const labels = {
     replayTour: "Replay Tour"
 }
 
+
 const linkItems = [
     {
         label: "Docs",
@@ -42,6 +43,7 @@ const PgSidebar = () => {
     const { selectedQuery, setSelectedQuery, fnGetSelectedQueryTemplate, runTour, setRunTour, fnSetTourCompleted } = usePlaygroundContext();
     const [selectedCategory, setSelectedCategory] = useState<IQueryTemplateData | null>(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
     useEffect(() => {
         if (selectedQuery) {
@@ -70,7 +72,7 @@ const PgSidebar = () => {
             <div className="pg-list-item anime-line-hover" onClick={() => setModalIsOpen(true)}>
                 <div className="pg-list-item-icon">
                     {/* <i className="fa fa-arrows-up-down-left-right"></i> */}
-                    <ImageIcon imgSrc="/icons/move.svg" alt="move" imgWidth="1rem" imgHeight="1rem" />
+                    <ImageIcon imgSrc={basePath + "/icons/move.svg"} alt="move" imgWidth="1rem" imgHeight="1rem" />
                 </div>
                 <div className="pg-list-item-label select-query-label">
                     {labels.selectQuery}
@@ -92,7 +94,7 @@ const PgSidebar = () => {
 
                                 <div className="pg-list-item-icon">
                                     {/* <i className="fa fa-arrow-right"></i> */}
-                                    <ImageIcon imgSrc="/icons/arrow-right-slim.svg" alt={item.label} imgWidth="1rem" imgHeight="1rem" />
+                                    <ImageIcon imgSrc={basePath + "/icons/arrow-right-slim.svg"} alt={item.label} imgWidth="1rem" imgHeight="1rem" />
                                 </div>
                                 <div className="pg-list-item-label">
                                     {item.label}
@@ -114,7 +116,7 @@ const PgSidebar = () => {
                 <div className="pg-list-item anime-line-hover" key={item.label} onClick={() => window.open(item.url, '_blank', 'noopener,noreferrer')}>
                     <div className="pg-list-item-icon">
                         {/* <i className={item.icon}></i> */}
-                        <ImageIcon imgSrc={item.image} alt={item.label} imgWidth="1rem" imgHeight="1rem" />
+                        <ImageIcon imgSrc={basePath + item.image} alt={item.label} imgWidth="1rem" imgHeight="1rem" />
                     </div>
                     <div className="pg-list-item-label" >
                         {item.label}
@@ -125,7 +127,7 @@ const PgSidebar = () => {
             <div className="pg-list-item anime-line-hover" key="replay-tour" onClick={handleReplayTourClick}>
                 <div className="pg-list-item-icon">
                     {/* <i className="fa fa-rotate"></i> */}
-                    <ImageIcon imgSrc="/icons/refresh.svg" alt="rotate" imgWidth="1rem" imgHeight="1rem" />
+                    <ImageIcon imgSrc={basePath + "/icons/refresh.svg"} alt="rotate" imgWidth="1rem" imgHeight="1rem" />
                 </div>
                 <div className="pg-list-item-label pg-replay-tour-lbl">
                     {labels.replayTour}

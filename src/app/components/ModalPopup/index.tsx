@@ -18,6 +18,7 @@ interface ModalPopupProps {
 
 const ModalPopup = ({ isOpen, onClose, children, styles }: ModalPopupProps) => {
     const parentId = "main-app";
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
     const customStyles = {
         overlay: {
@@ -48,7 +49,7 @@ const ModalPopup = ({ isOpen, onClose, children, styles }: ModalPopupProps) => {
             <div className="comp-modal-popup">
                 <div className="icon-close" onClick={onClose}>
                     {/* <i className="fa fa-times"></i> */}
-                    <Image src="/icons/close.svg" alt="close" width={20} height={20} />
+                    <Image src={basePath + "/icons/close.svg"} alt="close" width={20} height={20} />
                 </div>
                 {children}
             </div>

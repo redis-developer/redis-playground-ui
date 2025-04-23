@@ -86,7 +86,7 @@ const postRequest = async (
 
 const fetchServerVariables = async () => {
   const axiosInst = axios.create({
-    baseURL: "/api",
+    baseURL: process.env.NEXT_PUBLIC_BASE_PATH + "/api",
   });
 
   try {

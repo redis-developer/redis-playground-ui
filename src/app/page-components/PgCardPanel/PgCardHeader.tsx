@@ -21,6 +21,7 @@ enum HeaderIcon {
 
 
 const PgCardHeader = ({ headerTitle, infoIconContent, infoIconContentType, showCopyIcon, showSwitchViewIcon, handleIconClick }: PgCardHeaderProps) => {
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
     const [copied, setCopied] = useState(false);
 
@@ -45,21 +46,21 @@ const PgCardHeader = ({ headerTitle, infoIconContent, infoIconContentType, showC
                 {headerTitle}
 
                 {infoIconContent && (
-                    <TooltipIcon imgSrc="/icons/info.svg" imgWidth="0.875rem" imgHeight="0.875rem"
+                    <TooltipIcon imgSrc={basePath + "/icons/info.svg"} imgWidth="0.875rem" imgHeight="0.875rem"
                         title={infoIconContent} titleType={infoIconContentType} />
                 )}
 
 
             </div>
             <div className="header-buttons">
-                {showSwitchViewIcon && <TooltipIcon imgSrc="/icons/columns.svg" imgWidth="1.25rem" imgHeight="1.25rem"
+                {showSwitchViewIcon && <TooltipIcon imgSrc={basePath + "/icons/columns.svg"} imgWidth="1.25rem" imgHeight="1.25rem"
                     title="Switch View"
                     onClick={() => handleClick(HeaderIcon.switchView)}
                 />
                 }
 
                 {showCopyIcon &&
-                    (copied ? <TooltipIcon imgSrc="/icons/check.svg" imgWidth="1.25rem" imgHeight="1.25rem" title="Copied" /> : <TooltipIcon imgSrc="/icons/copy.svg" imgWidth="1.25rem" imgHeight="1.25rem" title="Copy" onClick={() => handleClick(HeaderIcon.copy)} />)}
+                    (copied ? <TooltipIcon imgSrc={basePath + "/icons/check.svg"} imgWidth="1.25rem" imgHeight="1.25rem" title="Copied" /> : <TooltipIcon imgSrc={basePath + "/icons/copy.svg"} imgWidth="1.25rem" imgHeight="1.25rem" title="Copy" onClick={() => handleClick(HeaderIcon.copy)} />)}
 
             </div>
         </div>
