@@ -165,7 +165,7 @@ const PgMainHeader = () => {
         }
         if (queryStr) {
             //for safari, clipboard copy must happen before the api call
-            const shareUrl = `${window.location.origin}${queryStr}`;
+            const shareUrl = `${window.location.origin}${basePath}${queryStr}`;
             navigator.clipboard.writeText(shareUrl);
         }
 
