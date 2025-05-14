@@ -16,6 +16,8 @@ import PgResultCard from "./PgResultCard";
 
 import { usePlaygroundContext } from "../PlaygroundContext";
 import { pgGetQueryDataById, pgGetSavedQuery } from "@/app/utils/services";
+import BrowserCache from '@/app/utils/browser-cache';
+import { USER_ID_KEY } from '@/app/utils/axios-util';
 
 const ResizeHandle = () => {
     return (
@@ -63,6 +65,12 @@ const PgCardPanel = () => {
                 const cQueryId = queryParams.get("cQueryId") || "";
                 const queryId = queryParams.get("queryId")?.toUpperCase() || "";
                 const catId = queryParams.get("catId") || "";
+                const userId = queryParams.get("userId") || "";
+
+                if (userId) {
+                    BrowserCache.setItem(USER_ID_KEY, userId);
+                }
+
 
                 if (cQueryId) {
                     const promObjSq = pgGetSavedQuery({ partialId: cQueryId });

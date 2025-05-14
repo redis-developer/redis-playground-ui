@@ -1,8 +1,14 @@
 import { z } from "zod";
 
-import { postRequest, consoleLogError, errorAPIAlert } from "./axios-util";
+import {
+  postRequest,
+  consoleLogError,
+  errorAPIAlert,
+  USER_ID_KEY,
+} from "./axios-util";
 import { errorToast } from "./toast-util";
 import { apiCacheInst } from "./api-cache";
+import BrowserCache from "./browser-cache";
 
 const cacheCollection = {
   getQueryByIdGroup: {
@@ -166,10 +172,19 @@ const pgRunQuery = async (input: z.infer<typeof pgRunQuerySchema>) => {
   };
 
   try {
+    const inputUserId = BrowserCache.getItem(USER_ID_KEY);
+
     pgRunQuerySchema.parse(input); // validate input
 
     const response = await postRequest(API_PATHS.pgRunQuery, input);
-    testResult.data = response?.data?.data;
+    const responseData = response?.data?.data;
+    if (responseData) {
+      testResult.data = responseData.queryResult;
+
+      if (responseData.userId !== inputUserId) {
+        BrowserCache.setItem(USER_ID_KEY, responseData.userId);
+      }
+    }
 
     if (!testResult.data) {
       throw new Error("No data found");

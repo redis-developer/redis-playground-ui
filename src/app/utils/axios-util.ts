@@ -7,6 +7,7 @@ import axios, {
 
 import { errorToast } from "./toast-util";
 import { getConfigData } from "../config";
+import BrowserCache from "./browser-cache";
 
 interface IApiResponse {
   data: any;
@@ -17,6 +18,7 @@ const CSS_CLASSES = {
 };
 
 let axiosInstance: AxiosInstance | null = null;
+const USER_ID_KEY = "userId";
 
 // #region helper functions
 const consoleLogError = (axiosError: any) => {
@@ -76,6 +78,15 @@ const postRequest = async (
     if (!axInst) {
       throw "postRequest() : Axios Instance is not available!";
     }
+    if (!data) {
+      data = {};
+    }
+
+    const inputUserId = BrowserCache.getItem(USER_ID_KEY);
+    if (inputUserId) {
+      data.userId = inputUserId;
+    }
+
     const response = await axInst.post(url, data, config);
     return response;
   } catch (error) {
@@ -104,4 +115,5 @@ export {
   consoleLogError,
   errorAPIAlert,
   fetchServerVariables,
+  USER_ID_KEY,
 };

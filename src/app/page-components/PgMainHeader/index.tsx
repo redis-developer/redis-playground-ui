@@ -14,6 +14,8 @@ import { QueryResultFormat } from '@/app/constants';
 import { IconButtonType } from '@/app/components/IconButton';
 import Loader from "@/app/components/Loader";
 import { infoToast } from '@/app/utils/toast-util';
+import BrowserCache from '@/app/utils/browser-cache';
+import { USER_ID_KEY } from '@/app/utils/axios-util';
 
 const logoImgPath = '/redis.png';
 const labels = {
@@ -155,6 +157,8 @@ const PgMainHeader = () => {
     const handleShareQuery = async () => {
 
         let isSuccess = false;
+        const inputUserId = BrowserCache.getItem(USER_ID_KEY);
+
         let queryStr = '';
         let partialId = uuidv4();
         if (customQuery) {
@@ -164,6 +168,11 @@ const PgMainHeader = () => {
             queryStr = `?queryId=${queryViewData?.queryId?.toLowerCase()}&catId=${selectedQuery?.categoryId}`;
         }
         if (queryStr) {
+
+            if (inputUserId) {
+                queryStr += `&userId=${inputUserId}`;
+            }
+
             //for safari, clipboard copy must happen before the api call
             const shareUrl = `${window.location.origin}${basePath}${queryStr}`;
             navigator.clipboard.writeText(shareUrl);
