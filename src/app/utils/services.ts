@@ -181,7 +181,7 @@ const pgRunQuery = async (input: z.infer<typeof pgRunQuerySchema>) => {
     if (responseData) {
       testResult.data = responseData.queryResult;
 
-      if (responseData.userId !== inputUserId) {
+      if (responseData.userId == "" || responseData.userId !== inputUserId) {
         BrowserCache.setItem(USER_ID_KEY, responseData.userId);
       }
     }
