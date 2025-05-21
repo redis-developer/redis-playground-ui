@@ -12,4 +12,6 @@ class BrowserCache {
   };
 }
 
-export default BrowserCache;
+const USER_ID_KEY = "userId";
+
+export { BrowserCache, USER_ID_KEY };

@@ -7,7 +7,7 @@ import axios, {
 
 import { errorToast } from "./toast-util";
 import { getConfigData } from "../config";
-import BrowserCache from "./browser-cache";
+import { BrowserCache, USER_ID_KEY } from "./browser-cache";
 
 interface IApiResponse {
   data: any;
@@ -18,7 +18,6 @@ const CSS_CLASSES = {
 };
 
 let axiosInstance: AxiosInstance | null = null;
-const USER_ID_KEY = "userId";
 
 // #region helper functions
 const consoleLogError = (axiosError: any) => {
@@ -115,5 +114,4 @@ export {
   consoleLogError,
   errorAPIAlert,
   fetchServerVariables,
-  USER_ID_KEY,
 };

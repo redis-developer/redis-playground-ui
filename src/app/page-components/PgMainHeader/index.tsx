@@ -14,8 +14,9 @@ import { QueryResultFormat } from '@/app/constants';
 import { IconButtonType } from '@/app/components/IconButton';
 import Loader from "@/app/components/Loader";
 import { infoToast } from '@/app/utils/toast-util';
-import BrowserCache from '@/app/utils/browser-cache';
-import { USER_ID_KEY } from '@/app/utils/axios-util';
+import { BrowserCache, USER_ID_KEY } from '@/app/utils/browser-cache';
+import TooltipIcon from '@/app/components/TooltipIcon';
+import { TooltipIconType } from '@/app/components/TooltipIcon';
 
 const logoImgPath = '/redis.png';
 const labels = {
@@ -95,7 +96,9 @@ const PgMainHeader = () => {
     const { queryViewData, customQuery,
         setQueryResponse,
         selectedQuery, setSelectedQuery,
-        apiCallInProgress, setApiCallInProgress
+        apiCallInProgress, setApiCallInProgress,
+        userId,
+        setUserId,
     } = usePlaygroundContext();
     const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
@@ -121,6 +124,8 @@ const PgMainHeader = () => {
         });
 
         if (apiResult?.data) {
+            setUserId(apiResult?.userId);
+
             queryResponse.result = apiResult?.data;
 
             const currentQuery = customQuery || queryViewData?.query || "";
@@ -213,6 +218,11 @@ const PgMainHeader = () => {
                 <div className="header-right-top">
                     <div className="header-title font-medium">
                         {labels.title}
+
+                        {userId && (
+                            <TooltipIcon imgSrc={basePath + "/icons/info.svg"} imgWidth="0.875rem" imgHeight="0.875rem"
+                                title={"userId : " + userId} />
+                        )}
                     </div>
                     <div className="header-buttons">
                         <IconButton buttonLbl={labels.buttonRun}

@@ -8,7 +8,7 @@ import type {
 
 import { useState } from "react";
 import { pgGetQueryNavbarData } from "../utils/services";
-import BrowserCache from "../utils/browser-cache";
+import { BrowserCache, USER_ID_KEY } from "../utils/browser-cache";
 
 const TOUR_COMPLETED_KEY = "pgTourCompleted";
 
@@ -29,6 +29,10 @@ const usePlayground = () => {
 
   const [queryResponse, setQueryResponse] = useState<IQueryResponse | null>(
     null
+  );
+
+  const [userId, setUserIdState] = useState<string | null>(
+    BrowserCache.getItem(USER_ID_KEY)
   );
 
   const fnIsTourCompleted = () => {
@@ -79,6 +83,15 @@ const usePlayground = () => {
     return retData;
   };
 
+  const setUserId = (newUserId: string) => {
+    const oldUserId = BrowserCache.getItem(USER_ID_KEY);
+    newUserId = newUserId || "";
+    if (newUserId == "" || newUserId !== oldUserId) {
+      setUserIdState(newUserId);
+      BrowserCache.setItem(USER_ID_KEY, newUserId);
+    }
+  };
+
   return {
     queryTemplateData,
     setQueryTemplateData,
@@ -94,6 +107,8 @@ const usePlayground = () => {
     setApiCallInProgress,
     runTour,
     setRunTour,
+    userId,
+    setUserId,
 
     fnLoadQueryTemplateData,
     fnGetSelectedQueryTemplate,

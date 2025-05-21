@@ -16,8 +16,6 @@ import PgResultCard from "./PgResultCard";
 
 import { usePlaygroundContext } from "../PlaygroundContext";
 import { pgGetQueryDataById, pgGetSavedQuery } from "@/app/utils/services";
-import BrowserCache from '@/app/utils/browser-cache';
-import { USER_ID_KEY } from '@/app/utils/axios-util';
 
 const ResizeHandle = () => {
     return (
@@ -35,7 +33,8 @@ const PgCardPanel = () => {
         setCustomQuery,
         setQueryResponse,
         setApiCallInProgress,
-        fnLoadQueryTemplateData
+        fnLoadQueryTemplateData,
+        setUserId
     } = usePlaygroundContext();
 
     const [savedQueryData, setSavedQueryData] = useState<ISavedQueryData | null>(null);
@@ -68,7 +67,7 @@ const PgCardPanel = () => {
                 const userId = queryParams.get("userId") || "";
 
                 if (userId) {
-                    BrowserCache.setItem(USER_ID_KEY, userId);
+                    setUserId(userId);
                 }
 
 
