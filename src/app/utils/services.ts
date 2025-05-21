@@ -223,8 +223,12 @@ const pgGetSavedQuery = async (
     const response = await postRequest(API_PATHS.pgGetSavedQuery, input);
     retValue = response?.data;
   } catch (axiosError: any) {
-    consoleLogError(axiosError);
-    errorAPIAlert(API_PATHS.pgGetSavedQuery);
+    const error = consoleLogError(axiosError);
+    if (error?.userMessage) {
+      errorToast(error.userMessage);
+    } else {
+      errorAPIAlert(API_PATHS.pgGetSavedQuery);
+    }
   }
 
   return retValue;
