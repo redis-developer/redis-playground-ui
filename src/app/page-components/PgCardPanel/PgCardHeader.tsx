@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import TooltipIcon from '../../components/TooltipIcon';
 import { TooltipIconType } from '../../components/TooltipIcon';
+import PgQueryHistory from './PgQueryHistory';
 
 interface PgCardHeaderProps {
     headerTitle: string;
@@ -11,6 +12,7 @@ interface PgCardHeaderProps {
     infoIconContentType?: TooltipIconType;
     showCopyIcon?: boolean;
     showSwitchViewIcon?: boolean;
+    showQueryHistoryIcon?: boolean;
     handleIconClick?: (icon: HeaderIcon) => void;
 }
 
@@ -20,10 +22,11 @@ enum HeaderIcon {
 }
 
 
-const PgCardHeader = ({ headerTitle, infoIconContent, infoIconContentType, showCopyIcon, showSwitchViewIcon, handleIconClick }: PgCardHeaderProps) => {
+const PgCardHeader = ({ headerTitle, infoIconContent, infoIconContentType, showCopyIcon, showSwitchViewIcon, showQueryHistoryIcon, handleIconClick }: PgCardHeaderProps) => {
     const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
     const [copied, setCopied] = useState(false);
+    const [showQueryHistoryModal, setShowQueryHistoryModal] = useState(false);
 
     const handleClick = (icon: HeaderIcon) => {
         if (handleIconClick) {
@@ -40,6 +43,10 @@ const PgCardHeader = ({ headerTitle, infoIconContent, infoIconContentType, showC
         }
     }
 
+    const handleQueryHistoryIconClick = () => {
+        setShowQueryHistoryModal(true);
+    };
+
     return (
         <div className="pg-card-header">
             <div className="header-title font-medium">
@@ -53,6 +60,15 @@ const PgCardHeader = ({ headerTitle, infoIconContent, infoIconContentType, showC
 
             </div>
             <div className="header-buttons">
+                {showQueryHistoryIcon && (
+                    <TooltipIcon
+                        imgSrc={basePath + "/icons/history.svg"}
+                        imgWidth="1.25rem"
+                        imgHeight="1.25rem"
+                        title="Query History"
+                        onClick={handleQueryHistoryIconClick}
+                    />
+                )}
                 {showSwitchViewIcon && <TooltipIcon imgSrc={basePath + "/icons/columns.svg"} imgWidth="1.25rem" imgHeight="1.25rem"
                     title="Switch View"
                     onClick={() => handleClick(HeaderIcon.switchView)}
@@ -63,6 +79,7 @@ const PgCardHeader = ({ headerTitle, infoIconContent, infoIconContentType, showC
                     (copied ? <TooltipIcon imgSrc={basePath + "/icons/check.svg"} imgWidth="1.25rem" imgHeight="1.25rem" title="Copied" /> : <TooltipIcon imgSrc={basePath + "/icons/copy.svg"} imgWidth="1.25rem" imgHeight="1.25rem" title="Copy" onClick={() => handleClick(HeaderIcon.copy)} />)}
 
             </div>
+            <PgQueryHistory isOpen={showQueryHistoryModal} onClose={() => setShowQueryHistoryModal(false)} />
         </div>
     );
 };

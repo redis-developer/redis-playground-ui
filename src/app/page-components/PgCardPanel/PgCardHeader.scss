@@ -6,6 +6,7 @@
   padding: var(--space-8);
   background-color: var(--pg-card-header-bg-clr);
   color: var(--pg-card-header-txt-clr);
+  border-bottom: 1px solid var(--pg-card-header-border-clr);
 
   .header-title {
     display: flex;

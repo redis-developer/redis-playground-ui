@@ -39,6 +39,10 @@ interface ISavedQueryData {
   queryId?: string;
 }
 
+interface IQueryHistoryItem extends ISavedQueryData {
+  hId: string;
+}
+
 export type {
   IQueryViewData,
   IQueryTemplateData,
@@ -46,4 +50,5 @@ export type {
   ISelectedQuery,
   IQueryResponse,
   ISavedQueryData,
+  IQueryHistoryItem,
 };

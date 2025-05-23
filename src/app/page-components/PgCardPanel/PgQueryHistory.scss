@@ -1,0 +1,46 @@
+.pg-query-history {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+
+  .history-header {
+    padding: var(--space-12);
+
+    font-size: var(--font-size-14);
+    color: var(--pg-query-template-txt-clr);
+  }
+
+  .history-list-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+    overflow: auto;
+    padding: var(--space-12);
+
+    background-color: var(--pg-query-template-bg-clr);
+    color: var(--pg-query-template-txt-clr);
+
+    .history-list-item {
+      border-radius: var(--radius-8);
+      padding: var(--space-8);
+      background-color: var(--pg-query-template-item-bg-clr);
+      color: var(--pg-query-template-item-txt-clr);
+      border: 1px solid var(--pg-query-template-item-border-clr);
+
+      .cm-editor {
+        cursor: pointer !important;
+      }
+    }
+
+    .history-list-item:hover {
+      border-color: var(--pg-query-template-item-hover-border-clr);
+    }
+
+    .no-history-data {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

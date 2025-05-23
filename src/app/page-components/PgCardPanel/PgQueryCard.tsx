@@ -103,7 +103,7 @@ const PgQueryCard = forwardRef<PgQueryCardRef, {}>((props, ref) => {
 
     return <div className="pg-query-card">
         <PgCardHeader headerTitle={pageData.headerTitle} showCopyIcon={true}
-            infoIconContent={infoIconContent} infoIconContentType={TooltipIconType.html} handleIconClick={handleIconClick} />
+            infoIconContent={infoIconContent} infoIconContentType={TooltipIconType.html} handleIconClick={handleIconClick} showQueryHistoryIcon={true} />
         <CodeMirrorEditor initialValue={queryViewData?.query || pageData.defaultQueryContent} mode={CodeMirrorMode.redis}
             ref={editorRef} onBlur={handleQueryChange} onExecute={handleExecute} />
     </div>

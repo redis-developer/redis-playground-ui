@@ -16,6 +16,7 @@ import PgResultCard from "./PgResultCard";
 
 import { usePlaygroundContext } from "../PlaygroundContext";
 import { pgGetQueryDataById, pgGetSavedQuery } from "@/app/utils/services";
+import { getQueryHistoryById } from '@/app/utils/query-history';
 
 const ResizeHandle = () => {
     return (
@@ -54,7 +55,7 @@ const PgCardPanel = () => {
     useEffect(() => {
 
         const onload = async () => {
-            const promObj1 = fnLoadQueryTemplateData();
+            const promObjTmpl = fnLoadQueryTemplateData();
 
             setSavedQueryData(null);
 
@@ -65,16 +66,25 @@ const PgCardPanel = () => {
                 const queryId = queryParams.get("queryId")?.toUpperCase() || "";
                 const catId = queryParams.get("catId") || "";
                 const userId = queryParams.get("userId") || "";
+                const hId = queryParams.get("hId") || "";
+
 
                 if (userId) {
                     setUserId(userId);
                 }
 
 
-                if (cQueryId) {
-                    const promObjSq = pgGetSavedQuery({ partialId: cQueryId });
+                if (cQueryId || hId) {
+                    let promObjSq = null;
 
-                    const [result1, resultSq] = await Promise.all([promObj1, promObjSq]);
+                    if (cQueryId) {
+                        promObjSq = pgGetSavedQuery({ partialId: cQueryId });
+                    }
+                    else if (hId) {
+                        promObjSq = getQueryHistoryById(hId);
+                    }
+
+                    const [result1, resultSq] = await Promise.all([promObjTmpl, promObjSq]);
 
                     if (resultSq?.data) {
 
@@ -100,7 +110,8 @@ const PgCardPanel = () => {
                     }
                 }
                 else if (queryId && catId) {
-                    await fnLoadQueryTemplateData();
+                    //await fnLoadQueryTemplateData();
+                    await promObjTmpl;
 
                     setSelectedQuery({
                         categoryId: catId,
@@ -114,7 +125,7 @@ const PgCardPanel = () => {
                 window.history.replaceState({}, "", newUrl);
             }
             else {
-                await promObj1;
+                await promObjTmpl;
             }
         };
         onload();
