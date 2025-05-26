@@ -5,9 +5,19 @@
 
   .history-header {
     padding: var(--space-12);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: var(--space-32);
 
-    font-size: var(--font-size-14);
-    color: var(--pg-query-template-txt-clr);
+    .history-header-title {
+      font-size: var(--font-size-14);
+      color: var(--pg-query-template-txt-clr);
+    }
+
+    .comp-tooltip-icon-img {
+      cursor: pointer;
+    }
   }
 
   .history-list-container {

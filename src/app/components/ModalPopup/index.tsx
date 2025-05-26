@@ -13,6 +13,8 @@ interface ModalPopupProps {
     styles?: {
         width?: string;
         height?: string;
+        closeIconWidth?: number;
+        closeIconHeight?: number;
     };
 }
 
@@ -49,7 +51,7 @@ const ModalPopup = ({ isOpen, onClose, children, styles }: ModalPopupProps) => {
             <div className="comp-modal-popup">
                 <div className="icon-close" onClick={onClose}>
                     {/* <i className="fa fa-times"></i> */}
-                    <Image src={basePath + "/icons/close.svg"} alt="close" width={20} height={20} />
+                    <Image src={basePath + "/icons/close.svg"} alt="close" width={styles?.closeIconWidth || 20} height={styles?.closeIconHeight || 20} />
                 </div>
                 {children}
             </div>

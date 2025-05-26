@@ -8,8 +8,8 @@ import CodeMirrorEditor from '../../components/CodeMirrorEditor';
 import { CodeMirrorMode, updateCode } from '../../components/CodeMirrorEditor';
 import { BrowserCache } from '@/app/utils/browser-cache';
 import { USER_ID_KEY } from '@/app/utils/browser-cache';
-import { getAllQueryHistory } from '@/app/utils/query-history';
-
+import { clearQueryHistory, getAllQueryHistory } from '@/app/utils/query-history';
+import TooltipIcon from '@/app/components/TooltipIcon';
 
 
 interface PgQueryHistoryProps {
@@ -42,7 +42,9 @@ const PgQueryHistory = ({ isOpen, onClose }: PgQueryHistoryProps) => {
         if (result.data) {
             setQueryHistory(result.data);
         }
-
+        else {
+            setQueryHistory([]);
+        }
     };
 
     const handleHistoryItemClick = (item: IQueryHistory) => {
@@ -62,14 +64,30 @@ const PgQueryHistory = ({ isOpen, onClose }: PgQueryHistoryProps) => {
         }
     };
 
+    const handleClearHistory = async () => {
+        await clearQueryHistory();
+        await fetchLatestQueryHistory();
+    };
+
     return (
         <ModalPopup
             isOpen={isOpen}
             onClose={onClose}
-            styles={{ width: modalWidthInPx + 'px', height: modalHeightInPx + 'px' }}
+            styles={{ width: modalWidthInPx + 'px', height: modalHeightInPx + 'px', closeIconWidth: 15, closeIconHeight: 15 }}
         >
             <div className="pg-query-history">
-                <div className="history-header font-medium">{pageData.headerTitle}</div>
+                <div className="history-header ">
+
+                    <div className="history-header-title font-medium">{pageData.headerTitle}</div>
+
+                    <TooltipIcon
+                        imgSrc={basePath + "/icons/delete.svg"}
+                        imgWidth="1.25rem"
+                        imgHeight="1.25rem"
+                        title="Clear History"
+                        onClick={handleClearHistory}
+                    />
+                </div>
                 {queryHistory.length > 0 &&
                     <div className="history-list-container">
                         {queryHistory.map((item) => (
