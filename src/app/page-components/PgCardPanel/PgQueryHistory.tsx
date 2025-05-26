@@ -1,4 +1,4 @@
-import { IQueryHistoryItem } from '../../types';
+import { IQueryHistory } from '../../types';
 
 import './PgQueryHistory.scss';
 
@@ -38,15 +38,14 @@ const PgQueryHistory = ({ isOpen, onClose }: PgQueryHistoryProps) => {
     }, [isOpen]);
 
     const fetchLatestQueryHistory = async () => {
-        setTimeout(async () => {
-            const result = await getAllQueryHistory();
-            if (result.data) {
-                setQueryHistory(result.data);
-            }
-        }, 500);
+        const result = await getAllQueryHistory();
+        if (result.data) {
+            setQueryHistory(result.data);
+        }
+
     };
 
-    const handleHistoryItemClick = (item: IQueryHistoryItem) => {
+    const handleHistoryItemClick = (item: IQueryHistory) => {
 
         if (item) {
             const inputUserId = BrowserCache.getItem(USER_ID_KEY);
@@ -79,7 +78,7 @@ const PgQueryHistory = ({ isOpen, onClose }: PgQueryHistoryProps) => {
                                 style={{ width: (modalWidthInPx - itemPaddingInPx) + 'px' }}
                                 onClick={() => handleHistoryItemClick(item)}
                             >
-                                <CodeMirrorEditor initialValue={item.query} mode={CodeMirrorMode.redis} disabled={true} />
+                                <CodeMirrorEditor initialValue={item.customQuery || item.query} mode={CodeMirrorMode.redis} disabled={true} />
 
                             </div>
                         ))}

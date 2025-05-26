@@ -1,3 +1,5 @@
+import { DBSchema } from "idb";
+
 import { QueryResultFormat } from "./constants";
 
 interface IQueryViewData {
@@ -39,9 +41,24 @@ interface ISavedQueryData {
   queryId?: string;
 }
 
-interface IQueryHistoryItem extends ISavedQueryData {
+//---- indexed db
+interface IQueryHistory {
   hId: string;
+  customQuery?: string;
+  queryId?: string;
+  query?: string;
+  categoryId?: string;
+  title?: string;
+  createdOn?: string;
 }
+
+interface IQueryHistoryDB extends DBSchema {
+  "query-history": {
+    key: string; // hId
+    value: IQueryHistory;
+  };
+}
+//---- indexed db ends
 
 export type {
   IQueryViewData,
@@ -50,5 +67,6 @@ export type {
   ISelectedQuery,
   IQueryResponse,
   ISavedQueryData,
-  IQueryHistoryItem,
+  IQueryHistory,
+  IQueryHistoryDB,
 };

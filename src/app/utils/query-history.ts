@@ -1,116 +1,26 @@
-const queryHistoryData = [
-  {
-    hId: "1",
-    customQuery: "",
-    query: "FT.SEARCH 'pg:userSearchIndex' '@country:{INDIA} @gender:{F}'",
-    createdOn: "2025-01-09T10:30:14.477Z",
-    title: "User Search Query",
-    categoryId: "JSON_GENERAL",
-    queryId: "JSON_GENERAL_NUMERIC_RANGE",
+import type { IQueryHistory, IQueryHistoryDB } from "@/app/types";
+import { openDB } from "idb";
+
+const DB_NAME = "QueryHistoryDB";
+const STORE_NAME = "query-history";
+const DB_VERSION = 1;
+
+const dbPromise = openDB<IQueryHistoryDB>(DB_NAME, DB_VERSION, {
+  upgrade(db) {
+    if (!db.objectStoreNames.contains(STORE_NAME)) {
+      db.createObjectStore(STORE_NAME, { keyPath: "hId" });
+    }
   },
-  {
-    hId: "2",
-    customQuery: "",
-    query:
-      "FT.SEARCH 'pg:userSearchIndex' '(@country:{AUSTRALIA}) | (@gender:{M})'",
-    createdOn: "2025-01-09T10:30:14.477Z",
-    title: "User Search Query 2",
-    categoryId: "JSON_GENERAL",
-    queryId: "JSON_GENERAL_MULTI_FIELD_OR_CONDITION",
-  },
-  {
-    hId: "3",
-    customQuery: "",
-    query: `//Searches for products with price between 100 and 200
-FT.SEARCH 'pg:fashionSearchIndex' '@price:[100 200]'
-//Note: other examples
-// - '@price:[1000 +inf]'  == price >= 1000
-// - '@price:[(1000 +inf]' == price > 1000
-// - '@price:[-inf 1000]' == price <= 1000
-// - '@price:[-inf (1000]' == price < 1000`,
-    createdOn: "2025-01-09T10:30:14.477Z",
-    title: "User Search Query 2",
-    categoryId: "JSON_AGGREGATE",
-    queryId: "JSON_AGGREGATE_GROUPBY_REDUCE_SUM",
-  },
-  {
-    hId: "4",
-    customQuery:
-      "FT.SEARCH 'Prasan:pg:userSearchIndex' '@country:{AUSTRALIA} @gender:{M}'",
-    query: `// Run a vector search for 'Comfortable commuter bike'
-FT.SEARCH pg: bikeVssIndex 
-    "*=>[KNN 3 @description_embeddings $my_blob AS score ]" 
-    RETURN 4 score brand type description 
-    PARAMS 2 my_blob 
-    -------------------------------------------------- -------------------------------------------------- -------------------------------------------------- --------------------------------------------------
-    SORTBY score
-    DIALECT 2`,
-    createdOn: "2025-01-09T10:30:14.477Z",
-    title: "User Search Query 2",
-    categoryId: "VECTORS",
-    queryId: "VECTORS_KNN_QUERY3",
-  },
-  {
-    hId: "5",
-    customQuery:
-      "FT.SEARCH 'pg:userSearchIndex' '@country:{AUSTRALIA} @gender:{M}'",
-    query: "FT.SEARCH 'pg:userSearchIndex' '@country:{AUSTRALIA} @gender:{M}'",
-    createdOn: "2025-01-09T10:30:14.477Z",
-    title: "User Search Query 2",
-    categoryId: "JSON_GENERAL",
-    queryId: "JSON_GENERAL_MULTI_FIELD_OR_CONDITION",
-  },
-  {
-    hId: "6",
-    customQuery:
-      "FT.SEARCH 'pg:userSearchIndex' '@country:{AUSTRALIA} @gender:{M}'",
-    query: "FT.SEARCH 'pg:userSearchIndex' '@country:{AUSTRALIA} @gender:{M}'",
-    createdOn: "2025-01-09T10:30:14.477Z",
-    title: "User Search Query 2",
-    categoryId: "JSON_GENERAL",
-    queryId: "JSON_GENERAL_MULTI_FIELD_OR_CONDITION",
-  },
-  {
-    hId: "7",
-    customQuery:
-      "FT.SEARCH 'pg:userSearchIndex' '@country:{AUSTRALIA} @gender:{M}'",
-    query: "FT.SEARCH 'pg:userSearchIndex' '@country:{AUSTRALIA} @gender:{M}'",
-    createdOn: "2025-01-09T10:30:14.477Z",
-    title: "User Search Query 2",
-    categoryId: "JSON_GENERAL",
-    queryId: "JSON_GENERAL_MULTI_FIELD_OR_CONDITION",
-  },
-  {
-    hId: "8",
-    customQuery:
-      "FT.SEARCH 'pg:userSearchIndex' '@country:{AUSTRALIA} @gender:{M}'",
-    query: "FT.SEARCH 'pg:userSearchIndex' '@country:{AUSTRALIA} @gender:{M}'",
-    createdOn: "2025-01-09T10:30:14.477Z",
-    title: "User Search Query 2",
-    categoryId: "JSON_GENERAL",
-    queryId: "JSON_GENERAL_MULTI_FIELD_OR_CONDITION",
-  },
-  {
-    hId: "9",
-    customQuery:
-      "FT.SEARCH 'pg:userSearchIndex' '@country:{AUSTRALIA} @gender:{M}'",
-    query: "FT.SEARCH 'pg:userSearchIndex' '@country:{AUSTRALIA} @gender:{M}'",
-    createdOn: "2025-01-09T10:30:14.477Z",
-    title: "User Search Query 2",
-    categoryId: "JSON_GENERAL",
-    queryId: "JSON_GENERAL_MULTI_FIELD_OR_CONDITION",
-  },
-  {
-    hId: "10",
-    customQuery:
-      "FT.SEARCH 'pg:userSearchIndex' '@country:{AUSTRALIA} @gender:{M}'",
-    query: "FT.SEARCH 'pg:userSearchIndex' '@country:{AUSTRALIA} @gender:{M}'",
-    createdOn: "2025-01-09T10:30:14.477Z",
-    title: "User Search Query 2",
-    categoryId: "JSON_GENERAL",
-    queryId: "JSON_GENERAL_MULTI_FIELD_OR_CONDITION",
-  },
-];
+});
+
+const insertQueryHistory = async (data: IQueryHistory[]) => {
+  const db = await dbPromise;
+  const tx = db.transaction(STORE_NAME, "readwrite");
+  for (const item of data) {
+    await tx.store.put(item);
+  }
+  await tx.done;
+};
 
 const getAllQueryHistory = async () => {
   let retObj: any = {
@@ -119,7 +29,17 @@ const getAllQueryHistory = async () => {
   };
 
   try {
-    retObj.data = queryHistoryData;
+    const db = await dbPromise;
+    const allData = await db.getAll(STORE_NAME);
+    if (allData?.length) {
+      retObj.data = [...allData].sort((a, b) => {
+        const aCreated = a.createdOn ?? "";
+        const bCreated = b.createdOn ?? "";
+        if (aCreated > bCreated) return -1;
+        if (aCreated < bCreated) return 1;
+        return 0;
+      });
+    }
   } catch (error) {
     retObj.error = error;
   }
@@ -133,11 +53,24 @@ const getQueryHistoryById = async (hId: string) => {
   };
 
   try {
-    retObj.data = queryHistoryData.find((item) => item.hId === hId);
+    const db = await dbPromise;
+    retObj.data = await db.get(STORE_NAME, hId);
   } catch (error) {
     retObj.error = error;
   }
   return retObj;
 };
 
-export { getAllQueryHistory, getQueryHistoryById };
+const clearQueryHistory = async () => {
+  const db = await dbPromise;
+  await db.clear(STORE_NAME);
+};
+
+export {
+  insertQueryHistory,
+  getAllQueryHistory,
+  getQueryHistoryById,
+  clearQueryHistory,
+};
+
+export type { IQueryHistory };

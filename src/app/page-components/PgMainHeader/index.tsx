@@ -1,6 +1,7 @@
 import './index.scss';
 
-import type { IQueryResponse } from '@/app/types';
+import type { IQueryResponse, IQueryHistory } from '@/app/types';
+
 
 import { useState } from 'react';
 import Image from 'next/image';
@@ -17,6 +18,7 @@ import { infoToast } from '@/app/utils/toast-util';
 import { BrowserCache, USER_ID_KEY } from '@/app/utils/browser-cache';
 import TooltipIcon from '@/app/components/TooltipIcon';
 import { TooltipIconType } from '@/app/components/TooltipIcon';
+import { insertQueryHistory } from '@/app/utils/query-history';
 
 const logoImgPath = '/redis.png';
 const labels = {
@@ -125,6 +127,7 @@ const PgMainHeader = () => {
 
         if (apiResult?.data) {
             setUserId(apiResult?.userId);
+            createQueryHistory(); //async
 
             queryResponse.result = apiResult?.data;
 
@@ -157,6 +160,30 @@ const PgMainHeader = () => {
                 setSelectedQuery(newSelectedQuery);
             }, 0);
         }
+    }
+
+    const createQueryHistory = async () => {
+        const queryHistory: IQueryHistory = {
+            hId: uuidv4(),
+            createdOn: new Date().toISOString(),
+
+            customQuery: "",
+            queryId: "",
+            query: "",
+            categoryId: "",
+            // title: "",
+        }
+
+        if (customQuery) {
+            queryHistory.customQuery = customQuery;
+        }
+        else if (queryViewData?.queryId && selectedQuery?.categoryId) {
+            queryHistory.queryId = queryViewData?.queryId;
+            queryHistory.query = queryViewData?.query;
+            queryHistory.categoryId = selectedQuery?.categoryId;
+        }
+
+        await insertQueryHistory([queryHistory]);
     }
 
     const handleShareQuery = async () => {
