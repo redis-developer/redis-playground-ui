@@ -181,7 +181,8 @@ const PgMainHeader = () => {
         if (customQuery) {
             queryHistory.customQuery = customQuery;
         }
-        else if (queryViewData?.queryId && selectedQuery?.categoryId) {
+
+        if (queryViewData?.queryId && selectedQuery?.categoryId) {
             queryHistory.queryId = queryViewData?.queryId;
             queryHistory.query = queryViewData?.query;
             queryHistory.categoryId = selectedQuery?.categoryId;
