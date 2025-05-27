@@ -3,6 +3,7 @@ import { IQueryHistory } from '../../types';
 import './PgQueryHistory.scss';
 
 import React, { useEffect, useState } from 'react';
+import { format, isToday, isYesterday, differenceInCalendarDays, parseISO } from 'date-fns';
 import ModalPopup from '../../components/ModalPopup';
 import CodeMirrorEditor from '../../components/CodeMirrorEditor';
 import { CodeMirrorMode, updateCode } from '../../components/CodeMirrorEditor';
@@ -17,6 +18,10 @@ interface PgQueryHistoryProps {
     onClose: () => void;
 }
 
+interface IGroupQueryHistory {
+    [key: string]: IQueryHistory[];
+}
+
 let modalWidthInPx = 650;
 let modalHeightInPx = 350;
 let itemPaddingInPx = 32;
@@ -25,6 +30,45 @@ const pageData = {
     noDataLbl: 'No query history found.',
     headerTitle: 'Query History',
 }
+
+const getGroupLabel = (dateStr?: string) => {
+    let retStr = "";
+    if (dateStr) {
+        const date = typeof dateStr === 'string' ? parseISO(dateStr) : dateStr;
+
+        if (isToday(date)) {
+            retStr = 'Today';
+        }
+        else if (isYesterday(date)) {
+            retStr = 'Yesterday';
+        }
+        else {
+            const daysAgo = differenceInCalendarDays(new Date(), date);
+            if (daysAgo < 7) {
+                retStr = `${daysAgo} days ago`;
+            }
+            else {
+                retStr = format(date, 'MMMM d, yyyy');
+            }
+        }
+    }
+    return retStr;
+}
+
+const groupByDate = (history: IQueryHistory[]): IGroupQueryHistory => {
+    let groups: IGroupQueryHistory = {};
+    groups = history.reduce<IGroupQueryHistory>((groups, item) => {
+        const label = getGroupLabel(item.createdOn);
+
+        if (!groups[label]) {
+            groups[label] = [];
+        }
+        groups[label].push(item);
+        return groups;
+    }, {});
+    return groups;
+}
+
 
 const PgQueryHistory = ({ isOpen, onClose }: PgQueryHistoryProps) => {
     const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
@@ -69,6 +113,8 @@ const PgQueryHistory = ({ isOpen, onClose }: PgQueryHistoryProps) => {
         await fetchLatestQueryHistory();
     };
 
+    const groupedHistory = groupByDate(queryHistory);
+
     return (
         <ModalPopup
             isOpen={isOpen}
@@ -90,14 +136,18 @@ const PgQueryHistory = ({ isOpen, onClose }: PgQueryHistoryProps) => {
                 </div>
                 {queryHistory.length > 0 &&
                     <div className="history-list-container">
-                        {queryHistory.map((item) => (
+                        {Object.entries(groupedHistory).map(([label, items]) => (
+                            <div key={label} className="history-group">
+                                <div className="group-label">{label}</div>
+                                {items.map(item => (
+                                    <div className="history-list-item" key={item.hId}
+                                        style={{ width: (modalWidthInPx - itemPaddingInPx) + 'px' }}
+                                        onClick={() => handleHistoryItemClick(item)}
+                                    >
+                                        <CodeMirrorEditor initialValue={item.customQuery || item.query} mode={CodeMirrorMode.redis} disabled={true} />
 
-                            <div className="history-list-item" key={item.hId}
-                                style={{ width: (modalWidthInPx - itemPaddingInPx) + 'px' }}
-                                onClick={() => handleHistoryItemClick(item)}
-                            >
-                                <CodeMirrorEditor initialValue={item.customQuery || item.query} mode={CodeMirrorMode.redis} disabled={true} />
-
+                                    </div>
+                                ))}
                             </div>
                         ))}
                     </div>

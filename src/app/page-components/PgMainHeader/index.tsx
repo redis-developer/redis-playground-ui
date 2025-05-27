@@ -166,6 +166,8 @@ const PgMainHeader = () => {
         const queryHistory: IQueryHistory = {
             hId: uuidv4(),
             createdOn: new Date().toISOString(),
+            //few days ago
+            // createdOn: new Date(new Date().setDate(new Date().getDate() - 13)).toISOString(),
 
             customQuery: "",
             queryId: "",
