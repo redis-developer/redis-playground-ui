@@ -1,3 +1,5 @@
+'use client';
+
 import './index.scss';
 import type { IQueryViewData, ISavedQueryData } from "@/app/types";
 import type { PgQueryCardRef } from "./PgQueryCard";

@@ -1,3 +1,5 @@
+'use client';
+
 import './index.scss';
 
 import type { IQueryResponse, IQueryHistory } from '@/app/types';

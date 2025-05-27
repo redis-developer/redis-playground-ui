@@ -5,21 +5,30 @@ const DB_NAME = "QueryHistoryDB";
 const STORE_NAME = "query-history";
 const DB_VERSION = 1;
 
-const dbPromise = openDB<IQueryHistoryDB>(DB_NAME, DB_VERSION, {
-  upgrade(db) {
-    if (!db.objectStoreNames.contains(STORE_NAME)) {
-      db.createObjectStore(STORE_NAME, { keyPath: "hId" });
-    }
-  },
-});
+const isIndexedDBSupported =
+  typeof window !== "undefined" && "indexedDB" in window;
+
+let dbPromise: any = null;
+
+if (isIndexedDBSupported) {
+  dbPromise = openDB<IQueryHistoryDB>(DB_NAME, DB_VERSION, {
+    upgrade(db) {
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        db.createObjectStore(STORE_NAME, { keyPath: "hId" });
+      }
+    },
+  });
+}
 
 const insertQueryHistory = async (data: IQueryHistory[]) => {
-  const db = await dbPromise;
-  const tx = db.transaction(STORE_NAME, "readwrite");
-  for (const item of data) {
-    await tx.store.put(item);
+  if (dbPromise) {
+    const db = await dbPromise;
+    const tx = db.transaction(STORE_NAME, "readwrite");
+    for (const item of data) {
+      await tx.store.put(item);
+    }
+    await tx.done;
   }
-  await tx.done;
 };
 
 const getAllQueryHistory = async () => {
@@ -29,16 +38,18 @@ const getAllQueryHistory = async () => {
   };
 
   try {
-    const db = await dbPromise;
-    const allData = await db.getAll(STORE_NAME);
-    if (allData?.length) {
-      retObj.data = [...allData].sort((a, b) => {
-        const aCreated = a.createdOn ?? "";
-        const bCreated = b.createdOn ?? "";
-        if (aCreated > bCreated) return -1;
-        if (aCreated < bCreated) return 1;
-        return 0;
-      });
+    if (dbPromise) {
+      const db = await dbPromise;
+      const allData = await db.getAll(STORE_NAME);
+      if (allData?.length) {
+        retObj.data = [...allData].sort((a, b) => {
+          const aCreated = a.createdOn ?? "";
+          const bCreated = b.createdOn ?? "";
+          if (aCreated > bCreated) return -1;
+          if (aCreated < bCreated) return 1;
+          return 0;
+        });
+      }
     }
   } catch (error) {
     retObj.error = error;
@@ -53,8 +64,10 @@ const getQueryHistoryById = async (hId: string) => {
   };
 
   try {
-    const db = await dbPromise;
-    retObj.data = await db.get(STORE_NAME, hId);
+    if (dbPromise) {
+      const db = await dbPromise;
+      retObj.data = await db.get(STORE_NAME, hId);
+    }
   } catch (error) {
     retObj.error = error;
   }
@@ -62,8 +75,10 @@ const getQueryHistoryById = async (hId: string) => {
 };
 
 const clearQueryHistory = async () => {
-  const db = await dbPromise;
-  await db.clear(STORE_NAME);
+  if (dbPromise) {
+    const db = await dbPromise;
+    await db.clear(STORE_NAME);
+  }
 };
 
 export {

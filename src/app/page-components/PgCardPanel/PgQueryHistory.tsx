@@ -1,3 +1,5 @@
+'use client';
+
 import { IQueryHistory } from '../../types';
 
 import './PgQueryHistory.scss';
