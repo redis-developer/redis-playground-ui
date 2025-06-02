@@ -13,12 +13,16 @@ import './common/css/anime.scss';
 import "./globals.scss";
 import 'react-toastify/dist/ReactToastify.css';
 
+import GoogleTagManager from "./components/GoogleTagManager";
+
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Redis Playground",
   description: "Play with raw Redis commands",
 };
+const GTM_ID = "GTM-TKZ6J9R";
 
 export default function RootLayout({
   children,
@@ -31,6 +35,8 @@ export default function RootLayout({
         {/* <link rel="stylesheet" href="/fontawesome-free-6.6.0-web/css/all.min.css" /> */}
       </head>
       <body className={`${inter.className} theme-redis font-regular`}>
+        <GoogleTagManager gtmId={GTM_ID} />
+
         {children}
 
         <ToastContainer />
