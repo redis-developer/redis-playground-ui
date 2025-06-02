@@ -134,6 +134,7 @@ const PgQueryHistory = ({ isOpen, onClose }: PgQueryHistoryProps) => {
                         imgHeight="1.25rem"
                         title="Clear History"
                         onClick={handleClearHistory}
+                        className="pg-query-history-delete-icon"
                     />
                 </div>
                 {queryHistory.length > 0 &&

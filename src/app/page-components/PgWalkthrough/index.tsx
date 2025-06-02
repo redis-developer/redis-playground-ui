@@ -34,6 +34,14 @@ const bottomCardConfig = {
 
 const keyboardHint = '(Use ← → arrow keys to navigate steps)';
 
+/**
+  data :{
+    performClick: true,
+    otherClickTarget: '.react-joyride__overlay', //else target is considered as clickable
+    title: 'Query History',
+    footer:''
+  }
+ */
 let steps: Step[] = [
     {
         target: '.select-query-label',
@@ -116,6 +124,30 @@ let steps: Step[] = [
         }
     },
     {
+        target: '.pg-query-card .pg-query-history-icon img',
+        content: 'Click on the query history icon to view your query history',
+        data: {
+            performClick: true,
+            title: 'Query History'
+        }
+    },
+    {
+        target: '.history-list-container',
+        content: 'Click on any query in the history to load it',
+        data: {
+            title: 'Query History'
+        }
+    },
+    {
+        target: '.history-header .pg-query-history-delete-icon',
+        content: 'Click on delete icon to clear the entire query history',
+        data: {
+            performClick: true,
+            otherClickTarget: '.ReactModal__Overlay--after-open',
+            title: 'Query History'
+        }
+    },
+    {
         target: '.pg-replay-tour-lbl',
         content: 'Replay this tour anytime to review the steps',
         data: {
@@ -184,7 +216,13 @@ const PgWalkthrough = () => {
         if (type === EVENTS.STEP_AFTER) {
 
             if (step.data?.performClick) {
-                if (targetElement && targetElement instanceof HTMLElement) {
+                if (step.data?.otherClickTarget) {
+                    const otherClickTarget = document.querySelector(step.data?.otherClickTarget as string);
+                    if (otherClickTarget && otherClickTarget instanceof HTMLElement) {
+                        otherClickTarget.click();
+                    }
+                }
+                else if (targetElement && targetElement instanceof HTMLElement) {
                     targetElement.click();
                 }
                 setRunTour(false); //React modal popup issue : Force reposition by temporarily stopping and restarting the tour

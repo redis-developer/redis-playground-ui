@@ -37,6 +37,11 @@ const linkItems = [
         url: "https://cloud.redis.io/",
         image: "/icons/cloud-midnight.svg"
     },
+    {
+        label: "Sandbox Tutorial",
+        url: "https://redis.io/learn/howtos/redis-sandbox/",
+        image: "/icons/tutorial.svg"
+    },
 ]
 
 const PgSidebar = () => {

@@ -67,6 +67,7 @@ const PgCardHeader = ({ headerTitle, infoIconContent, infoIconContentType, showC
                         imgHeight="1.25rem"
                         title="Query History"
                         onClick={handleQueryHistoryIconClick}
+                        className="pg-query-history-icon"
                     />
                 )}
                 {showSwitchViewIcon && <TooltipIcon imgSrc={basePath + "/icons/columns.svg"} imgWidth="1.25rem" imgHeight="1.25rem"
