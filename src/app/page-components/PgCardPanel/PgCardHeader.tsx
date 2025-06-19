@@ -63,8 +63,8 @@ const PgCardHeader = ({ headerTitle, infoIconContent, infoIconContentType, showC
                 {showQueryHistoryIcon && (
                     <TooltipIcon
                         imgSrc={basePath + "/icons/history.svg"}
-                        imgWidth="1.25rem"
-                        imgHeight="1.25rem"
+                        imgWidth="1rem"
+                        imgHeight="1rem"
                         title="Query History"
                         onClick={handleQueryHistoryIconClick}
                         className="pg-query-history-icon"

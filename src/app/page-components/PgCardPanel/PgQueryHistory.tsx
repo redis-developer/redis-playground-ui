@@ -130,8 +130,8 @@ const PgQueryHistory = ({ isOpen, onClose }: PgQueryHistoryProps) => {
 
                     <TooltipIcon
                         imgSrc={basePath + "/icons/delete.svg"}
-                        imgWidth="1.25rem"
-                        imgHeight="1.25rem"
+                        imgWidth="1rem"
+                        imgHeight="1rem"
                         title="Clear History"
                         onClick={handleClearHistory}
                         className="pg-query-history-delete-icon"
