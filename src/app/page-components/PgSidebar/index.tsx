@@ -32,9 +32,9 @@ const linkItems = [
         image: "/icons/university.svg"
     },
     {
-        label: "Redis Cloud",
+        label: "Try Redis Cloud",
         //icon: "fa fa-cloud",
-        url: "https://cloud.redis.io/",
+        url: "http://redis.io/try-free",
         image: "/icons/cloud-midnight.svg"
     },
     {
