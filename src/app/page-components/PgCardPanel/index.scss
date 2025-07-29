@@ -16,6 +16,10 @@
     box-sizing: border-box;
   }
 
+  .pg-card-panel-item.no-db-index {
+    width: calc(100% - 32px); /*16 (left) + 2 *8 (right)*/
+  }
+
   .pg-card-panel-query {
     margin: var(--space-16) var(--space-6) var(--space-6) var(--space-16);
   }

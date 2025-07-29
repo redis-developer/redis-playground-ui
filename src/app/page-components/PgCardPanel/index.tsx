@@ -168,7 +168,7 @@ const PgCardPanel = () => {
     // Resize panels when noDbIndex changes
     useEffect(() => {
         if (hPanelGroupRef.current) {
-            const newSizes = noDbIndex ? [80, 20] : [55, 45];
+            const newSizes = noDbIndex ? [100, 0] : [55, 45];
             hPanelGroupRef.current.setLayout(newSizes);
         }
     }, [noDbIndex]);
@@ -179,12 +179,12 @@ const PgCardPanel = () => {
                 <Panel minSize={20}>
                     <PanelGroup direction="horizontal" ref={hPanelGroupRef}>
                         <Panel minSize={20} defaultSize={55}>
-                            <div className="pg-card-panel-item pg-card-panel-query">
+                            <div className={`pg-card-panel-item pg-card-panel-query ${noDbIndex ? "no-db-index" : ""}`}>
                                 <PgQueryCard ref={queryCardRef} />
                             </div>
                         </Panel>
                         <ResizeHandle />
-                        <Panel minSize={20} defaultSize={45}>
+                        <Panel minSize={0} defaultSize={45}>
                             <div className="pg-card-panel-item pg-card-panel-db-index">
                                 <PgDbIndexCard />
                             </div>
