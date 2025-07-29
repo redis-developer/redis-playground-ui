@@ -30,17 +30,35 @@ const labels = {
     buttonShare: 'Share',
 }
 
-const getQueryMatchLabel = (result: any) => {
+const getQueryMatchLabel = (result: any, query: string, formatType: QueryResultFormat) => {
     let footerText = "---";
     try {
         if (result?.length > 0 && Array.isArray(result)) {
-            const mCount = parseInt(result[0]);
-            footerText = `TOTAL ${mCount > 1 ? "MATCHES" : "MATCH"}: ${mCount}`;
-            let resultLength = result.length - 1; //-mCount
-            if (resultLength % 2 === 0) { //key value pair
-                resultLength = resultLength / 2;
-                if (resultLength < mCount) {
-                    footerText += ` (SHOWING FIRST ${resultLength} RESULTS)`;
+
+            if (formatType === QueryResultFormat.vectorSets) {
+                const hasScores = query.toLowerCase().includes('withscores');
+                const hasAttribs = query.toLowerCase().includes('withattribs');
+                let count = 0;
+                if (hasScores && hasAttribs) {
+                    count = result.length / 3;
+                }
+                else if (hasScores) {
+                    count = result.length / 2;
+                }
+                else {
+                    count = result.length;
+                }
+                footerText = `TOTAL ELEMENTS: ${count}`;
+            }
+            else {
+                const mCount = parseInt(result[0]);
+                footerText = `TOTAL ${mCount > 1 ? "MATCHES" : "MATCH"}: ${mCount}`;
+                let resultLength = result.length - 1; //-mCount
+                if (resultLength % 2 === 0) { //key value pair
+                    resultLength = resultLength / 2;
+                    if (resultLength < mCount) {
+                        footerText += ` (SHOWING FIRST ${resultLength} RESULTS)`;
+                    }
                 }
             }
 
@@ -92,6 +110,9 @@ const detectResultFormatType = (currentQuery: string, result: any[]) => {
         else if (result?.length > 0 && Array.isArray(result) && currentQuery?.startsWith('FT.AGGREGATE')) {
             retType = QueryResultFormat.aggregate;
         }
+        else if (result?.length > 0 && Array.isArray(result) && currentQuery?.startsWith('VSIM')) {
+            retType = QueryResultFormat.vectorSets;
+        }
     }
     return retType;
 }
@@ -139,7 +160,7 @@ const PgMainHeader = () => {
             const formatType = detectResultFormatType(currentQuery, apiResult?.data);
             queryResponse.resultFormatType = formatType;
 
-            const footerText = getQueryMatchLabel(apiResult?.data);
+            const footerText = getQueryMatchLabel(apiResult?.data, currentQuery, formatType);
             queryResponse.matchLabel = footerText;
         }
         else if (apiResult?.error) {

@@ -186,22 +186,133 @@ const formatResultAggregate = (_result: any[]) => {
     return objArr;
 }
 
+const formatResultVectorSets = (_result: any[], _query: string = "") => {
+    /*
 
-const prioritizeTableHeaders = (_headers: IHeader[], _query: string = "") => {
+    Query : VSIM 'pg:sts' ELE 's4' 
+
+    Result :
+    [
+        "s4",
+        "s3",
+        "s424",
+    ]
+    -------------
+
+     Query : VSIM 'pg:sts' ELE 's4' WITHSCORES 
+
+     Result :
+    [
+        "s4",
+        "1",
+        "s3",
+        "0.9913436770439148",
+        "s424",
+        "0.9541677236557007",
+    ]
+    -------------
+      Query : VSIM 'pg:sts' ELE 's4' WITHSCORES WITHATTRIBS
+
+      Result :
+      [
+            "s4",
+            "1",
+            "{\"sentence\":\"The man is feeding a mouse to the snake.\",\"activityType\":\"people\",\"wordCount\":9,\"charCount\":40}",
+            "s3",
+            "0.9913436770439148",
+            "{\"sentence\":\"A man is feeding a mouse to a snake.\",\"activityType\":\"people\",\"wordCount\":9,\"charCount\":36}",
+            "s424",
+            "0.9541677236557007",
+            "{\"sentence\":\"The man is trying to feed the snake with a mouse.\",\"activityType\":\"people\",\"wordCount\":11,\"charCount\":49}",
+        ]
+    */
+
+    const objArr: any[] = [];
+
+    if (_result?.length) {
+        const hasScores = _query.toLowerCase().includes('withscores');
+        const hasAttribs = _query.toLowerCase().includes('withattribs');
+
+        if (hasScores && hasAttribs) {
+            // [{elemId, score, attr1, attr2, ...}, {elemId, score, attr1, attr2, ...}, ...]
+            for (let i = 0; i < _result.length; i += 3) {
+                const elemId = _result[i];
+                const score = _result[i + 1];
+                const attributes = _result[i + 2] as string;
+
+                let obj: any = {
+                    elemId,
+                    score
+                };
+
+                if (attributes) {
+                    try {
+                        const parsedAttribs = JSON.parse(attributes);
+                        obj = { ...obj, ...parsedAttribs };
+                    } catch (e) {
+                        console.error('Error parsing attributes JSON:', e);
+                        obj.attributes = attributes;
+                    }
+                }
+
+                objArr.push(obj);
+            }
+        } else if (hasScores) {
+            // [{elemId, score}, {elemId, score}, ...]
+            for (let i = 0; i < _result.length; i += 2) {
+                const elemId = _result[i];
+                const score = _result[i + 1];
+
+                objArr.push({
+                    elemId,
+                    score
+                });
+            }
+        } else {
+            // [{elemId}, {elemId}, {elemId}, ...]
+            for (let i = 0; i < _result.length; i++) {
+                const elemId = _result[i];
+
+                objArr.push({
+                    elemId
+                });
+            }
+        }
+    }
+
+    return objArr;
+}
+
+
+const prioritizeTableHeaders = (_headers: IHeader[], _query: string, _formatType: QueryResultFormat) => {
     //showing search fields first in the table
 
     let retHeaders: IHeader[] = _headers;
 
     if (_headers?.length && _query) {
+        let querySearchFields: string[] = [];
 
-        // Match all patterns that start with @ and end with :
-        const querySearchFields = _query.match(/@[^:]+:/g)?.map(field => {
-            // Remove @ from start and : from end
-            return field.slice(1, -1).trim();
-        }) || [];
+        if (_formatType === QueryResultFormat.vectorSets) {
+            const parts = _query.split(/FILTER\s+/i);
+            if (parts.length > 1) {
+                const afterFilter = parts[1];
+                // Check if any header keys are referenced with dot prefix in FILTER content
+                _headers.forEach(header => {
+                    if (afterFilter.includes(`.${header.key}`) && !querySearchFields.includes(header.key)) {
+                        querySearchFields.push(header.key);
+                    }
+                });
+            }
+        } else {
+            // Match all patterns that start with @ and end with :
+            querySearchFields = _query.match(/@[^:]+:/g)?.map(field => {
+                // Remove @ from start and : from end
+                return field.slice(1, -1).trim();
+            }) || [];
+        }
 
         if (querySearchFields?.length) {
-            const priorityKeys = ['key', 'path', ...querySearchFields];
+            const priorityKeys = ['key', 'path', 'elemId', 'score', ...querySearchFields];
 
             const filteredHeaders = _headers.filter(header => priorityKeys.includes(header.key));
             const remainingHeaders = _headers.filter(header => !priorityKeys.includes(header.key));
@@ -272,10 +383,14 @@ const PgResultTable = ({ result, formatType }: PgResultTableProps) => {
             else if (formatType === QueryResultFormat.hash) {
                 tData = formatResultHash(result);
             }
+            else if (formatType === QueryResultFormat.vectorSets) {
+                tData = formatResultVectorSets(result, queryResponse?.executedQuery);
+            }
             setTableData(tData);
 
             const headers = getTableHeaders(tData);
-            const prioritizedHeaders = prioritizeTableHeaders(headers, queryResponse?.executedQuery);
+            const executedQuery = queryResponse?.executedQuery || "";
+            const prioritizedHeaders = prioritizeTableHeaders(headers, executedQuery, formatType);
             setTableHeaders(prioritizedHeaders);
         }
     }, [result, formatType]);

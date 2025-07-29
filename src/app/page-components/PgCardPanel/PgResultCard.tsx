@@ -157,7 +157,8 @@ const PgResultCard = () => {
 
                 {(queryResponse?.resultFormatType === QueryResultFormat.json ||
                     queryResponse?.resultFormatType === QueryResultFormat.hash ||
-                    queryResponse?.resultFormatType === QueryResultFormat.aggregate) &&
+                    queryResponse?.resultFormatType === QueryResultFormat.aggregate ||
+                    queryResponse?.resultFormatType === QueryResultFormat.vectorSets) &&
                     <div className={`pg-result-card-content`}>
                         <PgResultTable result={queryResponse?.result} formatType={queryResponse?.resultFormatType} />
                     </div>

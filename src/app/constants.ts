@@ -14,6 +14,7 @@ enum QueryResultFormat {
   string = "string",
   error = "error",
   aggregate = "aggregate",
+  vectorSets = "vectorSets",
 }
 
 export { PAGE_THEMES, QueryResultFormat };
