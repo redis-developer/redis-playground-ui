@@ -8,7 +8,8 @@ import { useEffect, useRef, useState } from 'react';
 import {
     Panel,
     PanelGroup,
-    PanelResizeHandle
+    PanelResizeHandle,
+    ImperativePanelGroupHandle
 } from "react-resizable-panels";
 
 import PgQueryCard from "./PgQueryCard";
@@ -42,6 +43,9 @@ const PgCardPanel = () => {
 
     const [savedQueryData, setSavedQueryData] = useState<ISavedQueryData | null>(null);
     const queryCardRef = useRef<PgQueryCardRef>(null);
+    const [noDbIndex, setNoDbIndex] = useState(false);
+    const hPanelGroupRef = useRef<ImperativePanelGroupHandle>(null);
+
 
     const updateSavedQueryInEditor = (queryData?: ISavedQueryData | null) => {
         setTimeout(() => {
@@ -148,6 +152,9 @@ const PgCardPanel = () => {
                 if (result?.data?.length > 0) {
                     const resultData: IQueryViewData = result?.data[0];
                     setQueryViewData(resultData);
+                    if (!resultData?.dbIndexId && resultData?.dataSourceId) {
+                        setNoDbIndex(true);
+                    }
                 }
                 setApiCallInProgress(prev => prev - 1);
 
@@ -158,11 +165,19 @@ const PgCardPanel = () => {
         fetchQueryData();
     }, [selectedQuery]);
 
+    // Resize panels when noDbIndex changes
+    useEffect(() => {
+        if (hPanelGroupRef.current) {
+            const newSizes = noDbIndex ? [80, 20] : [55, 45];
+            hPanelGroupRef.current.setLayout(newSizes);
+        }
+    }, [noDbIndex]);
+
     return (
         <div className="pg-card-panel">
             <PanelGroup direction="vertical">
                 <Panel minSize={20}>
-                    <PanelGroup direction="horizontal">
+                    <PanelGroup direction="horizontal" ref={hPanelGroupRef}>
                         <Panel minSize={20} defaultSize={55}>
                             <div className="pg-card-panel-item pg-card-panel-query">
                                 <PgQueryCard ref={queryCardRef} />
@@ -174,6 +189,7 @@ const PgCardPanel = () => {
                                 <PgDbIndexCard />
                             </div>
                         </Panel>
+
                     </PanelGroup>
                 </Panel>
                 <ResizeHandle />
