@@ -89,7 +89,7 @@ const PgSidebar = () => {
             {selectedCategory && (
                 <div>
                     <div className="pg-list-title font-medium">
-                        {selectedCategory?.category}
+                        {selectedCategory?.category} ({selectedCategory?.items.length})
                     </div>
                     <div>
                         {selectedCategory?.items.map(item => (

@@ -20,6 +20,10 @@
     color: var(--pg-sidebar-header-txt-clr);
     margin-bottom: var(--space-8);
     padding: 0 var(--space-8);
+    position: sticky;
+    top: 0;
+    background-color: var(--pg-sidebar-bg-clr);
+    z-index: 1;
   }
 
   .pg-list-item {
