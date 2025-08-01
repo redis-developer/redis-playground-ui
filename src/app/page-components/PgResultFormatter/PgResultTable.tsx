@@ -234,14 +234,14 @@ const formatResultVectorSets = (_result: any[], _query: string = "") => {
         const hasAttribs = _query.toLowerCase().includes('withattribs');
 
         if (hasScores && hasAttribs) {
-            // [{elemId, score, attr1, attr2, ...}, {elemId, score, attr1, attr2, ...}, ...]
+            // [{elementId, score, attr1, attr2, ...}, {elementId, score, attr1, attr2, ...}, ...]
             for (let i = 0; i < _result.length; i += 3) {
-                const elemId = _result[i];
+                const elementId = _result[i];
                 const score = _result[i + 1];
                 const attributes = _result[i + 2] as string;
 
                 let obj: any = {
-                    elemId,
+                    elementId,
                     score
                 };
 
@@ -258,23 +258,23 @@ const formatResultVectorSets = (_result: any[], _query: string = "") => {
                 objArr.push(obj);
             }
         } else if (hasScores) {
-            // [{elemId, score}, {elemId, score}, ...]
+            // [{elementId, score}, {elementId, score}, ...]
             for (let i = 0; i < _result.length; i += 2) {
-                const elemId = _result[i];
+                const elementId = _result[i];
                 const score = _result[i + 1];
 
                 objArr.push({
-                    elemId,
+                    elementId,
                     score
                 });
             }
         } else {
-            // [{elemId}, {elemId}, {elemId}, ...]
+            // [{elementId}, {elementId}, {elementId}, ...]
             for (let i = 0; i < _result.length; i++) {
-                const elemId = _result[i];
+                const elementId = _result[i];
 
                 objArr.push({
-                    elemId
+                    elementId
                 });
             }
         }
@@ -293,9 +293,9 @@ const prioritizeTableHeaders = (_headers: IHeader[], _query: string, _formatType
         let querySearchFields: string[] = [];
 
         if (_formatType === QueryResultFormat.vectorSets) {
-            const parts = _query.split(/FILTER\s+/i);
-            if (parts.length > 1) {
-                const afterFilter = parts[1];
+            const parts = _query.split(/FILTER\s+/i); //query has comments also, so split by last FILTER
+            if (parts.length) {
+                const afterFilter = parts[parts.length - 1];
                 // Check if any header keys are referenced with dot prefix in FILTER content
                 _headers.forEach(header => {
                     if (afterFilter.includes(`.${header.headerKey}`) && !querySearchFields.includes(header.headerKey)) {
@@ -312,7 +312,7 @@ const prioritizeTableHeaders = (_headers: IHeader[], _query: string, _formatType
         }
 
         if (querySearchFields?.length) {
-            const priorityKeys = ['key', 'path', 'elemId', 'score', ...querySearchFields];
+            const priorityKeys = ['key', 'path', 'elementId', 'score', ...querySearchFields];
 
             const filteredHeaders = _headers.filter(header => priorityKeys.includes(header.headerKey));
             const remainingHeaders = _headers.filter(header => !priorityKeys.includes(header.headerKey));
@@ -386,7 +386,7 @@ const PgResultTable = ({ result, formatType }: PgResultTableProps) => {
             }
             else if (formatType === QueryResultFormat.vectorSets) {
                 tData = formatResultVectorSets(result, queryResponse?.executedQuery);
-                setKeyFieldName('elemId');
+                setKeyFieldName('elementId');
             }
             setTableData(tData);
 
