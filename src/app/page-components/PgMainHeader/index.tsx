@@ -87,7 +87,9 @@ const detectResultFormatType = (currentQuery: string, result: any[]) => {
                     !(trimmedLine.startsWith("#") || trimmedLine.startsWith("//"))
                 );
             })
-            .join("\n");
+            .join("\n")
+            .trim();
+
 
         if (result?.length > 0 && Array.isArray(result) && currentQuery?.startsWith('FT.SEARCH')) {
             retType = QueryResultFormat.hash;

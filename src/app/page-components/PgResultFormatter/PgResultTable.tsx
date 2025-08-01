@@ -12,8 +12,8 @@ interface PgResultTableProps {
 }
 
 interface IHeader {
-    key: string;
-    text: string;
+    headerKey: string;
+    headerText: string;
 }
 
 const formatResultHash = (_result: any[]) => {
@@ -298,8 +298,8 @@ const prioritizeTableHeaders = (_headers: IHeader[], _query: string, _formatType
                 const afterFilter = parts[1];
                 // Check if any header keys are referenced with dot prefix in FILTER content
                 _headers.forEach(header => {
-                    if (afterFilter.includes(`.${header.key}`) && !querySearchFields.includes(header.key)) {
-                        querySearchFields.push(header.key);
+                    if (afterFilter.includes(`.${header.headerKey}`) && !querySearchFields.includes(header.headerKey)) {
+                        querySearchFields.push(header.headerKey);
                     }
                 });
             }
@@ -314,8 +314,8 @@ const prioritizeTableHeaders = (_headers: IHeader[], _query: string, _formatType
         if (querySearchFields?.length) {
             const priorityKeys = ['key', 'path', 'elemId', 'score', ...querySearchFields];
 
-            const filteredHeaders = _headers.filter(header => priorityKeys.includes(header.key));
-            const remainingHeaders = _headers.filter(header => !priorityKeys.includes(header.key));
+            const filteredHeaders = _headers.filter(header => priorityKeys.includes(header.headerKey));
+            const remainingHeaders = _headers.filter(header => !priorityKeys.includes(header.headerKey));
             retHeaders = [...filteredHeaders, ...remainingHeaders];
         }
     }
@@ -342,8 +342,8 @@ const getTableHeaders = (_tableData: any[]) => {
                 .trim();
 
             headers.push({
-                key: headerKey,
-                text: headerText
+                headerKey,
+                headerText
             });
         }
     }
@@ -370,6 +370,7 @@ const PgResultTable = ({ result, formatType }: PgResultTableProps) => {
     const [tableData, setTableData] = useState<any[]>([]);
     const [tableHeaders, setTableHeaders] = useState<IHeader[]>([]);
     const maxCellCharCount = 50;
+    const [keyFieldName, setKeyFieldName] = useState<string>('key');
 
     useEffect(() => {
         if (result?.length) {
@@ -385,6 +386,7 @@ const PgResultTable = ({ result, formatType }: PgResultTableProps) => {
             }
             else if (formatType === QueryResultFormat.vectorSets) {
                 tData = formatResultVectorSets(result, queryResponse?.executedQuery);
+                setKeyFieldName('elemId');
             }
             setTableData(tData);
 
@@ -407,7 +409,7 @@ const PgResultTable = ({ result, formatType }: PgResultTableProps) => {
                         <tr>
                             <th key="slNo">Sl No</th>
                             {tableHeaders.map((header) => (
-                                <th key={header.key}>{header.text}</th>
+                                <th key={header.headerKey}>{header.headerText}</th>
                             ))}
                         </tr>
                     </thead>
@@ -415,13 +417,13 @@ const PgResultTable = ({ result, formatType }: PgResultTableProps) => {
 
                 <tbody>
                     {tableData.map((item, index) => (
-                        <tr key={item.key}>
-                            <td key={`${item.key}-slNo`}>{index + 1}</td>
+                        <tr key={item[keyFieldName]}>
+                            <td key={`${item[keyFieldName]}-slNo`}>{index + 1}</td>
 
                             {tableHeaders.map((header) => {
-                                const { displayText, title } = formatCellContent(item[header.key], maxCellCharCount);
+                                const { displayText, title } = formatCellContent(item[header.headerKey], maxCellCharCount);
                                 return (
-                                    <td key={`${item.key}-${header.key}`}
+                                    <td key={`${item[keyFieldName]}-${header.headerKey}`}
                                         title={title}>
                                         {displayText}
                                     </td>
