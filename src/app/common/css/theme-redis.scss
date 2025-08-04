@@ -5,7 +5,12 @@
   --comp-code-mirror-gutter-txt-clr: var(--gray-05);
   --comp-code-mirror-disabled-bg-clr: var(--white-base);
   --comp-code-mirror-border-clr: var(--gray-02);
-  --comp-code-mirror-active-line-bg-clr: var(--gray-02);
+  --comp-code-mirror-active-line-bg-clr: rgba(
+    230,
+    230,
+    230,
+    0.5
+  ); /*0.5 transparency for text selection*/
   --comp-code-mirror-active-gutter-txt-clr: var(--gray-07);
 
   --comp-icon-button-bg-clr: var(--white-base);
