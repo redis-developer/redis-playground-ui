@@ -56,6 +56,17 @@
     overflow-y: auto;
     /*trigger scrollbar*/
     height: 100px;
+    position: relative;
+  }
+  .pg-query-category.has-overflow::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 6px; /* scrollbar width */
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1); /* light scrollbar track */
+    pointer-events: none;
   }
 
   .pg-links {

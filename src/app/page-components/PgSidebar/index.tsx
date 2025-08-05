@@ -2,7 +2,7 @@ import "./index.scss";
 
 import type { IQueryTemplateData } from "@/app/types";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import { usePlaygroundContext } from "../PlaygroundContext";
 import ModalPopup from '@/app/components/ModalPopup';
@@ -48,6 +48,8 @@ const PgSidebar = () => {
     const { selectedQuery, setSelectedQuery, fnGetSelectedQueryTemplate, runTour, setRunTour, fnSetTourCompleted } = usePlaygroundContext();
     const [selectedCategory, setSelectedCategory] = useState<IQueryTemplateData | null>(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [hasQueryCategoryOverflow, setHasQueryCategoryOverflow] = useState(false);
+    const queryCategoryRef = useRef<HTMLDivElement>(null);
     const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
     useEffect(() => {
@@ -58,6 +60,16 @@ const PgSidebar = () => {
             }
         }
     }, [selectedQuery]);
+
+    useEffect(() => {
+        if (queryCategoryRef.current && selectedCategory) {
+            const element = queryCategoryRef.current;
+            const hasOverflowContent = element.scrollHeight > element.clientHeight;
+            setHasQueryCategoryOverflow(hasOverflowContent);
+        } else {
+            setHasQueryCategoryOverflow(false);
+        }
+    }, [selectedCategory]);
 
     const handleQueryItemClick = (queryId: string, categoryId: string) => {
         setSelectedQuery({ queryId, categoryId });
@@ -85,7 +97,10 @@ const PgSidebar = () => {
             </div>
         </div>
 
-        <div className="pg-query-category pg-list">
+        <div
+            ref={queryCategoryRef}
+            className={`pg-query-category pg-list ${hasQueryCategoryOverflow ? 'has-overflow' : ''}`}
+        >
             {selectedCategory && (
                 <div>
                     <div className="pg-list-title font-medium">
