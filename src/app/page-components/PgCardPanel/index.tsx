@@ -155,6 +155,9 @@ const PgCardPanel = () => {
                     if (!resultData?.dbIndexId && resultData?.dataSourceId) {
                         setNoDbIndex(true);
                     }
+                    else {
+                        setNoDbIndex(false);
+                    }
                 }
                 setApiCallInProgress(prev => prev - 1);
 
